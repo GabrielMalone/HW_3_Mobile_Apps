@@ -1,6 +1,6 @@
 import { StyleSheet, View, Text } from "react-native";
 
-export const renderCard = (card) => {
+export const Card = (card) => {
 
     return (
       <View style={styles.card}>
@@ -19,25 +19,32 @@ const styles = StyleSheet.create({
     flex: 0.7,
     borderRadius: 15,
     borderWidth: 3,
-    borderColor: '#E498AF',
+    borderColor: '#1D1816',
     justifyContent: 'flex-start',
     alignItems: 'center',
-    backgroundColor: "#BE5F7C",
+    backgroundColor: "#2A2A2A",
     marginTop: 0,
+
+    shadowColor: "#000",
+    shadowOffset: {width: 0, height: 5},
+    shadowOpacity: 0.5,
+    shadowRadius: 10,
+
   },
   cardImage:{
     marginTop: 10,
     borderWidth: 2,
     borderRadius: 10,
-    borderColor: "#E498AF",
+    borderColor: "#1D1816",
     width: "95%",
     height: "50%",
   },
   itemName: {
+    margin: 10,
     textAlign: 'center',
-    fontSize: 50,
+    fontSize: 30,
     backgroundColor: 'transparent',
-    color: "#E498AF",
-    fontFamily: "NotoCustom",
+    color: "#F36363",
+    fontFamily: "UnicaCustom",
   },
 });
