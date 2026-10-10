@@ -3,6 +3,7 @@ import { StyleSheet, View, Button } from 'react-native';
 import Swiper from 'react-native-deck-swiper';
 import { Card } from './Card';
 import { useFonts } from 'expo-font';
+import GetRestaurantData from './GetRestaurantData';
 
 // 1. Sample Data
 const CARDS = [
@@ -23,6 +24,9 @@ export default function App() {
   if (!fontsLoaded) {
     return null;
   }
+  
+  // should return an array
+  const data = GetRestaurantData();
 
   return (
     <View style={styles.container}>
@@ -46,6 +50,7 @@ export default function App() {
       </View>
     </View>
   );
+
 }
 
 const styles = StyleSheet.create({

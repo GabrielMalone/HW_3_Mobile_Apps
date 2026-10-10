@@ -1,37 +1,38 @@
 // https://developers.google.com/maps/documentation/places/web-service/
 
+import * as Location from "expo-location";
 
-// Use places.displayName to access the text name of the place.
-// places.currentOpeningHours
-// places.priceRange
-// places.rating
-// places.photos
-// places.reviews
-
-// Find places of one type
-
-// The following example shows a Nearby Search (New) request for the display names of all restaurants within a 500-meter radius, defined by circle:
-
-// curl -X POST -d '{
-//   "includedTypes": ["restaurant"],
-//   "maxResultCount": 10,
-//   "locationRestriction": {
-//     "circle": {
-//       "center": {
-//         "latitude": 37.7937,
-//         "longitude": -122.3965},
-//       "radius": 500.0
-//     }
-//   }
-// }' \
-// -H 'Content-Type: application/json' -H "X-Goog-Api-Key: API_KEY" \
-// ---> add more types with comma seperation ---> -H "X-Goog-FieldMask: places.displayName" \
-// https://places.googleapis.com/v1/places:searchNearby
 
 const GetRestaurantData = async () => {
 
     const GOOGLE_API_KEY = process.env.EXPO_PUBLIC_GOOGLE_API_KEY;
 
+    // settings
+    const placeTypes = ["restaurant"];
+    const numPlacesToFind = 20;
+    // 5k radius (3.1miles)
+    const searchRadius = 5000;
+    const fieldMask = [
+        "places.id",
+        "places.displayName",
+        "places.formattedAddress",
+        "places.rating",
+        "places.photos",
+        "places.priceRange"
+    ].join(",");
+
+    // get user location
+    const { status } = await Location.requestForegroundPermissionsAsync();
+    if (status !== "granted") {
+        console.log("Location permission denied");
+        return;
+    }
+    
+    const location = await Location.getCurrentPositionAsync({});
+    const lat = location.coords.latitude;
+    const lon = location.coords.longitude;
+
+    // get the data from google
     const response = await fetch(
     "https://places.googleapis.com/v1/places:searchNearby",
     {
@@ -39,19 +40,18 @@ const GetRestaurantData = async () => {
         headers: {
         "Content-Type": "application/json",
         "X-Goog-Api-Key": GOOGLE_API_KEY,
-        "X-Goog-FieldMask":
-            "places.id,places.displayName,places.formattedAddress,places.rating, places.photos, places.reviews, places.priceRange"
+        "X-Goog-FieldMask": fieldMask
         },
         body: JSON.stringify({
-        includedTypes: ["restaurant"],
-        maxResultCount: 20,
+        includedTypes: placeTypes,
+        maxResultCount: numPlacesToFind,
         locationRestriction: {
             circle: {
             center: {
-                latitude: 30.4515,
-                longitude: -91.1871
+                latitude: lat,
+                longitude: lon
             },
-            radius: 5000
+            radius: searchRadius
             }
         }
         })
@@ -60,7 +60,13 @@ const GetRestaurantData = async () => {
 
     const data = await response.json();
 
+    // lettuce sea if it worked
+    if (!response.ok) {
+        console.error("Google Places API Error:", data);
+        return;
+    }
     console.log(data.places);
 
-
 }
+
+export default GetRestaurantData;
