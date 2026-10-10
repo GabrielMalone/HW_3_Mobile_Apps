@@ -1,5 +1,5 @@
-import { useRef, useEffect, useState } from 'react';
-import { StyleSheet, View, Button, Text } from 'react-native';
+import { useEffect, useState } from 'react';
+import { StyleSheet } from 'react-native';
 
 import {
     createSwipeDeck,
@@ -48,7 +48,6 @@ export default function App() {
     return null;
   }
   // ------------------------------------------------------------------------------
-
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
       
@@ -61,7 +60,7 @@ export default function App() {
               allowedDirections={["left", "right"]}
               visibleCardCount={3}
             >
-              <RestaurantDeck.Card>
+              <RestaurantDeck.Card interactive>
                 {({ item }) => 
                   <Card 
                     data={item}

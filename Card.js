@@ -1,22 +1,9 @@
 import { StyleSheet, View, Text, Image } from "react-native";
 import StarRating from 'react-native-star-rating-widget';
+import { RestaurantMap } from "./RestaurantMap";
 
 const Card = ({data}) => {
-
-    // console.log(JSON.stringify(data, null, 2));
-
-    // shape of data looking like :
-    // {
-    // "id": "ChIJcyHKrHGmIIYR2WCyZwWLEI0",
-    // "formattedAddress": "930 Tchoupitoulas St Ste A, New Orleans, LA 70130, USA",
-    // "rating": 4.6,
-    // "displayName": {
-    //   "text": "Cochon RESTAURANT",
-    //   "languageCode": "en"
-    // },
-    // "photos": [
-    //   {
-
+    // ------------------------------------------------------------------------------
     const priceLevel = (level) => {
       switch(level){
         case "PRICE_LEVEL_INEXPENSIVE":  return "$";
@@ -25,13 +12,15 @@ const Card = ({data}) => {
         default :  return "";
       }
     }
-
+    // ------------------------------------------------------------------------------
     const photo = data.photos[0].name;
     const key = process.env.EXPO_PUBLIC_GOOGLE_API_KEY;
-    const photoURL = `https://places.googleapis.com/v1/${photo}/media?maxWidthPx=800&key=${key}`;
-
+    const photoURL = 
+      `https://places.googleapis.com/v1/${photo}/media?maxWidthPx=800&key=${key}`;
+    // ------------------------------------------------------------------------------
     return (
       <View style={styles.card}>
+
         <Image 
           source={{ uri: photoURL }}
           style={styles.cardImage}
@@ -62,15 +51,18 @@ const Card = ({data}) => {
           {data.reviewSummary?.text.text}
         </Text>
 
+        <RestaurantMap 
+          restaurant={data}
+        />
 
       </View>
     );
 
 };
-
+// ------------------------------------------------------------------------------
 // Color pallette helper
-//https://paletton.com/#uid=55p0u0kllllaFw0g0qFqFg0w0aF
-
+// https://paletton.com/#uid=55p0u0kllllaFw0g0qFqFg0w0aF
+// ------------------------------------------------------------------------------
 const styles = StyleSheet.create({
   card: {
     flex: 0.8,
@@ -90,7 +82,6 @@ const styles = StyleSheet.create({
     shadowRadius: 10,
 
     overflow: "scroll",
-
   },
   cardImage:{
     margin: 10,
@@ -99,6 +90,7 @@ const styles = StyleSheet.create({
     borderColor: "#100013",
     width: "95%",
     height: "50%",
+    maxHeight: 200,
   },
   itemName: {
     textAlign: 'center',
@@ -120,7 +112,7 @@ const styles = StyleSheet.create({
     },
   reviewSummary : {
     fontFamily: "QuickSandCustom",
-    fontSize: 10,
+    fontSize: 12,
     textAlign: "center",
     color: "#FFFFF0",
     width: "90%",
@@ -129,8 +121,22 @@ const styles = StyleSheet.create({
   priceLevel:{
       fontFamily:"UnicaCustom",
       fontSize: 20,
-      color: "#DFFF00"
+      color: "#FAA0A0"
   },
 });
 
 export default Card;
+
+// console.log(JSON.stringify(data, null, 2));
+
+// shape of data looking like :
+// {
+// "id": "ChIJcyHKrHGmIIYR2WCyZwWLEI0",
+// "formattedAddress": "930 Tchoupitoulas St Ste A, New Orleans, LA 70130, USA",
+// "rating": 4.6,
+// "displayName": {
+//   "text": "Cochon RESTAURANT",
+//   "languageCode": "en"
+// },
+// "photos": [
+//   {

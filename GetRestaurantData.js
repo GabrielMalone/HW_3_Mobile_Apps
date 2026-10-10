@@ -1,11 +1,10 @@
 // https://developers.google.com/maps/documentation/places/web-service/nearby-search
 
 import * as Location from "expo-location";
-
+// ------------------------------------------------------------------------------
 const getRestaurantData = async () => {
 
     const GOOGLE_API_KEY = process.env.EXPO_PUBLIC_GOOGLE_API_KEY;
-
     // settings
     const placeTypes = ["restaurant"];
     // max is 20
@@ -15,6 +14,8 @@ const getRestaurantData = async () => {
     // what do I want to get back
     const fieldMask = [
         "places.id",
+        "places.location",
+        "places.googleMapsUri",
         "places.displayName",
         "places.formattedAddress",
         "places.rating",
@@ -23,23 +24,26 @@ const getRestaurantData = async () => {
         "places.priceLevel",
         "places.reviewSummary"
     ].join(",");
-
-    // will return this
-    const results = [];
-
+    // ------------------------------------------------------------------------------
     // get user location
+    // ------------------------------------------------------------------------------
     const { status } = await Location.requestForegroundPermissionsAsync();
     if (status !== "granted") {
         console.log("Location permission denied");
         return;
     }
-
+    // ------------------------------------------------------------------------------
     // virtual phone needs to have location set for this to work
+    // New Orleans Lat and Long:
+    //  29.951065
+    // -90.071533
+    // ------------------------------------------------------------------------------
     const location = await Location.getCurrentPositionAsync({});
     const user_lat = location.coords.latitude;
     const user_lon = location.coords.longitude;
-
+    // ------------------------------------------------------------------------------
     // get the data from google
+    // ------------------------------------------------------------------------------
     const response = await fetch(
     "https://places.googleapis.com/v1/places:searchNearby",
     {
@@ -64,19 +68,18 @@ const getRestaurantData = async () => {
         })
     }
     );
-
+    // ------------------------------------------------------------------------------
     // this returns an object
     // with places key whose value is an array
     // {places:[]}
+    // ------------------------------------------------------------------------------
     const data = await response.json();
-
-
     // lettuce sea if it worked
     if (!response.ok) {
         console.error("Google Places API Error:", data);
         return;
     }
-
+    // ------------------------------------------------------------------------------
     return data.places;
 }
 
