@@ -19,87 +19,83 @@ const Card = ({data}) => {
       `https://places.googleapis.com/v1/${photo}/media?maxWidthPx=800&key=${key}`;
     // ------------------------------------------------------------------------------
     return (
-      <View style={styles.card}>
-        
-        <FlatList 
-          data={data.photos}
-          horizontal={true}
-          style={styles.photoListContainer}
-          contentContainerStyle={styles.photoListContent}
-          renderItem={({item})=>{
-            const pic = item.name;
-            const photoURL = 
-              `https://places.googleapis.com/v1/${pic}/media?maxWidthPx=800&key=${key}`;
-            return(
-              <Image 
-                source={{ uri: photoURL }}
-                style={styles.cardImage}
-              />
-            );
-          }}
-        />
-     
-        <Text style={styles.itemName}>
-          {data.displayName.text}
-        </Text>
-
-        <View style={styles.priceRating}>
+      <ScrollView 
+        style={styles.scrollContainer}
+        contentContainerStyle={styles.card}
+      >
+          {/*horizontal scroll images of restaurant*/}
+          <FlatList 
+            data={data.photos}
+            horizontal={true}
+            style={styles.photoListContainer}
+            contentContainerStyle={styles.photoListContent}
+            renderItem={({item})=>{
+              const pic = item.name;
+              const photoURL = 
+                `https://places.googleapis.com/v1/${pic}/media?maxWidthPx=800&key=${key}`;
+              return(
+                <Image 
+                  source={{ uri: photoURL }}
+                  style={styles.cardImage}
+                />
+              );
+            }}
+          />
+          {/*name of restaurant and price / overall rating*/}
+          <Text style={styles.itemName}>
+            {data.displayName.text}
+          </Text>
 
           <Text style={styles.priceLevel}>
             {priceLevel(data.priceLevel)}
           </Text>
-
+      
           <StarRating 
             style={styles.stars}
             onChange={()=>{}}
             rating={data.rating}
             enableHalfStar={true}
             step="quarter"
-            starSize={20}
+            starSize={40}
             color={"#770737"}
           />
-
-        </View>
-        <FlatList 
-          data={data.reviews}
-          horizontal={true}
-          style={styles.reviewsContainer}
-          contentContainerStyle={styles.reviewsContent}
-          renderItem={({item})=>{
-            console.log(`item: ${JSON.stringify(item)}`);
-            return(
-              <View style={styles.singleReviewContainer}>
-                <StarRating 
-                  starContainerStyle={styles.starsIndividualRatings}
-                  onChange={()=>{}}
-                  rating={item.rating}
-                  enableHalfStar={true}
-                  step="quarter"
-                  starSize={10}
-                  color={"#EC646C"}
-                />
-
-                <Text style={styles.reviewDate}>
-                  {item.relativePublishTimeDescription}
-                </Text>
-
-                <ScrollView>
-                  <Text style={styles.individualReviewText}>
-                    {item.text.text}
+      
+          {/*horizontal scroll of individual reviews*/}
+          <FlatList 
+            data={data.reviews}
+            horizontal={true}
+            style={styles.reviewsContainer}
+            contentContainerStyle={styles.reviewsContent}
+            renderItem={({item})=>{
+              console.log(`item: ${JSON.stringify(item)}`);
+              return(
+                <View style={styles.singleReviewContainer}>
+                  <StarRating 
+                    starContainerStyle={styles.starsIndividualRatings}
+                    onChange={()=>{}}
+                    rating={item.rating}
+                    enableHalfStar={true}
+                    step="quarter"
+                    starSize={10}
+                    color={"#EC646C"}
+                  />
+                  <Text style={styles.reviewDate}>
+                    {item.relativePublishTimeDescription}
                   </Text>
-                </ScrollView>
-
-              </View>
-            );
-          }}
-        />
-  
-
-        <RestaurantMap 
-          restaurant={data}
-        />
-
-      </View>
+                  <ScrollView>
+                    <Text style={styles.individualReviewText}>
+                      {item.text.text}
+                    </Text>
+                  </ScrollView>
+                </View>
+              );
+            }}
+          />
+          {/*map of restaurant location*/}
+          <RestaurantMap
+            restaurant={data}
+          />
+      </ScrollView>
     );
 
 };
@@ -108,30 +104,26 @@ const Card = ({data}) => {
 // https://paletton.com/#uid=55p0u0kllllaFw0g0qFqFg0w0aF
 // ------------------------------------------------------------------------------
 const styles = StyleSheet.create({
+  scrollContainer: {
+
+    borderRadius: 15,
+    borderWidth: 0,
+    borderColor: '#250329',
+    alignSelf: "center",
+    backgroundColor: "#0a0909",
+    width: "90%",
+    maxHeight: "80%",
+
+  },
 
   card: {
-    flex: 0.8,
-    borderRadius: 15,
-    borderWidth: 1,
-    borderColor: '#100013',
-    justifyContent: 'flex-start',
     alignItems: "center",
-    alignSelf: "center",
-    backgroundColor: "#0b0b0b",
-    marginTop: 0,
-    width: "90%",
-
-    shadowColor: "#000",
-    shadowOffset: {width: 0, height: 5},
-    shadowOpacity: 0.5,
-    shadowRadius: 10,
-
-    overflow: "hidden",
   },
 
   photoListContainer :{
-    maxHeight: 180,
-    marginBottom: 20,
+    height: 180,
+    margin: 20,
+
   },
   photoListContent:{
     padding: 0,
@@ -146,30 +138,25 @@ const styles = StyleSheet.create({
 
   itemName: {
     textAlign: 'center',
-    fontSize: 30,
+    fontSize: 50,
     backgroundColor: 'transparent',
     color: "#EDEADE",
     fontFamily: "UnicaCustom",
   },
 
-
-  priceLevel:{
-      fontFamily:"UnicaCustom",
-      fontSize: 20,
-      color: "#FAA0A0"
-  },
   priceRating:{
     flexDirection: "row",
     alignItems: "center",
+    margin: 50,
+  },
+  priceLevel:{
+    fontFamily:"UnicaCustom",
+    fontSize: 40,
+    color: "#FAA0A0"
   },
   stars:{
     margin: 10
   },
-  itemCategory:{
-    color: "#EC646C",
-    fontSize: 15,
-  },
-
 
   reviewSummary : {
     fontFamily: "QuickSandCustom",
@@ -179,35 +166,37 @@ const styles = StyleSheet.create({
     width: "90%",
     marginBottom: 20,
   },
-
-
+  
   reviewsContainer :{
-    maxHeight: 180,
-    marginBottom: 20,
+    height: 380,
+    margin: 20,
+
   },
   reviewsContent:{
-    padding: 10,
     gap: 10,
   },
   reviewDate:{
     fontFamily: "QuickSandCustom",
     fontSize: 10,
     color: "#ffabea",
+    padding: 5,
   },
   singleReviewContainer:{
     width: 200,
     height: 180,
     borderRadius: 10,
-    backgroundColor: "#0f0f0f"
+    backgroundColor: "#100f0f",
+    padding: 10,
   },
   starsIndividualRatings:{
-
+    padding: 5,
   },
   individualReviewText:{
     fontFamily: "QuickSandCustom",
     fontSize: 10,
-    color: "#FFFFF0",
-    maxWidth: 200
+    color: "#FFFFFF",
+    maxWidth: 200,
+    padding: 5,
   },
 
 });
