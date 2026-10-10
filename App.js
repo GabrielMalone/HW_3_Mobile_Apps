@@ -12,9 +12,11 @@ import {
 } from "react-native-safe-area-context";
 
 import { GestureHandlerRootView } from "react-native-gesture-handler";
+import { useFonts } from 'expo-font';
+
 import GetRestaurantData from './GetRestaurantData';
 import Card from './Card';
-import { useFonts } from 'expo-font';
+
 
 const RestaurantDeck = createSwipeDeck({
     motion: SwipeDeckMotion.tinder(),

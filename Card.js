@@ -1,4 +1,4 @@
-import { StyleSheet, View, Text } from "react-native";
+import { StyleSheet, View, Text, Image } from "react-native";
 import StarRating from 'react-native-star-rating-widget';
 
 const Card = ({data}) => {
@@ -17,13 +17,22 @@ const Card = ({data}) => {
     // "photos": [
     //   {
 
+    const photo = data.photos[0].name;
+    const key = process.env.EXPO_PUBLIC_GOOGLE_API_KEY;
+    const photoURL = `https://places.googleapis.com/v1/${photo}/media?maxWidthPx=800&key=${key}`;
+
     return (
       <View style={styles.card}>
-        <View style={styles.cardImage}>
-        </View>
+  
+        <Image 
+          source={{ uri: photoURL }}
+          style={styles.cardImage}
+        />
+        
         <Text style={styles.itemName}>
           {data.displayName.text}
         </Text>
+
         <StarRating 
           style={styles.stars}
           rating={data.rating}
@@ -32,6 +41,10 @@ const Card = ({data}) => {
           starSize={20}
           color={"#EC646C"}
         />
+
+        <Text style={styles.reviewSummary}>
+          {data.reviewSummary.text.text}
+        </Text>
  
       </View>
     );
@@ -50,7 +63,7 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-start',
     alignItems: "center",
     alignSelf: "center",
-    backgroundColor: "#1B1B1B",
+    backgroundColor: "#100f0f",
     marginTop: 0,
     width: "90%",
 
@@ -80,7 +93,12 @@ const styles = StyleSheet.create({
     fontSize: 15,
   },
   stars:{
-    
+    margin: 10
+  },
+  reviewSummary : {
+    fontFamily: "NotoCustom",
+    color: "#e5ff00",
+    width: "90%",
   },
 });
 

@@ -19,7 +19,9 @@ const GetRestaurantData = async () => {
         "places.formattedAddress",
         "places.rating",
         "places.photos",
-        "places.priceRange"
+        "places.priceRange",
+        "places.priceLevel",
+        "places.reviewSummary"
     ].join(",");
 
     // will return this
