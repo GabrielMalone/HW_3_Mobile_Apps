@@ -2,7 +2,7 @@
 
 import * as Location from "expo-location";
 
-const GetRestaurantData = async () => {
+const getRestaurantData = async () => {
 
     const GOOGLE_API_KEY = process.env.EXPO_PUBLIC_GOOGLE_API_KEY;
 
@@ -80,4 +80,4 @@ const GetRestaurantData = async () => {
     return data.places;
 }
 
-export default GetRestaurantData;
+export default getRestaurantData;

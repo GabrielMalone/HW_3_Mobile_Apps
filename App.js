@@ -14,14 +14,13 @@ import {
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { useFonts } from 'expo-font';
 
-import GetRestaurantData from './GetRestaurantData';
+import getRestaurantData from './getRestaurantData';
 import Card from './Card';
-
-
+// --------------------------------------------------------------------------------
 const RestaurantDeck = createSwipeDeck({
     motion: SwipeDeckMotion.tinder(),
 });
-
+// --------------------------------------------------------------------------------
 export default function App() {
 // --------------------------------------------------------------------------------
   const [restaurantData, setRestaurantData] = useState([]);
@@ -32,7 +31,7 @@ export default function App() {
   // ------------------------------------------------------------------------------
   useEffect(()=>{
       const loadRestaurants = async () => {
-          const places = await GetRestaurantData();
+          const places = await getRestaurantData();
           setRestaurantData(places);
       }
       loadRestaurants();
@@ -43,6 +42,7 @@ export default function App() {
   const [fontsLoaded] = useFonts({
     'NotoCustom': require('./assets/fonts/NotoSerif-VariableFont_wdth,wght.ttf'),
     'UnicaCustom': require('./assets/fonts/UnicaOne-Regular.ttf'),
+    'QuickSandCustom':require('./assets/fonts/Quicksand-VariableFont_wght.ttf'),
   });
   if (!fontsLoaded) {
     return null;

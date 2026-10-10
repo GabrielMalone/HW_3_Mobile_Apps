@@ -17,13 +17,21 @@ const Card = ({data}) => {
     // "photos": [
     //   {
 
+    const priceLevel = (level) => {
+      switch(level){
+        case "PRICE_LEVEL_INEXPENSIVE":  return "$";
+        case "PRICE_LEVEL_MODERATE"   :  return "$$";
+        case "PRICE_LEVEL_EXPENSIVE"  :  return "$$$";
+        default :  return "";
+      }
+    }
+
     const photo = data.photos[0].name;
     const key = process.env.EXPO_PUBLIC_GOOGLE_API_KEY;
     const photoURL = `https://places.googleapis.com/v1/${photo}/media?maxWidthPx=800&key=${key}`;
 
     return (
       <View style={styles.card}>
-  
         <Image 
           source={{ uri: photoURL }}
           style={styles.cardImage}
@@ -33,19 +41,28 @@ const Card = ({data}) => {
           {data.displayName.text}
         </Text>
 
-        <StarRating 
-          style={styles.stars}
-          rating={data.rating}
-          enableHalfStar={true}
-          step="quarter"
-          starSize={20}
-          color={"#EC646C"}
-        />
+        <View style={styles.priceRating}>
+
+          <Text style={styles.priceLevel}>
+            {priceLevel(data.priceLevel)}
+          </Text>
+
+          <StarRating 
+            style={styles.stars}
+            rating={data.rating}
+            enableHalfStar={true}
+            step="quarter"
+            starSize={20}
+            color={"#770737"}
+          />
+
+        </View>
 
         <Text style={styles.reviewSummary}>
-          {data.reviewSummary.text.text}
+          {data.reviewSummary?.text.text}
         </Text>
- 
+
+
       </View>
     );
 
@@ -56,14 +73,14 @@ const Card = ({data}) => {
 
 const styles = StyleSheet.create({
   card: {
-    flex: 0.7,
+    flex: 0.8,
     borderRadius: 15,
     borderWidth: 1,
-    borderColor: '#64242F',
+    borderColor: '#100013',
     justifyContent: 'flex-start',
     alignItems: "center",
     alignSelf: "center",
-    backgroundColor: "#100f0f",
+    backgroundColor: "#0b0b0b",
     marginTop: 0,
     width: "90%",
 
@@ -72,12 +89,14 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.5,
     shadowRadius: 10,
 
+    overflow: "scroll",
+
   },
   cardImage:{
     margin: 10,
     borderWidth: 1,
     borderRadius: 10,
-    borderColor: "#64242F",
+    borderColor: "#100013",
     width: "95%",
     height: "50%",
   },
@@ -85,20 +104,32 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     fontSize: 30,
     backgroundColor: 'transparent',
-    color: "#F36363",
+    color: "#EDEADE",
     fontFamily: "UnicaCustom",
   },
-  itemCategory:{
-    color: "#EC646C",
-    fontSize: 15,
+  priceRating:{
+    flexDirection: "row",
+    alignItems: "center",
   },
-  stars:{
-    margin: 10
-  },
+    itemCategory:{
+      color: "#EC646C",
+      fontSize: 15,
+    },
+    stars:{
+      margin: 10
+    },
   reviewSummary : {
-    fontFamily: "NotoCustom",
-    color: "#e5ff00",
+    fontFamily: "QuickSandCustom",
+    fontSize: 10,
+    textAlign: "center",
+    color: "#FFFFF0",
     width: "90%",
+    marginBottom: 20,
+  },
+  priceLevel:{
+      fontFamily:"UnicaCustom",
+      fontSize: 20,
+      color: "#DFFF00"
   },
 });
 
