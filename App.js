@@ -1,22 +1,35 @@
-import { useRef } from 'react';
+import { useRef, useEffect, useState } from 'react';
 import { StyleSheet, View, Button } from 'react-native';
 import Swiper from 'react-native-deck-swiper';
-import { Card } from './Card';
-import { useFonts } from 'expo-font';
 import GetRestaurantData from './GetRestaurantData';
-
-// 1. Sample Data
-const CARDS = [
-  { id: 1, text: 'Local Restaurant' },
-  { id: 2, text: 'Card Two' },
-  { id: 3, text: 'Card Three' },
-];
+import Card from './Card';
+import { useFonts } from 'expo-font';
 
 export default function App() {
-  // this will let us get access to the methods inside of the Swiper 
+// --------------------------------------------------------------------------------
+
+  // useRef --> this will let us get access to the methods inside of the Swiper 
   // and we can call them on the specific isntance of the swiper
   // we create (for buttons that do it auto)
+
+  const [restaurants, setRestaurants] = useState([]);
   const swiperRef = useRef(null);
+
+  // ------------------------------------------------------------------------------
+  // need useState for the re-render, 
+  // and useEffect to prevent the API request from running on every render.
+  // otherwise infinite loop
+  // ------------------------------------------------------------------------------
+  useEffect(()=>{
+      const loadRestaurants = async () => {
+          const results = await GetRestaurantData();
+          setRestaurants(results);
+      }
+      loadRestaurants();
+  },[]);
+  // ------------------------------------------------------------------------------
+  // load custom fonts
+  // ------------------------------------------------------------------------------
   const [fontsLoaded] = useFonts({
     'NotoCustom': require('./assets/fonts/NotoSerif-VariableFont_wdth,wght.ttf'),
     'UnicaCustom': require('./assets/fonts/UnicaOne-Regular.ttf'),
@@ -24,16 +37,12 @@ export default function App() {
   if (!fontsLoaded) {
     return null;
   }
-  
-  // should return an array
-  const data = GetRestaurantData();
-
+  // ------------------------------------------------------------------------------
   return (
     <View style={styles.container}>
-      {/* 3. The Swiper Component */}
       <Swiper
         ref={swiperRef}
-        cards={CARDS}
+        cards={restaurants}
         renderCard={Card}
         onSwipedLeft={(index) => console.log('Swiped left on index:', index)}
         onSwipedRight={(index) => console.log('Swiped right on index:', index)}
@@ -41,18 +50,14 @@ export default function App() {
         cardIndex={0}
         backgroundColor={'transparent'}
         stackSize={3} // Number of cards visible in the stack background
+        stackSeparation={20}
+        stackScale={10}
       />
-
-      {/* Optional: Programmatic trigger buttons */}
-      <View style={styles.buttonContainer}>
-        {/* <Button title="Swipe Left" onPress={() => swiperRef.current.swipeLeft()} />
-        <Button title="Swipe Right" onPress={() => swiperRef.current.swipeRight()} /> */}
-      </View>
     </View>
   );
 
 }
-
+// ------------------------------------------------------------------------------
 const styles = StyleSheet.create({
   container: {
     flex: 1,

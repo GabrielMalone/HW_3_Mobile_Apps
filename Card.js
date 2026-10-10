@@ -1,16 +1,18 @@
 import { StyleSheet, View, Text } from "react-native";
 
-export const Card = (card) => {
+const Card = (restaurantName) => {
+
+    console.log(restaurantName);
 
     return (
       <View style={styles.card}>
         <View style={styles.cardImage}>
         </View>
         <Text style={styles.itemName}>
-          {card.text}
+          {restaurantName}
         </Text>
         <Text style={[styles.itemName, styles.itemCategory]}>
-          {card.text}
+          {restaurantName}
         </Text>
       </View>
     );
@@ -57,3 +59,5 @@ const styles = StyleSheet.create({
     fontSize: 15,
   },
 });
+
+export default Card;

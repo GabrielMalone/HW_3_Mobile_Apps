@@ -1,7 +1,6 @@
-// https://developers.google.com/maps/documentation/places/web-service/
+// https://developers.google.com/maps/documentation/places/web-service/nearby-search
 
 import * as Location from "expo-location";
-
 
 const GetRestaurantData = async () => {
 
@@ -9,9 +8,11 @@ const GetRestaurantData = async () => {
 
     // settings
     const placeTypes = ["restaurant"];
+    // max is 20
     const numPlacesToFind = 20;
     // 5k radius (3.1miles)
     const searchRadius = 5000;
+    // what do I want to get back
     const fieldMask = [
         "places.id",
         "places.displayName",
@@ -21,16 +22,20 @@ const GetRestaurantData = async () => {
         "places.priceRange"
     ].join(",");
 
+    // will return this
+    const results = [];
+
     // get user location
     const { status } = await Location.requestForegroundPermissionsAsync();
     if (status !== "granted") {
         console.log("Location permission denied");
         return;
     }
-    
+
+    // virtual phone needs to have location set for this to work
     const location = await Location.getCurrentPositionAsync({});
-    const lat = location.coords.latitude;
-    const lon = location.coords.longitude;
+    const user_lat = location.coords.latitude;
+    const user_lon = location.coords.longitude;
 
     // get the data from google
     const response = await fetch(
@@ -48,8 +53,8 @@ const GetRestaurantData = async () => {
         locationRestriction: {
             circle: {
             center: {
-                latitude: lat,
-                longitude: lon
+                latitude: user_lat,
+                longitude: user_lon
             },
             radius: searchRadius
             }
@@ -58,6 +63,9 @@ const GetRestaurantData = async () => {
     }
     );
 
+    // this returns an object
+    // with places key whose value is an array
+    // {places:[]}
     const data = await response.json();
 
     // lettuce sea if it worked
@@ -65,8 +73,15 @@ const GetRestaurantData = async () => {
         console.error("Google Places API Error:", data);
         return;
     }
-    console.log(data.places);
 
+    data.places.map((info, i)=>{
+        //console.log(`info: ${info.displayName.text}`);
+        results[i] = info.displayName.text;
+    });
+
+    // console.log(`results [] : ${results}`);
+
+    return results;
 }
 
 export default GetRestaurantData;
