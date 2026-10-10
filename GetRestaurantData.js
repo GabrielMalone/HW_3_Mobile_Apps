@@ -19,6 +19,7 @@ const getRestaurantData = async () => {
         "places.displayName",
         "places.formattedAddress",
         "places.rating",
+        "places.reviews",
         "places.photos",
         "places.priceRange",
         "places.priceLevel",
