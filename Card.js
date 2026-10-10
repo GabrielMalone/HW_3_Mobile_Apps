@@ -1,6 +1,6 @@
 import { StyleSheet, View, Text } from "react-native";
 
-const Card = (restaurantName) => {
+const Card = ({restaurantName}) => {
 
     console.log(restaurantName);
 
@@ -29,9 +29,10 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: '#64242F',
     justifyContent: 'flex-start',
-    alignItems: 'center',
-    backgroundColor: "#2A2A2A",
+    alignSelf: "center",
+    backgroundColor: "#1B1B1B",
     marginTop: 0,
+    width: "90%",
 
     shadowColor: "#000",
     shadowOffset: {width: 0, height: 5},

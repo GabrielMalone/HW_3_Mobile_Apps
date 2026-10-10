@@ -1,20 +1,28 @@
 import { useRef, useEffect, useState } from 'react';
-import { StyleSheet, View, Button } from 'react-native';
-import Swiper from 'react-native-deck-swiper';
+import { StyleSheet, View, Button, Text } from 'react-native';
+
+import {
+    createSwipeDeck,
+    SwipeDeckMotion
+} from "@react-native-motion-kit/swipe-deck";
+
+import {
+    SafeAreaProvider,
+    SafeAreaView
+} from "react-native-safe-area-context";
+
+import { GestureHandlerRootView } from "react-native-gesture-handler";
 import GetRestaurantData from './GetRestaurantData';
 import Card from './Card';
 import { useFonts } from 'expo-font';
 
+const RestaurantDeck = createSwipeDeck({
+    motion: SwipeDeckMotion.tinder(),
+});
+
 export default function App() {
 // --------------------------------------------------------------------------------
-
-  // useRef --> this will let us get access to the methods inside of the Swiper 
-  // and we can call them on the specific isntance of the swiper
-  // we create (for buttons that do it auto)
-
   const [restaurants, setRestaurants] = useState([]);
-  const swiperRef = useRef(null);
-
   // ------------------------------------------------------------------------------
   // need useState for the re-render, 
   // and useEffect to prevent the API request from running on every render.
@@ -39,23 +47,31 @@ export default function App() {
   }
   // ------------------------------------------------------------------------------
   return (
-    <View style={styles.container}>
-      <Swiper
-        ref={swiperRef}
-        cards={restaurants}
-        renderCard={Card}
-        onSwipedLeft={(index) => console.log('Swiped left on index:', index)}
-        onSwipedRight={(index) => console.log('Swiped right on index:', index)}
-        onSwipedAll={() => console.log('All cards swiped!')}
-        cardIndex={0}
-        backgroundColor={'transparent'}
-        stackSize={3} // Number of cards visible in the stack background
-        stackSeparation={20}
-        stackScale={10}
-      />
-    </View>
+    <GestureHandlerRootView style={{ flex: 1 }}>
+      <SafeAreaProvider>
+        <SafeAreaView style={styles.container} edges={["top", "bottom"]}>
+          <View style={styles.container}>
+            {restaurants.length > 0 && (
+              <RestaurantDeck.Root
+                data={restaurants}
+                getKey={(restaurant) => restaurant}
+                allowedDirections={["left", "right"]}
+                visibleCardCount={restaurants.length}
+              >
+                <RestaurantDeck.Card>
+                  {({ item }) => (
+                    <Card 
+                      restaurantName={item}
+                    />
+                  )}
+                </RestaurantDeck.Card>
+              </RestaurantDeck.Root>
+            )}
+          </View>
+        </SafeAreaView>
+      </SafeAreaProvider>
+    </GestureHandlerRootView>
   );
-
 }
 // ------------------------------------------------------------------------------
 const styles = StyleSheet.create({
