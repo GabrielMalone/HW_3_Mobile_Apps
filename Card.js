@@ -1,4 +1,4 @@
-import { StyleSheet, View, Text, Image } from "react-native";
+import { StyleSheet, View, Text, Image, FlatList } from "react-native";
 import StarRating from 'react-native-star-rating-widget';
 import { RestaurantMap } from "./RestaurantMap";
 
@@ -20,12 +20,24 @@ const Card = ({data}) => {
     // ------------------------------------------------------------------------------
     return (
       <View style={styles.card}>
-
-        <Image 
-          source={{ uri: photoURL }}
-          style={styles.cardImage}
-        />
         
+        <FlatList 
+          data={data.photos}
+          horizontal={true}
+          contentContainerStyle={styles.photoListContent}
+          renderItem={({item})=>{
+            const pic = item.name;
+            const photoURL = 
+              `https://places.googleapis.com/v1/${pic}/media?maxWidthPx=800&key=${key}`;
+            return(
+              <Image 
+                source={{ uri: photoURL }}
+                style={styles.cardImage}
+              />
+            );
+          }}
+        />
+     
         <Text style={styles.itemName}>
           {data.displayName.text}
         </Text>
@@ -83,14 +95,16 @@ const styles = StyleSheet.create({
 
     overflow: "scroll",
   },
+  photoListContent:{
+    padding: 10,
+    gap: 10,
+    alignItems: 'center',
+  },
   cardImage:{
-    margin: 10,
-    borderWidth: 1,
     borderRadius: 10,
-    borderColor: "#100013",
-    width: "95%",
-    height: "50%",
-    maxHeight: 200,
+    width: 250,
+    height: 180,
+    borderRadius: 10,
   },
   itemName: {
     textAlign: 'center',
