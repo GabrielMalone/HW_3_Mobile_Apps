@@ -22,7 +22,7 @@ const RestaurantDeck = createSwipeDeck({
 
 export default function App() {
 // --------------------------------------------------------------------------------
-  const [restaurants, setRestaurants] = useState([]);
+  const [restaurantData, setRestaurantData] = useState([]);
   // ------------------------------------------------------------------------------
   // need useState for the re-render, 
   // and useEffect to prevent the API request from running on every render.
@@ -30,8 +30,8 @@ export default function App() {
   // ------------------------------------------------------------------------------
   useEffect(()=>{
       const loadRestaurants = async () => {
-          const results = await GetRestaurantData();
-          setRestaurants(results);
+          const places = await GetRestaurantData();
+          setRestaurantData(places);
       }
       loadRestaurants();
   },[]);
@@ -46,30 +46,31 @@ export default function App() {
     return null;
   }
   // ------------------------------------------------------------------------------
+
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
+      
       <SafeAreaProvider>
         <SafeAreaView style={styles.container} edges={["top", "bottom"]}>
-          <View style={styles.container}>
-            {restaurants.length > 0 && (
-              <RestaurantDeck.Root
-                data={restaurants}
-                getKey={(restaurant) => restaurant}
-                allowedDirections={["left", "right"]}
-                visibleCardCount={restaurants.length}
-              >
-                <RestaurantDeck.Card>
-                  {({ item }) => (
-                    <Card 
-                      restaurantName={item}
-                    />
-                  )}
-                </RestaurantDeck.Card>
-              </RestaurantDeck.Root>
-            )}
-          </View>
+
+            <RestaurantDeck.Root
+              data={restaurantData}
+              getKey={(restaurant) => restaurant.id}
+              allowedDirections={["left", "right"]}
+              visibleCardCount={3}
+            >
+              <RestaurantDeck.Card>
+                {({ item }) => 
+                  <Card 
+                    data={item}
+                  />
+                }
+              </RestaurantDeck.Card>
+            </RestaurantDeck.Root>
+            
         </SafeAreaView>
       </SafeAreaProvider>
+
     </GestureHandlerRootView>
   );
 }

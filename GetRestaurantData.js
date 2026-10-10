@@ -68,20 +68,14 @@ const GetRestaurantData = async () => {
     // {places:[]}
     const data = await response.json();
 
+
     // lettuce sea if it worked
     if (!response.ok) {
         console.error("Google Places API Error:", data);
         return;
     }
 
-    data.places.map((info, i)=>{
-        //console.log(`info: ${info.displayName.text}`);
-        results[i] = info.displayName.text;
-    });
-
-    // console.log(`results [] : ${results}`);
-
-    return results;
+    return data.places;
 }
 
 export default GetRestaurantData;

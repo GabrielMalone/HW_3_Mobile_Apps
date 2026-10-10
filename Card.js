@@ -1,19 +1,38 @@
 import { StyleSheet, View, Text } from "react-native";
+import StarRating from 'react-native-star-rating-widget';
 
-const Card = ({restaurantName}) => {
+const Card = ({data}) => {
 
-    console.log(restaurantName);
+    // console.log(JSON.stringify(data, null, 2));
+
+    // shape of data looking like :
+    // {
+    // "id": "ChIJcyHKrHGmIIYR2WCyZwWLEI0",
+    // "formattedAddress": "930 Tchoupitoulas St Ste A, New Orleans, LA 70130, USA",
+    // "rating": 4.6,
+    // "displayName": {
+    //   "text": "Cochon RESTAURANT",
+    //   "languageCode": "en"
+    // },
+    // "photos": [
+    //   {
 
     return (
       <View style={styles.card}>
         <View style={styles.cardImage}>
         </View>
         <Text style={styles.itemName}>
-          {restaurantName}
+          {data.displayName.text}
         </Text>
-        <Text style={[styles.itemName, styles.itemCategory]}>
-          {restaurantName}
-        </Text>
+        <StarRating 
+          style={styles.stars}
+          rating={data.rating}
+          enableHalfStar={true}
+          step="quarter"
+          starSize={20}
+          color={"#EC646C"}
+        />
+ 
       </View>
     );
 
@@ -29,6 +48,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: '#64242F',
     justifyContent: 'flex-start',
+    alignItems: "center",
     alignSelf: "center",
     backgroundColor: "#1B1B1B",
     marginTop: 0,
@@ -58,6 +78,9 @@ const styles = StyleSheet.create({
   itemCategory:{
     color: "#EC646C",
     fontSize: 15,
+  },
+  stars:{
+    
   },
 });
 
