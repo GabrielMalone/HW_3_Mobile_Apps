@@ -77,7 +77,7 @@ const Card = ({data}) => {
                     enableHalfStar={true}
                     step="quarter"
                     starSize={10}
-                    color={"#EC646C"}
+                    color={"#770737"}
                   />
                   <Text style={styles.reviewDate}>
                     {item.relativePublishTimeDescription}
@@ -107,12 +107,14 @@ const styles = StyleSheet.create({
   scrollContainer: {
 
     borderRadius: 15,
-    borderWidth: 0,
-    borderColor: '#250329',
+    borderWidth: 1,
+    borderColor: '#c4bbc5',
     alignSelf: "center",
     backgroundColor: "#0a0909",
     width: "90%",
     maxHeight: "80%",
+
+    boxShadow: "0px 5px 15px rgba(0, 0, 0, 0.8)",
 
   },
 
@@ -178,7 +180,7 @@ const styles = StyleSheet.create({
   reviewDate:{
     fontFamily: "QuickSandCustom",
     fontSize: 10,
-    color: "#ffabea",
+    color: "#c4bbc5",
     padding: 5,
   },
   singleReviewContainer:{
