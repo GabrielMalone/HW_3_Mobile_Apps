@@ -14,6 +14,7 @@ const FriendList = () => {
     }   
     return (
         <FlatList 
+            scrollsToTop={true}
             style={styles.friendListContent}
             contentContainerStyle={styles.friendListContainer}
             data={mockFriendsData}
@@ -33,11 +34,12 @@ const styles = StyleSheet.create({
         position: "absolute",
         bottom: 120,
         right: 65,
-        borderWidth: 1,
+        // borderWidth: 1,
         borderRadius: 10, 
-        borderColor: "white",
-        backgroundColor: "#5f00ad8b",
+        borderColor: "#747070",
+        backgroundColor: "#5f00ad54",
         zIndex: 1,
+        maxHeight: 600,
     },
     friendListContainer:{
         justifyContent: "center",
