@@ -49,7 +49,7 @@ export default function RestaurantDeck() {
         <RestaurantCards.Card interactive>
         {({ item }) => 
             <Card 
-            data={item}
+              data={item}
             />
         }
         </RestaurantCards.Card>
@@ -57,17 +57,3 @@ export default function RestaurantDeck() {
   );
 }
 // ------------------------------------------------------------------------------
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#1B1B1B",
-  },
-  buttonContainer: {
-    position: 'absolute',
-    bottom: 50,
-    left: 0,
-    right: 0,
-    flexDirection: 'row',
-    justifyContent: 'space-around',
-  }
-});

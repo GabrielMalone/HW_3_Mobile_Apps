@@ -1,6 +1,7 @@
 import { StyleSheet, View, Text, Image, FlatList, ScrollView } from "react-native";
 import StarRating from 'react-native-star-rating-widget';
 import { RestaurantMap } from "./RestaurantMap";
+import TruchetPattern from "./assets/svg/TruchetPattern";
 
 const Card = ({data}) => {
     // ------------------------------------------------------------------------------
@@ -23,6 +24,13 @@ const Card = ({data}) => {
         style={styles.scrollContainer}
         contentContainerStyle={styles.card}
       >
+          <TruchetPattern 
+            width="100%"
+            height={500}
+            color="#ba3cb4"
+            backgroundColor="#0a0909"
+            opacity={0.3}
+          />
           {/*horizontal scroll images of restaurant*/}
           <FlatList 
             data={data.photos}
@@ -104,18 +112,15 @@ const Card = ({data}) => {
 // https://paletton.com/#uid=55p0u0kllllaFw0g0qFqFg0w0aF
 // ------------------------------------------------------------------------------
 const styles = StyleSheet.create({
+  
   scrollContainer: {
-
     borderRadius: 15,
     borderWidth: 1,
     borderColor: '#c4bbc5',
     alignSelf: "center",
     backgroundColor: "#0a0909",
     width: "90%",
-    maxHeight: "80%",
-
     boxShadow: "0px 5px 15px rgba(0, 0, 0, 0.8)",
-
   },
 
   card: {
