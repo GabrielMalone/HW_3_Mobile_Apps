@@ -50,22 +50,22 @@ const getRestaurantData = async () => {
     {
         method: "POST",
         headers: {
-        "Content-Type": "application/json",
-        "X-Goog-Api-Key": GOOGLE_API_KEY,
-        "X-Goog-FieldMask": fieldMask
+            "Content-Type": "application/json",
+            "X-Goog-Api-Key": GOOGLE_API_KEY,
+            "X-Goog-FieldMask": fieldMask
         },
         body: JSON.stringify({
-        includedTypes: placeTypes,
-        maxResultCount: numPlacesToFind,
-        locationRestriction: {
-            circle: {
-            center: {
-                latitude: user_lat,
-                longitude: user_lon
-            },
-            radius: searchRadius
+            includedTypes: placeTypes,
+            maxResultCount: numPlacesToFind,
+            locationRestriction: {
+                circle: {
+                    center: {
+                        latitude: user_lat,
+                        longitude: user_lon
+                    },
+                radius: searchRadius
+                }
             }
-        }
         })
     }
     );
