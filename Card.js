@@ -75,7 +75,7 @@ const Card = ({data}) => {
             style={styles.reviewsContainer}
             contentContainerStyle={styles.reviewsContent}
             renderItem={({item})=>{
-              console.log(`item: ${JSON.stringify(item)}`);
+              // console.log(`item: ${JSON.stringify(item)}`);
               return(
                 <View style={styles.singleReviewContainer}>
                   <StarRating 

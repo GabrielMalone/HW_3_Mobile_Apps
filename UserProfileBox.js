@@ -1,15 +1,14 @@
 import { StyleSheet, View, Image } from "react-native";
 // --------------------------------------------------------------------------------
 const UserProfileBox = ({profilePic}) => {
-
     return (
         <View style={sytles.profileContainer}>
-            <Image
-                source={profilePic}
-                width={100}
-                height={100}
-                style={sytles.photo}
-            />
+                <Image
+                    source={profilePic}
+                    width={100}
+                    height={100}
+                    style={sytles.photo}
+                />
         </View>
     );
 }
@@ -22,6 +21,7 @@ const sytles = StyleSheet.create({
         borderColor: "#ffffff",
         borderWidth: 1,
         margin: 5,
+        position: "relative",
     },
     photo:{
         width: 100,

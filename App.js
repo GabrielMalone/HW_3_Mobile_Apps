@@ -31,7 +31,7 @@ export default function App() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#1B1B1B",
-    position: "relative"
+    backgroundColor: "#0a0a0a",
+    position: "relative",
   },
 });

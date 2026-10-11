@@ -1,8 +1,11 @@
-import { View, StyleSheet } from "react-native";
+import { View, StyleSheet, Pressable } from "react-native";
+import { useState } from "react";
 import UserProfileBox from "./UserProfileBox";
+import FriendList from "./FriendList";
+
 // --------------------------------------------------------------------------------
 const ProfileArea = () => {
-
+    const [friendListActive, setFriendListActive] = useState(false);
     // eventually get this from backend and wire up a little differently
     const userProfile = require('./assets/profileImg/p1.png');
     const partnerProfile = require('./assets/profileImg/p2.png');
@@ -10,7 +13,12 @@ const ProfileArea = () => {
     return (
         <View style={styles.profilesCotainer}>
             <UserProfileBox profilePic={userProfile}/>
-            <UserProfileBox profilePic={partnerProfile}/>
+            {friendListActive ? <FriendList /> : null}
+            <Pressable
+                onPress={()=>setFriendListActive(!friendListActive)}
+            >
+                <UserProfileBox profilePic={partnerProfile}/>
+            </Pressable>
         </View>
     );
 }
@@ -22,6 +30,7 @@ const styles = StyleSheet.create({
         flexDirection: "row",
         justifyContent: "center",
         marginTop: 10,
+        position: "relative",
     },
 });
 // --------------------------------------------------------------------------------

@@ -12,7 +12,7 @@ const HeaderComponent = ()=> {
             <IsoSphere
                 width={300}
                 height={300}
-                lightColor = "#c1198922"
+                lightColor = "#19adc122"
                 darkColor = "#7c095227"
             />
         </View>
@@ -23,7 +23,7 @@ const styles = StyleSheet.create({
     headerContainer : {
         flexDirection: "row",
         justifyContent: "center",
-        backgroundColor: "#090909",
+        // backgroundColor: "#090909",
         marginBottom: 5,
         maxHeight: 45,
         overflow: "hidden",
