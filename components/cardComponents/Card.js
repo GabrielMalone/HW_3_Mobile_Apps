@@ -5,49 +5,52 @@ import CardPhotosComponent from "./CardPhotosComponent";
 import CardHeaderComponent from "./CardHeaderComponent.js";
 import TruchetPattern from "../../assets/svg/TruchetPattern.jsx";
 
-const Card = ({data}) => {
-    // ------------------------------------------------------------------------------
-    return (
-      <ScrollView 
-        style={styles.scrollContainer}
-        contentContainerStyle={styles.card}
-      >
-        <TruchetPattern 
-          width="100%"
-          height={500}
-          color="#f800be"
-          backgroundColor="#0a0909"
-          opacity={0.2}
-        />
-        {/*horizontal scroll images of restaurant*/}
-        <CardPhotosComponent data={data}/>
-        {/*name of restaurant and price / overall rating*/}
-        <CardHeaderComponent data={data}/>
-        {/*horizontal scroll of individual reviews*/}
-        <CardReviewComponent data={data}/>
-        {/*map of restaurant location*/}
-        <CardMapComponent restaurant={data}/>
-      </ScrollView>
-    );
+const Card = ({data, state}) => {
+  const styles = StyleSheet.create({
+    
+    scrollContainer: {
+
+      borderRadius: 15,
+      borderWidth: !state.userSettingsVisible ? 1 : 0,
+      borderColor: !state.userSettingsVisible ? state.cardBorderColor : "#00000000",
+      alignSelf: "center",
+      backgroundColor: state.cardBgColor,
+      width: !state.userSettingsVisible ? "80%" : 0,
+      height: !state.userSettingsVisible ? "80%" : 0,
+      boxShadow: !state.userSettingsVisible ?  `0px 5px 15px ${state.cardShadowColor}` : null,
+    },
+
+    card: {
+      alignItems: "center",
+    },
+
+  });
+  // ---------------------------------------------------------r--------------------
+  return (
+    <ScrollView 
+      style={styles.scrollContainer}
+      contentContainerStyle={styles.card}
+    >
+      <TruchetPattern 
+        width={state.cardPatternBgWidth}
+        height={state.cardPatternBgHeight}
+        color={state.cardPatternBgColor}
+        backgroundColor={state.cardPatternBgBgColor}
+        opacity={state.cardPatternBgOpacity}
+      />
+      {/*horizontal scroll images of restaurant*/}
+      <CardPhotosComponent data={data} state={state}/>
+      {/*name of restaurant and price / overall rating*/}
+      <CardHeaderComponent data={data} state={state}/>
+      {/*horizontal scroll of individual reviews*/}
+      <CardReviewComponent data={data} state={state}/>
+      {/*map of restaurant location*/}
+      <CardMapComponent restaurant={data} state={state}/> 
+    </ScrollView>
+  );
 };
 // ------------------------------------------------------------------------------
-const styles = StyleSheet.create({
-  
-  scrollContainer: {
-    borderRadius: 15,
-    borderWidth: 1,
-    borderColor: '#c4bbc5',
-    alignSelf: "center",
-    backgroundColor: "#0a0909",
-    width: "90%",
-    boxShadow: "0px 5px 15px rgba(0, 0, 0, 0.8)",
-  },
 
-  card: {
-    alignItems: "center",
-  },
-
-});
 
 export default Card;
 

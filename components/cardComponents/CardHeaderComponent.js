@@ -1,7 +1,30 @@
 import { Text, StyleSheet } from "react-native";
 import StarRating from "react-native-star-rating-widget";
 // ------------------------------------------------------------------------------
-const CardHeaderComponent = ({data}) => {
+const CardHeaderComponent = ({data, state}) => {
+
+  const styles = StyleSheet.create({
+    itemName: {
+      textAlign: 'center',
+      fontSize: state.cardTitleFontSize,
+      backgroundColor: 'transparent',
+      color: state.cardTitleFontColor,
+      fontFamily: state.cardTitleFontFace,
+    },
+    priceRating:{
+      flexDirection: "row",
+      alignItems: "center",
+      margin: 50,
+    },
+    priceLevel:{
+      fontFamily: state.cardPriceLevelFontFace,
+      fontSize: state.cardPriceLevelFontSize,
+      color: state.cardPriceLevelFontColor,
+    },
+    stars:{
+      margin: 10
+    },
+  });
 
   const priceLevel = (level) => {
     switch(level){
@@ -31,35 +54,14 @@ const CardHeaderComponent = ({data}) => {
           rating={data.rating}
           enableHalfStar={true}
           step="quarter"
-          starSize={40}
-          color={"#770737"}
+          starSize={state.cardStarRatingSize}
+          color={state.cardStarRatingColor}
       />
 
     </>
   );
 }
 // ------------------------------------------------------------------------------
-const styles = StyleSheet.create({
-  itemName: {
-    textAlign: 'center',
-    fontSize: 50,
-    backgroundColor: 'transparent',
-    color: "#EDEADE",
-    fontFamily: "UnicaCustom",
-  },
-  priceRating:{
-    flexDirection: "row",
-    alignItems: "center",
-    margin: 50,
-  },
-  priceLevel:{
-    fontFamily:"UnicaCustom",
-    fontSize: 40,
-    color: "#FAA0A0"
-  },
-  stars:{
-    margin: 10
-  },
-});
+
 // ------------------------------------------------------------------------------
 export default CardHeaderComponent

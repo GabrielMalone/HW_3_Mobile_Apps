@@ -1,8 +1,49 @@
 import { FlatList, StyleSheet, View, ScrollView, Text } from "react-native";
 import StarRating from "react-native-star-rating-widget";
 // ------------------------------------------------------------------------------
-const CardReviewComponent = ({data}) => {
+const CardReviewComponent = ({data, state}) => {
+  const styles = StyleSheet.create({
+      reviewSummary : {
+          fontFamily: "QuickSandCustom",
+          fontSize: 12,
+          textAlign: "center",
+          color: state.reviewSummaryTextColor,
+          width: "90%",
+          marginBottom: 20,
+      },
+      
+      reviewsContainer :{
+          margin: 20,
+          opacity: 0.8,
 
+      },
+      reviewsContent:{
+          gap: 10,
+      },
+      reviewDate:{
+          fontFamily: state.reviewDateFontFamily,
+          fontSize: state.reviewDateFontSize,
+          color: state.reviewDateFontColor,
+          padding: 5,
+      },
+      singleReviewContainer:{
+          width: state.reviewContainerWidth,
+          height: state.reviewContainerHeight,
+          borderRadius: 10,
+          backgroundColor: state.reviewContainerBgColor,
+          padding: 10,
+      },
+      starsIndividualRatings:{
+          padding: 5,
+      },
+      individualReviewText:{
+          fontFamily: state.individualReviewTextFace,
+          fontSize: state.individualReviewTextSize,
+          color: state.individualReviewTextColor,
+          maxWidth: 200,
+          padding: 5,
+      },  
+  });
     return (
         <FlatList 
             data={data.reviews}
@@ -19,8 +60,8 @@ const CardReviewComponent = ({data}) => {
                     rating={item.rating}
                     enableHalfStar={true}
                     step="quarter"
-                    starSize={10}
-                    color={"#770737"}
+                    starSize={state.invidualReviewStarsSize}
+                    color={state.invidualReviewStarsColor}
                   />
                   <Text style={styles.reviewDate}>
                     {item.relativePublishTimeDescription}
@@ -37,47 +78,6 @@ const CardReviewComponent = ({data}) => {
     );
 }
 // ------------------------------------------------------------------------------
-const styles = StyleSheet.create({
-    reviewSummary : {
-        fontFamily: "QuickSandCustom",
-        fontSize: 12,
-        textAlign: "center",
-        color: "#FFFFF0",
-        width: "90%",
-        marginBottom: 20,
-    },
-    
-    reviewsContainer :{
-        margin: 20,
-        opacity: 0.8,
 
-    },
-    reviewsContent:{
-        gap: 10,
-    },
-    reviewDate:{
-        fontFamily: "OpenCustom",
-        fontSize: 10,
-        color: "#c4bbc5",
-        padding: 5,
-    },
-    singleReviewContainer:{
-        width: 200,
-        height: 180,
-        borderRadius: 10,
-        backgroundColor: "#100f0f",
-        padding: 10,
-    },
-    starsIndividualRatings:{
-        padding: 5,
-    },
-    individualReviewText:{
-        fontFamily: "OpenCustom",
-        fontSize: 10,
-        color: "#FFFFFF",
-        maxWidth: 200,
-        padding: 5,
-    },  
-});
 // ------------------------------------------------------------------------------
 export default CardReviewComponent

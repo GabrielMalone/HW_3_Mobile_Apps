@@ -10,18 +10,25 @@ const ProfileArea = ({state, dispatch}) => {
    
     return (
         <View style={styles.profilesCotainer}>
-            {/*user profile */}
-            <UserProfileBox profileData={state.curUser}/>
 
+            {/*user profile */}
+            <Pressable
+                onPress={()=>dispatch({type: "TOGGLE_USER_SETTINGS"})}
+            >
+            <UserProfileBox profileData={mockUserData} state={state}/>
+            </Pressable>
+
+            {/*friends list menu */}
             {state.friendsListVisible ? 
                 <FriendList state={state} dispatch={dispatch}/> 
                 : null
             }
+
             {/*partner profile */}
             <Pressable
                 onPress={()=>dispatch({type: "TOGGLE_FRIENDS_LIST"})}
             >
-                <UserProfileBox profileData={state.curPartner}/>
+                <UserProfileBox profileData={mockPartnerData} state={state}/>
             </Pressable>
         </View>
     );

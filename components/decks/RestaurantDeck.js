@@ -39,7 +39,7 @@ function DeckEvents(dispatch) {
   return null;
 }
 // --------------------------------------------------------------------------------
-export default function RestaurantDeck({dispatch}) {
+export default function RestaurantDeck({dispatch, state}) {
 // --------------------------------------------------------------------------------
   const [restaurantData, setRestaurantData] = useState([]);
 
@@ -67,7 +67,7 @@ export default function RestaurantDeck({dispatch}) {
       visibleCardCount={3}
     >
       <RestaurantCards.Card interactive>
-        {({ item }) => <Card data={item} />}
+        {({ item }) => <Card data={item} state={state}/>}
       </RestaurantCards.Card>
     </RestaurantCards.Root>
   );

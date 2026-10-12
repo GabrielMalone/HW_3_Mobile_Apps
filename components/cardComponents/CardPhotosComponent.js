@@ -1,8 +1,24 @@
 import { FlatList, Image, StyleSheet } from "react-native"
 // ------------------------------------------------------------------------------
-const CardPhotosComponent = ({data}) => {
+const CardPhotosComponent = ({data, state}) => {
 
     const key = process.env.EXPO_PUBLIC_GOOGLE_API_KEY;
+
+    const styles = StyleSheet.create({
+      photoListContainer :{
+        height: state.photoListHeight,
+        margin: 20,
+      },
+      photoListContent:{
+        padding: 0,
+        gap: 10,
+      },
+      cardImage:{
+        width: state.cardImageWidth,
+        height: state.cardImageHeight,
+        borderRadius: 10,
+      },    
+    });
 
     return (
         <FlatList 
@@ -24,21 +40,5 @@ const CardPhotosComponent = ({data}) => {
         />
     );
 }
-// ------------------------------------------------------------------------------
-const styles = StyleSheet.create({
-  photoListContainer :{
-    height: 180,
-    margin: 20,
-  },
-  photoListContent:{
-    padding: 0,
-    gap: 10,
-  },
-  cardImage:{
-    width: 250,
-    height: 180,
-    borderRadius: 10,
-  },    
-});
 // ------------------------------------------------------------------------------
 export default CardPhotosComponent

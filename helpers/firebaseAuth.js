@@ -1,7 +1,7 @@
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { auth } from "./firebaseConfig";
 import { createUserProfile } from "./firebaseDatabase";
-
+// --------------------------------------------------------------------------------
 const registerUser = async (email, password) => {
     try {
         // firebase creates the account
@@ -23,5 +23,5 @@ const registerUser = async (email, password) => {
         throw error;
     }
 };
-
+// --------------------------------------------------------------------------------
 export default registerUser

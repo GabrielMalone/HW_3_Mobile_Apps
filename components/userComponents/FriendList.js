@@ -5,6 +5,26 @@ import {mockFriendsData} from '../../data/mockUsers.js';
 // --------------------------------------------------------------------------------
 const FriendList = ({state, dispatch}) => {
 
+    const styles = StyleSheet.create({
+        friendListContent:{
+            position: "absolute",
+            bottom: 150,
+            right: 65,
+            maxHeight: state.friendListMaxHeight,
+        },
+        friendListContainer:{
+            justifyContent: "center",
+            padding: 20,
+            gap: 10,
+            borderTopWidth :3,
+            borderBottomWidth: 3,
+            borderColor: "white",
+            backgroundColor: state.friendListBgColor,
+         
+        }
+        
+    });
+
     const renderFriends = (profileData) => {
         return (
             <Pressable
@@ -38,22 +58,6 @@ const FriendList = ({state, dispatch}) => {
     );
 }
 // --------------------------------------------------------------------------------
-const styles = StyleSheet.create({
-    friendListContent:{
-        position: "absolute",
-        bottom: 150,
-        right: 65,
-        borderRadius: 10, 
-        backgroundColor: "#29013fbe",
-        zIndex: 1,
-        maxHeight: 500,
-    },
-    friendListContainer:{
-        justifyContent: "center",
-        padding: 20,
-        gap: 10,
-    }
-    
-});
+
 // --------------------------------------------------------------------------------
 export default FriendList;

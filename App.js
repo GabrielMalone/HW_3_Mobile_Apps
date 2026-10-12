@@ -10,14 +10,17 @@ import RestaurantDeck from './components/decks/RestaurantDeck';
 import ProfileArea from './components/userComponents/ProfileArea';
 import HeaderComponent from './components/main/HeaderComponent';
 import LoginScreen from './components/loginComponents/LoginScreen';
+import UserSettingsComponent from './components/userComponents/userSettings/UserSettingsComponent';
 // --------------------------------------------------------------------------------
 export default function App() {
    
   // TO DO --
   // when a user logs in, retrieve their profile from Firestore and load it into your reducer.
-
+  // for now let's just make it so that your friends are anyone who has registered on the app. 
+  
   const [state, dispatch] = useReducer(reducer, stateShape);
 
+  // for debuggins stsate
   useEffect(() => {
       console.log(JSON.stringify(state, null, 2));
   }, [state]);
@@ -26,7 +29,7 @@ export default function App() {
     // listen for changes in the user's authentication state
     // returns a function that stops that listener automatically
     // when this component unmounts (though at app level not likely)
-    const unsubscribe = onAuthStateChanged(auth, (user)=>{
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
       if (user){
         console.log("user logged in: ", user.uid);
         dispatch({type: "LOGGED_IN", uid: user.uid});
@@ -52,6 +55,14 @@ export default function App() {
     return null;
   }
 
+  const styles = StyleSheet.create({
+    container: {
+      flex: 1,
+      backgroundColor: state.mainAppBgColor,
+      position: "relative",
+    },
+  });
+
 
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
@@ -60,7 +71,7 @@ export default function App() {
           style={styles.container} 
           edges={["top", "bottom"]}
         >
-          <HeaderComponent />
+          <HeaderComponent state={state}/>
 
           {!state.loggedIn ?
             <LoginScreen 
@@ -69,9 +80,19 @@ export default function App() {
             null
           }
 
+          {state.userSettingsVisible ?
+            <UserSettingsComponent
+              state={state} 
+              dispatch={dispatch}
+            /> :
+            null
+          }
+          
           <RestaurantDeck 
-            dispatch={dispatch}            
+            dispatch={dispatch} 
+            state={state}           
           />
+
           <ProfileArea 
             state={state}
             dispatch={dispatch}
@@ -82,10 +103,3 @@ export default function App() {
   );
 }
 // ------------------------------------------------------------------------------
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#0a0a0a",
-    position: "relative",
-  },
-});
