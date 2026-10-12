@@ -1,7 +1,7 @@
 import { View, StyleSheet, Linking } from "react-native";
 import MapView, { Marker } from "react-native-maps";
 // ------------------------------------------------------------------------------
-export const RestaurantMap = ({ restaurant }) => {
+const CardMapComponent = ({ restaurant }) => {
 
   return (
       <View style={styles.container}>
@@ -45,3 +45,5 @@ const styles = StyleSheet.create({
     height: "100%",
   },
 });
+
+export default CardMapComponent;

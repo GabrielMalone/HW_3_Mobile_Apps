@@ -1,5 +1,7 @@
 import { StyleSheet, View, Image } from "react-native";
 // --------------------------------------------------------------------------------
+// This box is the smallest unit that contains the user profile image
+// --------------------------------------------------------------------------------
 const UserProfileBox = ({profilePic}) => {
     return (
         <View style={sytles.profileContainer}>

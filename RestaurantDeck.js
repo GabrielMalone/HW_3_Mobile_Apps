@@ -5,8 +5,8 @@ import {
     SwipeDeckMotion
 } from "@react-native-motion-kit/swipe-deck";
 import { useFonts } from 'expo-font';
-import getRestaurantData from './getRestaurantData';
-import Card from './Card';
+import getRestaurantData from './helpers/getRestaurantData';
+import Card from './components/cardComponents/Card';
 // --------------------------------------------------------------------------------
 const RestaurantCards = createSwipeDeck({
     motion: SwipeDeckMotion.tinder(),

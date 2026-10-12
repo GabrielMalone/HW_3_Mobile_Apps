@@ -1,7 +1,7 @@
-import { View, FlatList, StyleSheet } from "react-native";
-import UserProfileBox from "./UserProfileBox";
+import { FlatList, StyleSheet } from "react-native";
+import UserProfileBox from "./UserProfileBox.js";
 // --------------------------------------------------------------------------------
-import { mockFriendsData } from "./data/mockUsers";
+import {mockFriendsData} from '../../data/mockUsers.js';
 // --------------------------------------------------------------------------------
 const FriendList = () => {
     // how each friend will look in the list
