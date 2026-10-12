@@ -32,18 +32,17 @@ const FriendList = () => {
 const styles = StyleSheet.create({
     friendListContent:{
         position: "absolute",
-        bottom: 120,
+        bottom: 150,
         right: 65,
-        // borderWidth: 1,
         borderRadius: 10, 
-        borderColor: "#747070",
-        backgroundColor: "#5f00ad54",
+        backgroundColor: "#29013fbe",
         zIndex: 1,
-        maxHeight: 600,
+        maxHeight: 500,
     },
     friendListContainer:{
         justifyContent: "center",
         padding: 20,
+        gap: 10,
     }
     
 });

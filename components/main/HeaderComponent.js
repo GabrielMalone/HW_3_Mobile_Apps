@@ -12,11 +12,11 @@ const HeaderComponent = ()=> {
             <IsoSphere
                 width={300}
                 height={300}
-                lightColor = "#19adc122"
-                darkColor = "#7c095227"
+                lightColor = "#19adc149"
+                darkColor = "#54063727"
             />
         </View>
-        
+
     );
 }
 

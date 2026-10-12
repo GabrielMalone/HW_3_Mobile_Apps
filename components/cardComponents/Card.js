@@ -15,9 +15,9 @@ const Card = ({data}) => {
         <TruchetPattern 
           width="100%"
           height={500}
-          color="#ba3cb4"
+          color="#f800be"
           backgroundColor="#0a0909"
-          opacity={0.3}
+          opacity={0.2}
         />
         {/*horizontal scroll images of restaurant*/}
         <CardPhotosComponent data={data}/>
