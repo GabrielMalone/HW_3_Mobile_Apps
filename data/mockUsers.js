@@ -1,4 +1,23 @@
 // mock friend data obj
+
+const user_1 = {
+    userName : "",
+    fname : "",
+    lname : "",
+    email : "",
+    profilePic : require('../assets/profileImg/p1.png'),
+    likedRestaurants : [],
+};
+
+const partner_1 = {
+    userName : "",
+    fname : "",
+    lname : "",
+    email : "",
+    profilePic : require('../assets/profileImg/p2.png'),
+    likedRestaurants : [],
+};
+
 const friendObj_1 = {
     userName : "",
     fname : "",
@@ -82,3 +101,5 @@ const friendObj_11 = {
 
 // mock backend of friend objs
 export const mockFriendsData = [friendObj_1,friendObj_2,friendObj_3,friendObj_4,friendObj_6,friendObj_7,friendObj_8,friendObj_9,friendObj_10,friendObj_11];
+export const mockUserData = user_1;
+export const mockPartnerData = partner_1;

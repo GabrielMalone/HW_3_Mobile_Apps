@@ -1,17 +1,26 @@
-import { FlatList, StyleSheet } from "react-native";
+import { FlatList, StyleSheet, Pressable } from "react-native";
 import UserProfileBox from "./UserProfileBox.js";
 // --------------------------------------------------------------------------------
 import {mockFriendsData} from '../../data/mockUsers.js';
 // --------------------------------------------------------------------------------
-const FriendList = () => {
-    // how each friend will look in the list
-    const renderFriends = (profilePic) => {
+const FriendList = ({state, dispatch}) => {
+
+    const renderFriends = (profileData) => {
         return (
-            <UserProfileBox 
-                profilePic={profilePic}
-            />
+            <Pressable
+                // what happens when click on a friend
+                onPress={()=>{
+                    dispatch({type:"SET_PARTNER", value: profileData});
+                    dispatch({type:"TOGGLE_FRIENDS_LIST"});
+                }}
+            >
+                <UserProfileBox 
+                    profileData={profileData}
+                />
+            </Pressable>
         );
     }   
+    // how each friend will look in the list
     return (
         <FlatList 
             scrollsToTop={true}
@@ -21,7 +30,7 @@ const FriendList = () => {
             renderItem={
                 ({item})=>{
                     return (
-                        renderFriends(item.profilePic)
+                        renderFriends(item)
                     );
                 }
             }

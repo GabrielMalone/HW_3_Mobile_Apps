@@ -12,21 +12,21 @@ import HeaderComponent from './components/main/HeaderComponent';
 // --------------------------------------------------------------------------------
 export default function App() {
   // ------------------------------------------------------------------------------
-
   const [state, dispatch] = useReducer(reducer, stateShape);
 
   return (
-    <GestureHandlerRootView 
-      style={{ flex: 1 }}
-    >
+    <GestureHandlerRootView style={{ flex: 1 }}>
       <SafeAreaProvider>
         <SafeAreaView 
           style={styles.container} 
           edges={["top", "bottom"]}
         >
-        <HeaderComponent />
-        <RestaurantDeck />
-        <ProfileArea />
+          <HeaderComponent />
+          <RestaurantDeck />
+          <ProfileArea 
+            state={state}
+            dispatch={dispatch}
+          />
         </SafeAreaView>
       </SafeAreaProvider>
     </GestureHandlerRootView>

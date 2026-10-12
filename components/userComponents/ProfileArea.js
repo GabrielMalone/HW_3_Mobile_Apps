@@ -1,25 +1,27 @@
 import { View, StyleSheet, Pressable } from "react-native";
-import { useState } from "react";
 import UserProfileBox from "./UserProfileBox.js";
 import FriendList from "./FriendList.js";
+import { mockUserData, mockPartnerData } from "../../data/mockUsers.js";
 
 // --------------------------------------------------------------------------------
 // This holds the current user and the user they are matching things with
 // --------------------------------------------------------------------------------
-const ProfileArea = () => {
-    const [friendListActive, setFriendListActive] = useState(false);
-    // eventually get this from backend and wire up a little differently
-    const userProfile = require('../../assets/profileImg/p1.png');
-    const partnerProfile = require('../../assets/profileImg/p2.png');
-
+const ProfileArea = ({state, dispatch}) => {
+   
     return (
         <View style={styles.profilesCotainer}>
-            <UserProfileBox profilePic={userProfile}/>
-            {friendListActive ? <FriendList /> : null}
+            {/*user profile */}
+            <UserProfileBox profileData={state.curUser}/>
+
+            {state.friendsListVisible ? 
+                <FriendList state={state} dispatch={dispatch}/> 
+                : null
+            }
+            {/*partner profile */}
             <Pressable
-                onPress={()=>setFriendListActive(!friendListActive)}
+                onPress={()=>dispatch({type: "TOGGLE_FRIENDS_LIST"})}
             >
-                <UserProfileBox profilePic={partnerProfile}/>
+                <UserProfileBox profileData={state.curPartner}/>
             </Pressable>
         </View>
     );
