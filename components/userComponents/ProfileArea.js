@@ -28,7 +28,7 @@ const ProfileArea = ({state, dispatch}) => {
             <Pressable
                 onPress={()=>dispatch({type: "TOGGLE_FRIENDS_LIST"})}
             >
-                <UserProfileBox profileData={mockPartnerData} state={state}/>
+                <UserProfileBox profileData={state.curPartner} state={state}/>
             </Pressable>
         </View>
     );

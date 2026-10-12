@@ -8,16 +8,16 @@ const FriendList = ({state, dispatch}) => {
     const styles = StyleSheet.create({
         friendListContent:{
             position: "absolute",
-            bottom: 150,
-            right: 65,
+            bottom: 110,
+            right: 89,
             maxHeight: state.friendListMaxHeight,
         },
         friendListContainer:{
             justifyContent: "center",
-            padding: 20,
+            padding: 0,
             gap: 10,
-            borderTopWidth :3,
-            borderBottomWidth: 3,
+            borderTopWidth :1,
+            borderBottomWidth: 1,
             borderColor: "white",
             backgroundColor: state.friendListBgColor,
          

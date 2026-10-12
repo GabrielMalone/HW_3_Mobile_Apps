@@ -21,7 +21,7 @@ export const stateShape = {
 
     // we can set up colors here too and other visuals
 
-    mainAppBgColor : "#07050a",
+    mainAppBgColor : "#050405",
 
     // ------------------------------------------------------------------------------
     // LOGO STYLING
@@ -36,7 +36,7 @@ export const stateShape = {
     // CARD STYLING
     // ------------------------------------------------------------------------------
     // card header styling ----------------------------------------------------------
-    cardBgColor : "#0a0909",
+    cardBgColor : "#010101",
     cardBorderColor : "#c4bbc5",
     cardShadowColor : "rgba(0, 0, 0, 0.8)",
     // photo styling

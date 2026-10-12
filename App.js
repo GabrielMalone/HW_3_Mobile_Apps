@@ -15,7 +15,8 @@ import UserSettingsComponent from './components/userComponents/userSettings/User
 export default function App() {
    
   // TO DO --
-  // when a user logs in, retrieve their profile from Firestore and load it into your reducer.
+  // when a user logs in, retrieve their profile from Firestore and load it into the reducer.
+  // also need to be able to set profile pics from user Info {user.profilePic : "p1"}
   // for now let's just make it so that your friends are anyone who has registered on the app. 
   
   const [state, dispatch] = useReducer(reducer, stateShape);
