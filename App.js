@@ -1,12 +1,11 @@
 import { StyleSheet } from 'react-native';
 import { useReducer, useEffect } from 'react';
-import {
-    SafeAreaProvider,
-    SafeAreaView
-} from "react-native-safe-area-context";
+import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
 import { useFonts } from 'expo-font';
 import { reducer, stateShape } from './helpers/reducer';
 import { GestureHandlerRootView } from "react-native-gesture-handler";
+import { onAuthStateChanged } from 'firebase/auth';
+import { auth } from './helpers/firebaseConfig';
 import RestaurantDeck from './components/decks/RestaurantDeck';
 import ProfileArea from './components/userComponents/ProfileArea';
 import HeaderComponent from './components/main/HeaderComponent';
@@ -25,6 +24,22 @@ export default function App() {
   useEffect(() => {
       console.log(JSON.stringify(state, null, 2));
   }, [state]);
+
+  useEffect(()=>{
+    // listen for changes in the user's authentication state
+    // returns a function that stops that listener automatically
+    // when this component unmounts (though at app level not likely)
+    const unsubscribe = onAuthStateChanged(auth, (user)=>{
+      if (user){
+        console.log("user logged in: ", user.uid);
+        dispatch({type: "LOGGED_IN", uid: user.uid});
+      } else {
+        console.log("user logged out: ");
+        dispatch({type : "LOGGED_OUT"});
+      }
+    })
+    return unsubscribe;
+  }, []);
   
   // ------------------------------------------------------------------------------
   // load custom fonts

@@ -2,6 +2,7 @@ import { mockPartnerData, mockUserData } from "../data/mockUsers";
 // ------------------------------------------------------------------------------
 export const stateShape = {
     loggedIn : false,
+    uid: null,
     curUser : mockUserData,
     friendsListVisible: false,
     userProfileSettingsVisible: false,
@@ -52,9 +53,18 @@ export const reducer = (state, action) => {
         case "LOGGED_IN" : 
             return {
                 ...state, 
-                loggedIn: true
+                loggedIn: true,
+                uid: action.uid
             }
 
-        default : return state;
+        case "LOGGED_OUT" : 
+            return {
+                ...state,
+                loggedIn : false
+            }
+        
+
+        default : 
+            return state;
     }
 }

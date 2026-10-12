@@ -56,7 +56,7 @@ const styles = StyleSheet.create({
         gap: 10,
     },
     reviewDate:{
-        fontFamily: "QuickSandCustom",
+        fontFamily: "OpenCustom",
         fontSize: 10,
         color: "#c4bbc5",
         padding: 5,
@@ -72,7 +72,7 @@ const styles = StyleSheet.create({
         padding: 5,
     },
     individualReviewText:{
-        fontFamily: "QuickSandCustom",
+        fontFamily: "OpenCustom",
         fontSize: 10,
         color: "#FFFFFF",
         maxWidth: 200,

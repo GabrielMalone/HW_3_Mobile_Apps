@@ -2,6 +2,7 @@ import { View, StyleSheet, TextInput, Text } from "react-native";
 import { useState } from "react";
 import HalftoneSphere from "../../assets/svg/HalftoneSphere";
 import SubmitButton from "../../assets/svg/SubmitButton";
+import registerUser from "../../helpers/firebaseAuth";
 // ------------------------------------------------------------------------------
 const LoginScreen = ({dispatch}) => {
 
@@ -9,9 +10,15 @@ const LoginScreen = ({dispatch}) => {
     const [password, setPassword] = useState("");
     const [submitButtonColor, setSubmitButtonColor] = useState("#FFFFFF");
 
-    const handleSubmit = (dispatch) => {
+    const handleSubmit = async (dispatch) => {
         setSubmitButtonColor("#00ddff");
-        dispatch({type: "LOGGED_IN"})
+        try {
+            const user = await registerUser(email, password);
+            console.log(`user: ${JSON.stringify(user)}`)
+        } catch (error) {
+            console.error("Firebase registration error:", error.code, error.message);
+            setSubmitButtonColor("#FFFFFF");           
+        }
     }
 
     return (
@@ -20,8 +27,8 @@ const LoginScreen = ({dispatch}) => {
             <HalftoneSphere 
                 width={600}
                 height={600}
-                color="#7700ff"
-                opacity={0.3}
+                color="#00ffae"
+                opacity={0.1}
                 style={{zIndex: 0, position: "absolute"}}
             />
 
@@ -31,6 +38,7 @@ const LoginScreen = ({dispatch}) => {
 
             <TextInput
                 style={styles.inputStyle}
+                placeholderTextColor={"#FFFFFF"}
                 placeholder="Email"
                 value={email}
                 onChangeText={setEmail}
@@ -41,6 +49,7 @@ const LoginScreen = ({dispatch}) => {
             <TextInput
                 style={styles.inputStyle}
                 placeholder="Password"
+                placeholderTextColor={"#FFFFFF"}
                 value={password}
                 onChangeText={setPassword}
                 autoCapitalize="none"
@@ -48,7 +57,7 @@ const LoginScreen = ({dispatch}) => {
             /> 
 
             <SubmitButton 
-                onPress={()=>{handleSubmit(dispatch)}}
+                onPress={  ()=>{handleSubmit(dispatch)} }
                 color={submitButtonColor}
                 width={50}
                 height={50}
@@ -65,7 +74,7 @@ const styles = StyleSheet.create({
         width: "100%",
         height: "95%",
 
-        backgroundColor: "#0f0f0f",
+        // backgroundColor: "#0f0f0f",
         borderRadius: 20,
         zIndex: 1,
 
@@ -88,7 +97,7 @@ const styles = StyleSheet.create({
     inputStyle : {
 
         borderWidth: 1,
-        borderColor: "#484747",
+        borderColor: "#b7b6b6",
         borderRadius: 10,
         backgroundColor:"#000000",
 

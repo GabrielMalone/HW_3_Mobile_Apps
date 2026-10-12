@@ -1,6 +1,5 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
-import { getAnalytics } from "firebase/analytics";
 import {
     initializeAuth,
     getReactNativePersistence
@@ -26,7 +25,6 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 
 export const auth = initializeAuth(app, {
+    // saves authentication information locally on device
     persistence: getReactNativePersistence(AsyncStorage)
 });
-
-const analytics = getAnalytics(app);
