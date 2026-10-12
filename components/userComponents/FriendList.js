@@ -10,7 +10,7 @@ const FriendList = ({state, dispatch}) => {
             <Pressable
                 // what happens when click on a friend
                 onPress={()=>{
-                    dispatch({type:"SET_PARTNER", value: profileData});
+                    dispatch({type:"SET_PARTNER", profileData});
                     dispatch({type:"TOGGLE_FRIENDS_LIST"});
                 }}
             >

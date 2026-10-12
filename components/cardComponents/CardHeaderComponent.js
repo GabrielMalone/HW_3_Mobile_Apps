@@ -1,4 +1,4 @@
-import { Text,StyleSheet } from "react-native";
+import { Text, StyleSheet } from "react-native";
 import StarRating from "react-native-star-rating-widget";
 // ------------------------------------------------------------------------------
 const CardHeaderComponent = ({data}) => {
@@ -13,12 +13,18 @@ const CardHeaderComponent = ({data}) => {
   }
   return (
     <>
+
       <Text style={styles.itemName}>
           {data.displayName.text}
       </Text>
-      <Text style={styles.priceLevel}>
+
+      { data.priceLevel ?   
+        <Text style={styles.priceLevel}>
           {priceLevel(data.priceLevel)}
-      </Text>
+        </Text> 
+        : null
+      }
+
       <StarRating 
           style={styles.stars}
           onChange={()=>{}}
@@ -28,6 +34,7 @@ const CardHeaderComponent = ({data}) => {
           starSize={40}
           color={"#770737"}
       />
+
     </>
   );
 }
