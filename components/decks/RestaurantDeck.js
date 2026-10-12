@@ -1,12 +1,11 @@
 import { useEffect, useState } from 'react';
-import { StyleSheet } from 'react-native';
 import {
     createSwipeDeck,
     SwipeDeckMotion
 } from "@react-native-motion-kit/swipe-deck";
 import { useFonts } from 'expo-font';
-import getRestaurantData from './helpers/getRestaurantData';
-import Card from './components/cardComponents/Card';
+import getRestaurantData from '../../helpers/getRestaurantData';
+import Card from '../cardComponents/Card'
 // --------------------------------------------------------------------------------
 const RestaurantCards = createSwipeDeck({
     motion: SwipeDeckMotion.tinder(),
@@ -31,9 +30,9 @@ export default function RestaurantDeck() {
   // load custom fonts
   // ------------------------------------------------------------------------------
   const [fontsLoaded] = useFonts({
-    'NotoCustom': require('./assets/fonts/NotoSerif-VariableFont_wdth,wght.ttf'),
-    'UnicaCustom': require('./assets/fonts/UnicaOne-Regular.ttf'),
-    'QuickSandCustom':require('./assets/fonts/Quicksand-VariableFont_wght.ttf'),
+    'NotoCustom': require('../../assets/fonts/NotoSerif-VariableFont_wdth,wght.ttf'),
+    'UnicaCustom': require('../../assets/fonts/UnicaOne-Regular.ttf'),
+    'QuickSandCustom':require('../../assets/fonts/Quicksand-VariableFont_wght.ttf'),
   });
   if (!fontsLoaded) {
     return null;

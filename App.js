@@ -4,9 +4,9 @@ import {
     SafeAreaView
 } from "react-native-safe-area-context";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
-import RestaurantDeck from './RestaurantDeck';
+import RestaurantDeck from './components/decks/RestaurantDeck';
 import ProfileArea from './components/userComponents/ProfileArea';
-import HeaderComponent from './HeaderComponent';
+import HeaderComponent from './components/main/HeaderComponent';
 // --------------------------------------------------------------------------------
 export default function App() {
   // ------------------------------------------------------------------------------

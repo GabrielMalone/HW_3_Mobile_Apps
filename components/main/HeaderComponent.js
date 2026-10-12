@@ -1,10 +1,10 @@
 import { View, StyleSheet, Text } from "react-native";
 
-import FoodIcon from "./assets/svg/logo";
-import IsoSphere from "./assets/svg/IsoSphere";
+import IsoSphere from "../../assets/svg/IsoSphere";
 
 const HeaderComponent = ()=> {
     return (
+
         <View style={styles.headerContainer}>
             <Text style={styles.logoStyle}>
                 ESuRio
@@ -16,6 +16,7 @@ const HeaderComponent = ()=> {
                 darkColor = "#7c095227"
             />
         </View>
+        
     );
 }
 
