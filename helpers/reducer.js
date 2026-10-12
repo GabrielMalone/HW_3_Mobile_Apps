@@ -1,6 +1,7 @@
 import { mockPartnerData, mockUserData } from "../data/mockUsers";
 // ------------------------------------------------------------------------------
 export const stateShape = {
+    loggedIn : false,
     curUser : mockUserData,
     friendsListVisible: false,
     userProfileSettingsVisible: false,
@@ -15,7 +16,7 @@ export const stateShape = {
 };
 // ------------------------------------------------------------------------------
 export const reducer = (state, action) => {
-
+    console.log("dispatch called!");
     switch(action.type)
     {
         case "TOGGLE_FRIENDS_LIST" : 
@@ -46,6 +47,12 @@ export const reducer = (state, action) => {
             return {
                 ...state,
                 liked : []
+            }
+
+        case "LOGGED_IN" : 
+            return {
+                ...state, 
+                loggedIn: true
             }
 
         default : return state;

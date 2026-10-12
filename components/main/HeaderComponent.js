@@ -7,7 +7,7 @@ const HeaderComponent = ()=> {
 
         <View style={styles.headerContainer}>
             <Text style={styles.logoStyle}>
-                ESuRio
+                eSUriO
             </Text>
             <IsoSphere
                 width={300}

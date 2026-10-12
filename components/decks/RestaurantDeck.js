@@ -5,19 +5,21 @@ import {
 } from "@react-native-motion-kit/swipe-deck";
 import getRestaurantData from '../../helpers/getRestaurantData';
 import Card from '../cardComponents/Card'
+
 // --------------------------------------------------------------------------------
 // https://react-native-swipe-deck.pages.dev
 // --------------------------------------------------------------------------------
 const RestaurantCards = createSwipeDeck({
     motion: SwipeDeckMotion.tinder(),
 });
+
 // --------------------------------------------------------------------------------
 // https://react-native-swipe-deck.pages.dev/guide/usage/handling-events
 // --------------------------------------------------------------------------------
-function DeckEvents(state, dispatch) {
+function DeckEvents(dispatch) {
 
   RestaurantCards.useDeckEventListener('swipe', ({ item, direction, source }) => {
-    console.log("DISPATCH REGISTERED!!");
+
     switch(direction)
     {
       case "left" :  return dispatch({type: "DISLIKED", placeId: item.id});
@@ -37,17 +39,17 @@ function DeckEvents(state, dispatch) {
   return null;
 }
 // --------------------------------------------------------------------------------
-export default function RestaurantDeck({state, dispatch}) {
+export default function RestaurantDeck({dispatch}) {
 // --------------------------------------------------------------------------------
   const [restaurantData, setRestaurantData] = useState([]);
+
+  DeckEvents(dispatch);
+
   // ------------------------------------------------------------------------------
   // need useState for the re-render, 
   // and useEffect to prevent the API request from running on every render.
   // otherwise infinite loop
   // ------------------------------------------------------------------------------
-  
-  DeckEvents(state, dispatch);
-
   useEffect(()=>{
       const loadRestaurants = async () => {
           const places = await getRestaurantData();
