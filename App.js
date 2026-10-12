@@ -14,10 +14,7 @@ import LoginScreen from './components/loginComponents/LoginScreen';
 export default function App() {
    
   // TO DO --
-  // set up the backend like we will use in class
-  // come up with a method to gather a bunch of restaurant data for various radii
-  // and see if we can overcome the googl 20 limit
-  // come up with on match logic
+  // when a user logs in, retrieve their profile from Firestore and load it into your reducer.
 
   const [state, dispatch] = useReducer(reducer, stateShape);
 
