@@ -146,6 +146,12 @@ export const reducer = (state, action) => {
                 hasAccount : action.hasAccount
             }
         
+        case "SET_USER_DATA" : 
+            return {
+                ...state,
+                curUser: action.curUser
+            }
+        
         default : 
             return state;
     }

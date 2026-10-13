@@ -35,7 +35,7 @@ const FriendList = ({state, dispatch}) => {
                 }}
             >
                 <UserProfileBox 
-                    profileData={profileData}
+                    state={profileData}
                 />
             </Pressable>
         );

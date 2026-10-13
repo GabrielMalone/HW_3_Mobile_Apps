@@ -30,7 +30,7 @@ export default function App() {
 
   // for debuggins stsate
   useEffect(() => {
-      //console.log(JSON.stringify(state, null, 2));
+      console.log(JSON.stringify(state, null, 2));
   }, [state]);
 
   useEffect(() => {
@@ -49,7 +49,8 @@ export default function App() {
       if (user){
         dispatch({type: "LOGGED_IN", uid: user.uid});
         const userData = await getUserData(user.uid);
-        console.log("Firestore user data:", userData);
+        console.log("Firestore user data:", userData.curUser);
+        dispatch({type: "SET_USER_DATA", curUser: userData.curUser})
         // now set the state data from userData
       } else {
         console.log("user logged out: ");

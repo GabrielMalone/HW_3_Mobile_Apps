@@ -17,7 +17,7 @@ const ProfileArea = ({state, dispatch}) => {
                 onPress={logOut}
                 //onPress={()=>dispatch({type: "TOGGLE_USER_SETTINGS"})}
             >
-            <UserProfileBox profileData={mockUserData} state={state}/>
+            <UserProfileBox state={state} isUser={true}/>
             </Pressable>
 
             {/*friends list menu */}
@@ -30,7 +30,7 @@ const ProfileArea = ({state, dispatch}) => {
             <Pressable
                 onPress={()=>dispatch({type: "TOGGLE_FRIENDS_LIST"})}
             >
-                <UserProfileBox profileData={state.curPartner} state={state}/>
+                <UserProfileBox state={state.curPartner}/>
             </Pressable>
         </View>
     );

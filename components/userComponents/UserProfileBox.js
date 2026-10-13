@@ -1,8 +1,9 @@
 import { StyleSheet, View, Image } from "react-native";
+import { profilePics } from "../../data/mockUsers";
 // --------------------------------------------------------------------------------
 // This box is the smallest unit that contains the user profile image
 // --------------------------------------------------------------------------------
-const UserProfileBox = ({profileData, state}) => {
+const UserProfileBox = ({state, isUser=false}) => {
 
     const sytles = StyleSheet.create({
         profileContainer: {
@@ -20,10 +21,12 @@ const UserProfileBox = ({profileData, state}) => {
         }
     });
 
+    const pic = profilePics[state.curUser?.profilePic];
+
     return (
         <View style={sytles.profileContainer}>
                 <Image
-                    source={profileData.profilePic}
+                    source={isUser ? pic : state.profilePic}
                     width={100}
                     height={100}
                     style={sytles.photo}
