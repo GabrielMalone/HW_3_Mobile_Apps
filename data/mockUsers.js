@@ -16,12 +16,14 @@ export const profilePics = {
 };
 
 const user_1 = {
-    userName : "",
-    fname : "",
-    lname : "",
-    email : "",
-    profilePic : require('../assets/profileImg/p1.png'),
-    likedRestaurants : [],
+    curUser : {
+        userName : "",
+        fname : "",
+        lname : "",
+        email : "",
+        profilePic : require('../assets/profileImg/p1.png'),
+        likedRestaurants : [],
+    }
 };
 
 const partner_1 = {

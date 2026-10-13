@@ -50,3 +50,4 @@ export const logOut = async () => {
     // also triggers dispatch(logout)
     await signOut(auth);
 }
+// --------------------------------------------------------------------------------

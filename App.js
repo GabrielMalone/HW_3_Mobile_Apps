@@ -19,8 +19,7 @@ export default function App() {
   // run this to delete any local data during testing
   // AsyncStorage.removeItem("hasAccount");
   // TO DO --
-  // method to retrieve all friends (seed friends in user 1)
-  // friends list loads entire user object not just profile pic 
+  // when click on a friend, load their entire friend object into state.curPartner
   const [state, dispatch] = useReducer(reducer, stateShape);
   // ------------------------------------------------------------------------------
   // useEffect Stuff and other hooks
@@ -44,14 +43,20 @@ export default function App() {
     // when this component unmounts (though at app level not likely)
     const unsubscribe = onAuthStateChanged(auth, async (user) => {
       if (user){
+        // set state to logged in
         dispatch({type: "LOGGED_IN", uid: user.uid});
+        // get user data from firestore
         const userData = await getUserData(user.uid);
+        // set data locally
         dispatch({
           type: "SET_USER_DATA", 
           curUser: userData.curUser, 
           friends: userData.friends
         })
-        const friendsData = await getFriendsData(state);
+        // get user's friends data from firestore
+        const friendsData = await getFriendsData(userData);
+        // set friend data locally
+        console.log('did we get friends?', friendsData);
         dispatch({type: "SET_FRIENDS_DATA", friendsData: friendsData});
       } else {
         console.log("user logged out: ");

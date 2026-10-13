@@ -47,6 +47,6 @@ export const getFriendsData = async (state) => {
                 ...curFriend.data()
             }
         })
-    );
+    ); 
     return friends;
 }

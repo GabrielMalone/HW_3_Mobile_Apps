@@ -1,4 +1,5 @@
 import { View, StyleSheet, Pressable } from "react-native";
+import { useEffect, useState } from "react";
 import UserProfileBox from "./UserProfileBox.js";
 import FriendList from "./FriendList.js";
 import { logOut } from "../../helpers/firebaseAuth.js";
@@ -8,6 +9,18 @@ import { logOut } from "../../helpers/firebaseAuth.js";
 // --------------------------------------------------------------------------------
 const ProfileArea = ({state, dispatch}) => {
    
+    // const [dataReady, setDataReady] = useState(false);
+
+    // useEffect(()=>{
+    //     if (state.curPartner?.curUser?.profilePic){
+    //         setDataReady(true);
+    //         console.log("data ever ready?");
+    //     }
+
+    // },[state]);
+
+    // if (!dataReady) return;
+
     return (
         <View style={styles.profilesCotainer}>
 
@@ -28,12 +41,11 @@ const ProfileArea = ({state, dispatch}) => {
             {/*partner profile */}
             <Pressable
                 onPress={ async ()=> {
-                        console.log("friends: ",friends);
                         dispatch({type: "TOGGLE_FRIENDS_LIST"});
                     }
                 }
             >
-                <UserProfileBox state={state.curPartner}/>
+                <UserProfileBox state={state} isCurPartner={true}/>
             </Pressable>
         </View>
     );

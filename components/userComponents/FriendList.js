@@ -33,7 +33,9 @@ const FriendList = ({state, dispatch}) => {
                 }}
             >
                 <UserProfileBox 
-                    state={profileData}
+                    // i really need to fix the shape of the user object it's ugly
+                    state={profileData.curUser}
+                    isFriendInList={true}
                 />
             </Pressable>
         );
@@ -44,7 +46,7 @@ const FriendList = ({state, dispatch}) => {
             scrollsToTop={true}
             style={styles.friendListContent}
             contentContainerStyle={styles.friendListContainer}
-            data={mockFriendsData}
+            data={state.friendsData}
             renderItem={
                 ({item})=>{
                     return (

@@ -158,10 +158,13 @@ export const reducer = (state, action) => {
         case "SET_FRIENDS_DATA" : 
             return {
                 ...state,
-                friendsData : [...state.friendsData, action.friendsData]
+                // set cur partner to first person in list
+                curPartner : action.friendsData[0],
+                friendsData : action.friendsData
             }
         
         default : 
             return state;
     }
 }
+    
