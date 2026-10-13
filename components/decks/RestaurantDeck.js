@@ -6,7 +6,7 @@ import {
 import getRestaurantData from '../../helpers/getRestaurantData';
 import Card from '../cardComponents/Card'
 import { compareLikes } from '../../helpers/compareLikes';
-import MatchFx from '../matchComponents/MatchFx';
+import { setUserLikes, setUserDislikes } from '../../helpers/firebaseDatabase';
 
 // --------------------------------------------------------------------------------
 // https://react-native-swipe-deck.pages.dev
@@ -25,15 +25,21 @@ function DeckEvents(dispatch, state) {
     switch(direction)
     {
       case "left" :  
-        return dispatch({type: "DISLIKED", placeId: item.id});
+        dispatch({type: "DISLIKED", placeId: item.id});
+        setUserDislikes(state.uid, item.id);
+        return;
 
-      case "right":  
+      case "right": 
+        // what's the best way to go about this?
+        // update the backend then have that auto update the state?
         dispatch({type: "LIKED", placeId: item.id});
-        const partnerLikes = state.curPartner.curUser.likedRestaurants;
+        setUserLikes(state.uid, item.id);
+        const partnerLikes = state.curPartner.liked;
         const isMatch = compareLikes(item.id, partnerLikes);
         if (isMatch){
           dispatch({type: "SET_MATCH_MADE", isMatch: true});
         }
+
       default : 
         return;
     }
