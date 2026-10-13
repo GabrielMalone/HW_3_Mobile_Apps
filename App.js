@@ -26,7 +26,7 @@ export default function App() {
   // ------------------------------------------------------------------------------
   // for debuggins stsate
   useEffect(() => {
-      console.log(JSON.stringify(state, null, 2));
+      //console.log(JSON.stringify(state, null, 2));
   }, [state]);
   // local solution to seeing if a user has an account already 
   // so we dont show create account on start up unecessarily
@@ -56,7 +56,6 @@ export default function App() {
         // get user's friends data from firestore
         const friendsData = await getFriendsData(userData);
         // set friend data locally
-        console.log('did we get friends?', friendsData);
         dispatch({type: "SET_FRIENDS_DATA", friendsData: friendsData});
       } else {
         console.log("user logged out: ");

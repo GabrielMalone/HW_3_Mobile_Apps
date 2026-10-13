@@ -5,6 +5,7 @@ import {
 } from "@react-native-motion-kit/swipe-deck";
 import getRestaurantData from '../../helpers/getRestaurantData';
 import Card from '../cardComponents/Card'
+import { compareLikes } from '../../helpers/compareLikes';
 
 // --------------------------------------------------------------------------------
 // https://react-native-swipe-deck.pages.dev
@@ -16,16 +17,25 @@ const RestaurantCards = createSwipeDeck({
 // --------------------------------------------------------------------------------
 // https://react-native-swipe-deck.pages.dev/guide/usage/handling-events
 // --------------------------------------------------------------------------------
-function DeckEvents(dispatch) {
+function DeckEvents(dispatch, state) {
 
   RestaurantCards.useDeckEventListener('swipe', ({ item, direction, source }) => {
-
+    
     switch(direction)
     {
-      case "left" :  return dispatch({type: "DISLIKED", placeId: item.id});
-      case "right":  return dispatch({type: "LIKED", placeId: item.id});
-      default : return;
+      case "left" :  
+        return dispatch({type: "DISLIKED", placeId: item.id});
+
+      case "right":  
+        dispatch({type: "LIKED", placeId: item.id});
+        const partnerLikes = state.curPartner.curUser.likedRestaurants;
+        const isMatch = compareLikes(item.id, partnerLikes);
+        console.log("did we make a match? ", isMatch);
+
+      default : 
+        return;
     }
+    
   });
 
   RestaurantCards.useDeckEventListener('undo', ({ item }) => {
@@ -43,7 +53,7 @@ export default function RestaurantDeck({dispatch, state}) {
 // --------------------------------------------------------------------------------
   const [restaurantData, setRestaurantData] = useState([]);
 
-  DeckEvents(dispatch);
+  DeckEvents(dispatch, state);
 
   // ------------------------------------------------------------------------------
   // need useState for the re-render, 

@@ -1,5 +1,4 @@
 import { View, StyleSheet, Pressable } from "react-native";
-import { useEffect, useState } from "react";
 import UserProfileBox from "./UserProfileBox.js";
 import FriendList from "./FriendList.js";
 import { logOut } from "../../helpers/firebaseAuth.js";
@@ -8,18 +7,6 @@ import { logOut } from "../../helpers/firebaseAuth.js";
 // This holds the current user and the user they are matching things with
 // --------------------------------------------------------------------------------
 const ProfileArea = ({state, dispatch}) => {
-   
-    // const [dataReady, setDataReady] = useState(false);
-
-    // useEffect(()=>{
-    //     if (state.curPartner?.curUser?.profilePic){
-    //         setDataReady(true);
-    //         console.log("data ever ready?");
-    //     }
-
-    // },[state]);
-
-    // if (!dataReady) return;
 
     return (
         <View style={styles.profilesCotainer}>
