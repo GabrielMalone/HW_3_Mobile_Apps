@@ -14,6 +14,7 @@ import { getUserData, getFriendsData } from './helpers/firebaseDatabase';
 import CreateAccountComponent from './components/loginComponents/CreateAccountComponent';
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import LoginScreenComponent from './components/loginComponents/LoginScreenComponent';
+import MatchFx from './components/matchComponents/MatchFx';
 // --------------------------------------------------------------------------------
 export default function App() {
   // run this to delete any local data during testing
@@ -26,7 +27,7 @@ export default function App() {
   // ------------------------------------------------------------------------------
   // for debuggins stsate
   useEffect(() => {
-      //console.log(JSON.stringify(state, null, 2));
+      console.log(JSON.stringify(state, null, 2));
   }, [state]);
   // local solution to seeing if a user has an account already 
   // so we dont show create account on start up unecessarily
@@ -90,6 +91,9 @@ export default function App() {
           style={styles.container} 
           edges={["top", "bottom"]}
         >
+
+          {state.matchMade ? <MatchFx state={state} /> : null}
+
           <HeaderComponent state={state}/>
 
           {!state.loggedIn && !state.hasAccount?

@@ -6,6 +6,7 @@ import {
 import getRestaurantData from '../../helpers/getRestaurantData';
 import Card from '../cardComponents/Card'
 import { compareLikes } from '../../helpers/compareLikes';
+import MatchFx from '../matchComponents/MatchFx';
 
 // --------------------------------------------------------------------------------
 // https://react-native-swipe-deck.pages.dev
@@ -30,12 +31,13 @@ function DeckEvents(dispatch, state) {
         dispatch({type: "LIKED", placeId: item.id});
         const partnerLikes = state.curPartner.curUser.likedRestaurants;
         const isMatch = compareLikes(item.id, partnerLikes);
-        console.log("did we make a match? ", isMatch);
-
+        if (isMatch){
+          dispatch({type: "SET_MATCH_MADE", isMatch: true});
+        }
       default : 
         return;
     }
-    
+
   });
 
   RestaurantCards.useDeckEventListener('undo', ({ item }) => {

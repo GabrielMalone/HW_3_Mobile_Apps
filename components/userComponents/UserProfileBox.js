@@ -1,4 +1,4 @@
-import { StyleSheet, View, Image } from "react-native";
+import { StyleSheet, View, Image, Text } from "react-native";
 import { profilePics } from "../../data/mockUsers";
 // --------------------------------------------------------------------------------
 // This box is the smallest unit that contains the user profile image
@@ -12,24 +12,36 @@ const UserProfileBox = ({state, isUser=false, isCurPartner=false, isFriendInList
             borderWidth: 1,
             margin: 5,
             position: "relative",
+            alignItems: "center",
+            backgroundColor: "#0a0a0a",
+            boxShadow: "0px 5px 15px rgba(0, 0, 0, 0.65)"
         },
         photo:{
             width: 100,
             height: 100,
-            borderRadius: 10,
-            boxShadow: "0px 5px 15px rgba(0, 0, 0, 0.65)",
+            borderTopLeftRadius: 10,
+            borderTopRightRadius: 10,
+        },
+        userName :{
+            fontFamily: "OpenCustom",
+            fontSize: 12,
+            color: "#ffffff",
         }
     });
     // --------------------------------------------------------------------------------
     let pic = null;
+    let name = "";
     if (isUser){
         pic = profilePics[state?.curUser?.profilePic];
+        name = state?.curUser?.userName;
     }
     else if (isCurPartner) {
         pic = profilePics[state?.curPartner?.curUser?.profilePic];
+        name = state?.curPartner?.curUser?.userName;
     }
     else if (isFriendInList){
         pic = profilePics[state.profilePic];
+        name = state.userName;
     }
     // --------------------------------------------------------------------------------
     return (
@@ -40,6 +52,9 @@ const UserProfileBox = ({state, isUser=false, isCurPartner=false, isFriendInList
                 height={100}
                 style={sytles.photo}
             />
+            <Text style={sytles.userName}>
+                {name}
+            </Text>
         </View>
     );
 }

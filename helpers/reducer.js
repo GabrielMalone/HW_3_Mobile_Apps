@@ -21,6 +21,7 @@ export const stateShape = {
     disliked: [],
     lastCardSwiped: "",
     profilePic : "",
+    matchMade : false,
 
     // we can set up colors here too and other visuals
 
@@ -87,6 +88,12 @@ export const stateShape = {
 
     friendListBgColor : "#29013fa9",
     friendListMaxHeight : 600,
+
+    // ------------------------------------------------------------------------------
+    // Match FX MENU STYLING
+    // ------------------------------------------------------------------------------
+
+    matchFxBgColor : "#FFFFFF",
 
 };
 // ------------------------------------------------------------------------------
@@ -161,6 +168,12 @@ export const reducer = (state, action) => {
                 // set cur partner to first person in list
                 curPartner : action.friendsData[0],
                 friendsData : action.friendsData
+            }
+        
+        case "SET_MATCH_MADE" :
+            return {
+                ...state,
+                matchMade : action.isMatch
             }
         
         default : 
