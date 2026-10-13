@@ -9,11 +9,18 @@ import { auth } from './helpers/firebaseConfig';
 import RestaurantDeck from './components/decks/RestaurantDeck';
 import ProfileArea from './components/userComponents/ProfileArea';
 import HeaderComponent from './components/main/HeaderComponent';
-import LoginScreen from './components/loginComponents/LoginScreen';
 import UserSettingsComponent from './components/userComponents/userSettings/UserSettingsComponent';
+import getUserData from './helpers/getUserData';
+import CreateAccountComponent from './components/loginComponents/CreateAccountComponent';
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import LoginScreenComponent from './components/loginComponents/LoginScreenComponent';
+import { listenForUserStatus } from './helpers/firebaseAuth';
 // --------------------------------------------------------------------------------
 export default function App() {
-   
+
+  // run this to delete any local data during testing
+  // AsyncStorage.removeItem("hasAccount");
+
   // TO DO --
   // when a user logs in, retrieve their profile from Firestore and load it into the reducer.
   // also need to be able to set profile pics from user Info {user.profilePic : "p1"}
@@ -23,17 +30,27 @@ export default function App() {
 
   // for debuggins stsate
   useEffect(() => {
-      console.log(JSON.stringify(state, null, 2));
+      //console.log(JSON.stringify(state, null, 2));
   }, [state]);
+
+  useEffect(() => {
+      const checkAccount = async () => {
+          const result = await AsyncStorage.getItem("hasAccount");
+          dispatch({type:"SET_HAS_ACCOUNT", hasAccount: result});
+      };
+      checkAccount();
+  }, []);
 
   useEffect(()=>{
     // listen for changes in the user's authentication state
     // returns a function that stops that listener automatically
     // when this component unmounts (though at app level not likely)
-    const unsubscribe = onAuthStateChanged(auth, (user) => {
+    const unsubscribe = onAuthStateChanged(auth, async (user) => {
       if (user){
-        console.log("user logged in: ", user.uid);
         dispatch({type: "LOGGED_IN", uid: user.uid});
+        const userData = await getUserData(user.uid);
+        console.log("Firestore user data:", userData);
+        // now set the state data from userData
       } else {
         console.log("user logged out: ");
         dispatch({type : "LOGGED_OUT"});
@@ -74,8 +91,15 @@ export default function App() {
         >
           <HeaderComponent state={state}/>
 
-          {!state.loggedIn ?
-            <LoginScreen 
+          {!state.loggedIn && !state.hasAccount?
+            <CreateAccountComponent 
+              dispatch={dispatch}
+            /> :
+            null
+          }
+
+          {!state.loggedIn && state.hasAccount?
+            <LoginScreenComponent 
               dispatch={dispatch}
             /> :
             null

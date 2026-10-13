@@ -2,9 +2,9 @@ import { View, StyleSheet, TextInput, Text } from "react-native";
 import { useState } from "react";
 import HalftoneSphere from "../../assets/svg/HalftoneSphere";
 import SubmitButton from "../../assets/svg/SubmitButton";
-import registerUser from "../../helpers/firebaseAuth";
+import { registerUser } from "../../helpers/firebaseAuth";
 // ------------------------------------------------------------------------------
-const LoginScreen = ({dispatch}) => {
+const CreateAccountComponent = ({dispatch}) => {
 
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
@@ -14,7 +14,6 @@ const LoginScreen = ({dispatch}) => {
         setSubmitButtonColor("#00ddff");
         try {
             const user = await registerUser(email, password);
-            console.log(`user: ${JSON.stringify(user)}`)
         } catch (error) {
             console.error("Firebase registration error:", error.code, error.message);
             setSubmitButtonColor("#FFFFFF");           
@@ -117,4 +116,4 @@ const styles = StyleSheet.create({
 
 });
 // ------------------------------------------------------------------------------
-export default LoginScreen
+export default CreateAccountComponent

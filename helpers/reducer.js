@@ -5,6 +5,7 @@ export const stateShape = {
     // user state stuff
 
     loggedIn : false,
+    hasAccount : false,
     uid: null,
     curUser : mockUserData,
     friendsListVisible: false,
@@ -137,6 +138,12 @@ export const reducer = (state, action) => {
             return {
                 ...state,
                 loggedIn : false
+            }
+
+        case "SET_HAS_ACCOUNT" : 
+            return {
+                ...state,
+                hasAccount : action.hasAccount
             }
         
         default : 
