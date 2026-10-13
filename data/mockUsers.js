@@ -115,6 +115,17 @@ const friendObj_11 = {
 };
 
 // mock backend of friend objs
-export const mockFriendsData = [friendObj_1,friendObj_2,friendObj_3,friendObj_4,friendObj_6,friendObj_7,friendObj_8,friendObj_9,friendObj_10,friendObj_11];
+export const mockFriendsData = [
+    friendObj_1,
+    friendObj_2,
+    friendObj_3,
+    friendObj_4,
+    friendObj_6,
+    friendObj_7,
+    friendObj_8,
+    friendObj_9,
+    friendObj_10,
+    friendObj_11
+];
 export const mockUserData = user_1;
 export const mockPartnerData = partner_1;

@@ -12,7 +12,7 @@ export const stateShape = {
     userSettingsVisible: false,
     searchRadius: 1000,
     curLocation: "",
-    friends :[],
+    friends : [],
     curPartner : mockPartnerData,
     favorites : [],
     liked: [],
@@ -149,7 +149,8 @@ export const reducer = (state, action) => {
         case "SET_USER_DATA" : 
             return {
                 ...state,
-                curUser: action.curUser
+                curUser: action.curUser,
+                friends: action.friends,
             }
         
         default : 

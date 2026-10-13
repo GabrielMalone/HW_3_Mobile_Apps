@@ -27,7 +27,11 @@ const ProfileArea = ({state, dispatch}) => {
 
             {/*partner profile */}
             <Pressable
-                onPress={()=>dispatch({type: "TOGGLE_FRIENDS_LIST"})}
+                onPress={ async ()=> {
+                        console.log("friends: ",friends);
+                        dispatch({type: "TOGGLE_FRIENDS_LIST"});
+                    }
+                }
             >
                 <UserProfileBox state={state.curPartner}/>
             </Pressable>

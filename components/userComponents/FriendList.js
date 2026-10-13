@@ -20,9 +20,7 @@ const FriendList = ({state, dispatch}) => {
             borderBottomWidth: 1,
             borderColor: "white",
             backgroundColor: state.friendListBgColor,
-         
         }
-        
     });
 
     const renderFriends = (profileData) => {

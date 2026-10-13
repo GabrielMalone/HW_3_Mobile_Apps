@@ -23,7 +23,6 @@ export const createUserProfile = async (user) => {
         lastCardSwiped: "",
     });
 };
-
 // --------------------------------------------------------------------------------
 export const getUserData = async (uid) => {
     // get user's document from Firestore as object
@@ -35,3 +34,20 @@ export const getUserData = async (uid) => {
     }
     return null;
 };
+// --------------------------------------------------------------------------------
+export const getFriendsData = async (state) => {
+    // current state should have friends list already loaded 
+    // promise all needed to async arrays
+    const friends = await Promise.all(
+        state.friends.map( async (friendUID)=>{
+            console.log('friendUID: ', friendUID);
+            const friendRef = doc(db, "users", friendUID); 
+            const curFriend = await getDoc(friendRef);
+            return {
+                uid: friendUID,
+                ...curFriend.data()
+            }
+        })
+    );
+    return friends;
+}

@@ -10,7 +10,7 @@ import RestaurantDeck from './components/decks/RestaurantDeck';
 import ProfileArea from './components/userComponents/ProfileArea';
 import HeaderComponent from './components/main/HeaderComponent';
 import UserSettingsComponent from './components/userComponents/userSettings/UserSettingsComponent';
-import { getUserData } from './helpers/firebaseDatabase';
+import { getUserData, getFriendsData } from './helpers/firebaseDatabase';
 import CreateAccountComponent from './components/loginComponents/CreateAccountComponent';
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import LoginScreenComponent from './components/loginComponents/LoginScreenComponent';
@@ -19,6 +19,7 @@ export default function App() {
   // run this to delete any local data during testing
   // AsyncStorage.removeItem("hasAccount");
   // TO DO --
+  // method to retrieve all friends (seed friends in user 1)
   // friends list loads entire user object not just profile pic 
   const [state, dispatch] = useReducer(reducer, stateShape);
   // ------------------------------------------------------------------------------
@@ -45,8 +46,12 @@ export default function App() {
       if (user){
         dispatch({type: "LOGGED_IN", uid: user.uid});
         const userData = await getUserData(user.uid);
-        console.log("Firestore user data:", userData.curUser);
-        dispatch({type: "SET_USER_DATA", curUser: userData.curUser})
+        dispatch({
+          type: "SET_USER_DATA", 
+          curUser: userData.curUser, 
+          friends: userData.friends
+        })
+        const friendsData = await getFriendsData(state);
         // now set the state data from userData
       } else {
         console.log("user logged out: ");
