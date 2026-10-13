@@ -1,4 +1,4 @@
-import { doc, setDoc } from "firebase/firestore";
+import { doc, setDoc, getDoc } from "firebase/firestore";
 import { db } from "./firebaseConfig";
 // --------------------------------------------------------------------------------
 // doc(db, "users", user.uid) identifies the document we want to write.
@@ -22,4 +22,16 @@ export const createUserProfile = async (user) => {
         disliked: [],
         lastCardSwiped: "",
     });
+};
+
+// --------------------------------------------------------------------------------
+export const getUserData = async (uid) => {
+    // get user's document from Firestore as object
+    const userRef = doc(db, "users", uid);
+    const userSnapshot = await getDoc(userRef);
+    if (userSnapshot.exists()) {
+        // return fields as javascript object with .data()
+        return userSnapshot.data();
+    }
+    return null;
 };

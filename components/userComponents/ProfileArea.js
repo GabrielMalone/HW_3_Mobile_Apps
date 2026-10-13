@@ -1,8 +1,7 @@
 import { View, StyleSheet, Pressable } from "react-native";
 import UserProfileBox from "./UserProfileBox.js";
 import FriendList from "./FriendList.js";
-import { mockUserData, mockPartnerData } from "../../data/mockUsers.js";
-import logOut from "../../helpers/firebaseLogout.js";
+import { logOut } from "../../helpers/firebaseAuth.js";
 
 // --------------------------------------------------------------------------------
 // This holds the current user and the user they are matching things with

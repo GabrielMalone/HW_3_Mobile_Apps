@@ -10,29 +10,26 @@ import RestaurantDeck from './components/decks/RestaurantDeck';
 import ProfileArea from './components/userComponents/ProfileArea';
 import HeaderComponent from './components/main/HeaderComponent';
 import UserSettingsComponent from './components/userComponents/userSettings/UserSettingsComponent';
-import getUserData from './helpers/getUserData';
+import { getUserData } from './helpers/firebaseDatabase';
 import CreateAccountComponent from './components/loginComponents/CreateAccountComponent';
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import LoginScreenComponent from './components/loginComponents/LoginScreenComponent';
-import { listenForUserStatus } from './helpers/firebaseAuth';
 // --------------------------------------------------------------------------------
 export default function App() {
-
   // run this to delete any local data during testing
   // AsyncStorage.removeItem("hasAccount");
-
   // TO DO --
-  // when a user logs in, retrieve their profile from Firestore and load it into the reducer.
-  // also need to be able to set profile pics from user Info {user.profilePic : "p1"}
-  // for now let's just make it so that your friends are anyone who has registered on the app. 
-  
+  // friends list loads entire user object not just profile pic 
   const [state, dispatch] = useReducer(reducer, stateShape);
-
+  // ------------------------------------------------------------------------------
+  // useEffect Stuff and other hooks
+  // ------------------------------------------------------------------------------
   // for debuggins stsate
   useEffect(() => {
       console.log(JSON.stringify(state, null, 2));
   }, [state]);
-
+  // local solution to seeing if a user has an account already 
+  // so we dont show create account on start up unecessarily
   useEffect(() => {
       const checkAccount = async () => {
           const result = await AsyncStorage.getItem("hasAccount");
@@ -40,7 +37,6 @@ export default function App() {
       };
       checkAccount();
   }, []);
-
   useEffect(()=>{
     // listen for changes in the user's authentication state
     // returns a function that stops that listener automatically
@@ -59,11 +55,7 @@ export default function App() {
     })
     return unsubscribe;
   }, []);
-  
-  // ------------------------------------------------------------------------------
-  // load custom fonts
-  // ------------------------------------------------------------------------------
-  
+    
   const [fontsLoaded] = useFonts({
     'NotoCustom': require('./assets/fonts/NotoSerif-VariableFont_wdth,wght.ttf'),
     'UnicaCustom': require('./assets/fonts/UnicaOne-Regular.ttf'),
@@ -73,7 +65,7 @@ export default function App() {
   if (!fontsLoaded) {
     return null;
   }
-
+  // ------------------------------------------------------------------------------
   const styles = StyleSheet.create({
     container: {
       flex: 1,
@@ -81,8 +73,7 @@ export default function App() {
       position: "relative",
     },
   });
-
-
+  // ------------------------------------------------------------------------------
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
       <SafeAreaProvider>
