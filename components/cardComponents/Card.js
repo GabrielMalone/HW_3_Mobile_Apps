@@ -25,6 +25,9 @@ const Card = ({data, state}) => {
     },
 
   });
+
+  if (state.matchMade) return null;
+  
   // ---------------------------------------------------------r--------------------
   return (
     <ScrollView 

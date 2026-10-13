@@ -7,7 +7,6 @@ export const stateShape = {
     loggedIn : false,
     hasAccount : false,
     uid: null,
-    curUser : mockUserData,
     friendsListVisible: false,
     userSettingsVisible: false,
     searchRadius: 1000,
@@ -16,7 +15,6 @@ export const stateShape = {
     // just keep friendsData local
     friendsData : [],
     curPartner : mockPartnerData,
-    favorites : [],
     liked: [],
     disliked: [],
     lastCardSwiped: "",
@@ -25,7 +23,7 @@ export const stateShape = {
 
     // we can set up colors here too and other visuals
 
-    mainAppBgColor : "#050405",
+    mainAppBgColor : "#020002",
 
     // ------------------------------------------------------------------------------
     // LOGO STYLING
@@ -56,7 +54,7 @@ export const stateShape = {
     cardPriceLevelFontSize : 40,
     cardPriceLevelFontColor : "#FAA0A0",
     // card bg styling --------------------------------------------------------------
-    cardPatternBgColor : "#f800be",
+    cardPatternBgColor : "#00d3f8",
     cardPatternBgBgColor : "#0a0909",
     cardPatternBgHeight : "100%",
     cardPatternBgWidth : "100%",
@@ -154,12 +152,11 @@ export const reducer = (state, action) => {
                 ...state,
                 hasAccount : action.hasAccount
             }
-        
+        // keep state and then overwrite any fields from userData
         case "SET_USER_DATA" : 
             return {
                 ...state,
-                curUser: action.curUser,
-                friends: action.friends,
+                ...action.userData,
             }
 
         case "SET_FRIENDS_DATA" : 

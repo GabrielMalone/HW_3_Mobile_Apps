@@ -35,7 +35,6 @@ export const loginUser = async (email, password) => {
             email,
             password
         );
-
         // Return the authenticated user
         return userCredential.user;
 

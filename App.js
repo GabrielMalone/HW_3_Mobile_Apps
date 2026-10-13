@@ -15,19 +15,22 @@ import CreateAccountComponent from './components/loginComponents/CreateAccountCo
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import LoginScreenComponent from './components/loginComponents/LoginScreenComponent';
 import MatchFx from './components/matchComponents/MatchFx';
+import { populateFriends } from './helpers/firebaseAuth';
 // --------------------------------------------------------------------------------
 export default function App() {
   // run this to delete any local data during testing
   // AsyncStorage.removeItem("hasAccount");
   // TO DO --
   // when click on a friend, load their entire friend object into state.curPartner
+  // when liked, give timestamp then you can compare likes on recent vs old
   const [state, dispatch] = useReducer(reducer, stateShape);
   // ------------------------------------------------------------------------------
   // useEffect Stuff and other hooks
   // ------------------------------------------------------------------------------
   // for debuggins stsate
+
   useEffect(() => {
-      console.log(JSON.stringify(state, null, 2));
+      //console.log(JSON.stringify(state, null, 2));
   }, [state]);
   // local solution to seeing if a user has an account already 
   // so we dont show create account on start up unecessarily
@@ -51,13 +54,13 @@ export default function App() {
         // set data locally
         dispatch({
           type: "SET_USER_DATA", 
-          curUser: userData.curUser, 
-          friends: userData.friends
+          userData: userData,
         })
         // get user's friends data from firestore
         const friendsData = await getFriendsData(userData);
         // set friend data locally
         dispatch({type: "SET_FRIENDS_DATA", friendsData: friendsData});
+
       } else {
         console.log("user logged out: ");
         dispatch({type : "LOGGED_OUT"});
@@ -75,6 +78,7 @@ export default function App() {
   if (!fontsLoaded) {
     return null;
   }
+
   // ------------------------------------------------------------------------------
   const styles = StyleSheet.create({
     container: {
@@ -92,9 +96,15 @@ export default function App() {
           edges={["top", "bottom"]}
         >
 
-          {state.matchMade ? <MatchFx state={state} /> : null}
-
+     
           <HeaderComponent state={state}/>
+
+          {state.matchMade ? 
+            <MatchFx 
+              dispatch={dispatch} 
+            /> : 
+            null
+          }
 
           {!state.loggedIn && !state.hasAccount?
             <CreateAccountComponent 

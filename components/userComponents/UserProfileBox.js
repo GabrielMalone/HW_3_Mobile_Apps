@@ -32,12 +32,12 @@ const UserProfileBox = ({state, isUser=false, isCurPartner=false, isFriendInList
     let pic = null;
     let name = "";
     if (isUser){
-        pic = profilePics[state?.curUser?.profilePic];
-        name = state?.curUser?.userName;
+        pic = profilePics[state?.profilePic];
+        name = state?.userName;
     }
     else if (isCurPartner) {
-        pic = profilePics[state?.curPartner?.curUser?.profilePic];
-        name = state?.curPartner?.curUser?.userName;
+        pic = profilePics[state?.curPartner?.profilePic];
+        name = state?.curPartner?.userName;
     }
     else if (isFriendInList){
         pic = profilePics[state.profilePic];

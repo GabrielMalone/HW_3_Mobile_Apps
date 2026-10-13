@@ -1,22 +1,37 @@
 
-import { View, StyleSheet } from 'react-native';
+import { View, StyleSheet, Text, Pressable } from 'react-native';
 import { Confetti } from 'react-native-fast-confetti';
 
-const MatchFx = ({state}) => {
+const MatchFx = ({dispatch}) => {
 
     const styles = StyleSheet.create({
         matchFxContainer : {
-            flex : 1,
-            top: 0,
-            width: "100%",
-            height: "100%",
-            position: "absolute",
-            zIndex: 3
-        }
+            flex : 10,
+            backgroundColor: "#705f5f73",
+            borderRadius: 20,
+            zIndex: 3,
+            alignItems : "center",
+            justifyContent: "center",
+        },
+        matchText : {
+            fontFamily : "UnicaCustom",
+            fontSize: 64,
+            color : "#FFFFFF",
+        },
     });
 
+    // on date decided --> 
+    // name of restaurnt / map / option to book / plan route / call // 
+    // maybe just add to matched list?
+
     return (
-        <View style={styles.matchFxContainer}>
+        <Pressable
+            onPress={()=>{dispatch({type: "SET_MATCH_MADE", isMatch: false})}}
+            style={styles.matchFxContainer}
+        >
+            <Text style={styles.matchText}>
+                It's decided!
+            </Text>
             <Confetti autoplay>
             <Confetti.Flake size={12} radius={6} />
                 <Confetti.Flake width={8} height={14} />
@@ -27,7 +42,7 @@ const MatchFx = ({state}) => {
                 <Confetti.Flake size={17} shape="flower" />
                 <Confetti.Flake width={24} height={17} shape="streamer" />  
             </Confetti>
-        </View>
+        </Pressable>
     );
 }
 

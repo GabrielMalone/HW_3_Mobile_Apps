@@ -24,6 +24,9 @@ const FriendList = ({state, dispatch}) => {
     });
 
     const renderFriends = (profileData) => {
+
+        console.log('friend profileData: ', profileData);
+
         return (
             <Pressable
                 // what happens when click on a friend
@@ -34,7 +37,7 @@ const FriendList = ({state, dispatch}) => {
             >
                 <UserProfileBox 
                     // i really need to fix the shape of the user object it's ugly
-                    state={profileData.curUser}
+                    state={profileData}
                     isFriendInList={true}
                 />
             </Pressable>

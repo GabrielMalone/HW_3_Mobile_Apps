@@ -6,21 +6,18 @@ import { db } from "./firebaseConfig";
 // --------------------------------------------------------------------------------
 export const createUserProfile = async (user) => {
     await setDoc(doc(db, "users", user.uid), {
-        curUser: {
-            userName: "",
-            fname: "",
-            lname: "",
-            email: user.email,
-            profilePic: "p1",
-            likedRestaurants: [],
-        },
+        userName: "",
+        fname: "",
+        lname: "",
+        email: user.email,
+        profilePic: "p1",
         searchRadius: 1000,
         friends: [],
         partnerUid: null,
-        favorites: [],
+        partnerData: null,
         liked: [],
         disliked: [],
-        lastCardSwiped: "",
+        lastCardSwiped: null,
     });
 };
 // --------------------------------------------------------------------------------

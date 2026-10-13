@@ -10,15 +10,19 @@ export default function HalftoneSphere({
   color = "#e0e0e0",
   opacity = 1,
   style,
+  // any remaining props not destructured
   ...props
 }) {
   return (
+    // create the svg ovbject
     <Svg
       width={width}
       height={height}
+      // internal svg sizes xmin ymin xmax ymax
       viewBox="0 0 1931.28 1931.28"
       style={style}
       {...props}
+      // path then does the actual drawing
     >
       <Path d={DOTS_PATH} fill={color} opacity={opacity} />
     </Svg>
