@@ -116,6 +116,12 @@ export const reducer = (state, action) => {
                 curPartner : action.profileData 
             }
 
+        case "UPDATE_PARTNER_DATA" :
+            return {
+                ...state,
+                curParnter : action.partnerData
+            }
+
         case "LIKED" :
             return {
                 ...state,
@@ -163,7 +169,6 @@ export const reducer = (state, action) => {
             return {
                 ...state,
                 // set cur partner to first person in list
-                curPartner : action.friendsData[0],
                 friendsData : action.friendsData
             }
         

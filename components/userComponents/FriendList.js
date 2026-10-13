@@ -1,10 +1,13 @@
 import { FlatList, StyleSheet, Pressable } from "react-native";
+import { useEffect } from "react";
 import UserProfileBox from "./UserProfileBox.js";
 import { clearLikesAndDislikes } from "../../helpers/firebaseDatabase.js";
 
 // --------------------------------------------------------------------------------
 const FriendList = ({state, dispatch}) => {
-
+    // every time we get a partner, we need to listen
+    // to their likes remotely
+    // ----------------------------------------------------------------------------
     const styles = StyleSheet.create({
         friendListContent:{
             position: "absolute",
@@ -22,11 +25,8 @@ const FriendList = ({state, dispatch}) => {
             backgroundColor: state.friendListBgColor,
         }
     });
-
+    // ----------------------------------------------------------------------------
     const renderFriends = (profileData) => {
-
-        console.log('friend profileData: ', profileData);
-
         return (
             <Pressable
                 // what happens when click on a friend
@@ -34,7 +34,10 @@ const FriendList = ({state, dispatch}) => {
                     dispatch({type:"SET_PARTNER", profileData});
                     dispatch({type:"TOGGLE_FRIENDS_LIST"});
                     // reset likes and dislikes for new round of matching
+                    // would need to notify partner that they are in a new pair though 
+                    // before clearing theirs
                     clearLikesAndDislikes(state.uid);
+                    // this is where I should add a listener for the partner's updates
                 }}
             >
                 <UserProfileBox 
@@ -62,7 +65,5 @@ const FriendList = ({state, dispatch}) => {
         />
     );
 }
-// --------------------------------------------------------------------------------
-
 // --------------------------------------------------------------------------------
 export default FriendList;
