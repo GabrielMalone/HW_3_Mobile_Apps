@@ -40,7 +40,6 @@ export const getFriendsData = async (state) => {
     // promise all needed to async arrays
     const friends = await Promise.all(
         state.friends.map( async (friendUID)=>{
-            console.log('friendUID: ', friendUID);
             const friendRef = doc(db, "users", friendUID); 
             const curFriend = await getDoc(friendRef);
             return {

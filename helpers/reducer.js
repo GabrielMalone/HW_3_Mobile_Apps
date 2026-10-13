@@ -13,6 +13,8 @@ export const stateShape = {
     searchRadius: 1000,
     curLocation: "",
     friends : [],
+    // just keep friendsData local
+    friendsData : [],
     curPartner : mockPartnerData,
     favorites : [],
     liked: [],
@@ -151,6 +153,12 @@ export const reducer = (state, action) => {
                 ...state,
                 curUser: action.curUser,
                 friends: action.friends,
+            }
+
+        case "SET_FRIENDS_DATA" : 
+            return {
+                ...state,
+                friendsData : [...state.friendsData, action.friendsData]
             }
         
         default : 

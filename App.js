@@ -52,7 +52,7 @@ export default function App() {
           friends: userData.friends
         })
         const friendsData = await getFriendsData(state);
-        // now set the state data from userData
+        dispatch({type: "SET_FRIENDS_DATA", friendsData: friendsData});
       } else {
         console.log("user logged out: ");
         dispatch({type : "LOGGED_OUT"});
@@ -60,7 +60,7 @@ export default function App() {
     })
     return unsubscribe;
   }, []);
-    
+  // hook to load custom fonts
   const [fontsLoaded] = useFonts({
     'NotoCustom': require('./assets/fonts/NotoSerif-VariableFont_wdth,wght.ttf'),
     'UnicaCustom': require('./assets/fonts/UnicaOne-Regular.ttf'),
