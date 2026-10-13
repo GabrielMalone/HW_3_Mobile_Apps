@@ -1,7 +1,7 @@
 import { FlatList, StyleSheet, Pressable } from "react-native";
 import UserProfileBox from "./UserProfileBox.js";
-// --------------------------------------------------------------------------------
-import {mockFriendsData} from '../../data/mockUsers.js';
+import { clearLikesAndDislikes } from "../../helpers/firebaseDatabase.js";
+
 // --------------------------------------------------------------------------------
 const FriendList = ({state, dispatch}) => {
 
@@ -33,6 +33,8 @@ const FriendList = ({state, dispatch}) => {
                 onPress={()=>{
                     dispatch({type:"SET_PARTNER", profileData});
                     dispatch({type:"TOGGLE_FRIENDS_LIST"});
+                    // reset likes and dislikes for new round of matching
+                    clearLikesAndDislikes(state.uid);
                 }}
             >
                 <UserProfileBox 

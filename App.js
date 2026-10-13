@@ -27,11 +27,12 @@ export default function App() {
   // ------------------------------------------------------------------------------
   // useEffect Stuff and other hooks
   // ------------------------------------------------------------------------------
+  
   // for debuggins stsate
-
   useEffect(() => {
       //console.log(JSON.stringify(state, null, 2));
   }, [state]);
+
   // local solution to seeing if a user has an account already 
   // so we dont show create account on start up unecessarily
   useEffect(() => {
@@ -41,6 +42,7 @@ export default function App() {
       };
       checkAccount();
   }, []);
+
   useEffect(()=>{
     // listen for changes in the user's authentication state
     // returns a function that stops that listener automatically
@@ -65,8 +67,11 @@ export default function App() {
         console.log("user logged out: ");
         dispatch({type : "LOGGED_OUT"});
       }
+
     })
+
     return unsubscribe;
+
   }, []);
   // hook to load custom fonts
   const [fontsLoaded] = useFonts({

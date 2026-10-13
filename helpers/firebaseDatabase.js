@@ -42,6 +42,11 @@ export const setUserDislikes = async (uid, likedItemId) => {
     await updateDoc(userRef, {disliked: arrayUnion(likedItemId)});
 }
 // --------------------------------------------------------------------------------
+export const clearLikesAndDislikes = async (uid) => {
+    const userRef = doc(db, "users", uid);
+    await updateDoc(userRef, {disliked: [], liked: []});
+}
+// --------------------------------------------------------------------------------
 export const getFriendsData = async (state) => {
     // current state should have friends list already loaded 
     // promise all needed to async arrays
