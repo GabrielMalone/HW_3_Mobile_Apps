@@ -30,8 +30,12 @@ const FriendList = ({state, dispatch}) => {
         return (
             <Pressable
                 // what happens when click on a friend
+        
                 onPress={()=>{
-                    dispatch({type:"SET_PARTNER", profileData});
+                    dispatch({
+                        type:"SET_PARTNER", 
+                        partnerData: profileData
+                    });
                     dispatch({type:"TOGGLE_FRIENDS_LIST"});
                     // reset likes and dislikes for new round of matching
                     // would need to notify partner that they are in a new pair though 

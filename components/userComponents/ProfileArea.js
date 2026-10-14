@@ -1,4 +1,5 @@
 import { View, StyleSheet, Pressable } from "react-native";
+import { useEffect } from 'react';
 import UserProfileBox from "./UserProfileBox.js";
 import FriendList from "./FriendList.js";
 import { logOut } from "../../helpers/firebaseAuth.js";
@@ -8,12 +9,15 @@ import { onSnapshot, doc } from "firebase/firestore";
 // This holds the current user and the user they are matching things with
 // --------------------------------------------------------------------------------
 const ProfileArea = ({state, dispatch}) => {
-
     // listen for partner likes remotely
     useEffect(() => {
-        if (!state.partner?.uid) return;
+        console.log("listening to local partner?", 
+            JSON.stringify(state.partnerData, null, 2));
+        if (!state.partnerData?.uid) return;
         const unsubscribe = onSnapshot(
-            doc(db, "users", state.partner.uid),
+            doc(db, "users", state.partnerData.uid),
+            // dont send cached data
+            { includeMetadataChanges: true },
             (snapshot) => {
                 if (snapshot.exists()) {
                     dispatch({
@@ -24,7 +28,7 @@ const ProfileArea = ({state, dispatch}) => {
             }
         );
         return unsubscribe;
-    }, [state.partner?.uid]);
+    }, [state.partnerData?.uid]);
 
 
     return (

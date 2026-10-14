@@ -15,13 +15,12 @@ import CreateAccountComponent from './components/loginComponents/CreateAccountCo
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import LoginScreenComponent from './components/loginComponents/LoginScreenComponent';
 import MatchFx from './components/matchComponents/MatchFx';
-import { populateFriends } from './helpers/firebaseAuth';
 // --------------------------------------------------------------------------------
 export default function App() {
   // run this to delete any local data during testing
   // AsyncStorage.removeItem("hasAccount");
   // TO DO --
-  // when click on a friend, load their entire friend object into state.curPartner
+  // when click on a friend, load their entire friend object into state.partnerData
   // when liked, give timestamp then you can compare likes on recent vs old
   const [state, dispatch] = useReducer(reducer, stateShape);
   // ------------------------------------------------------------------------------
@@ -30,7 +29,8 @@ export default function App() {
   
   // for debuggins stsate
   useEffect(() => {
-      //console.log(JSON.stringify(state, null, 2));
+      console.log("CURRENT PARTNER INFO: ", 
+        JSON.stringify(state.partnerData, null, 2));
   }, [state]);
 
   // local solution to seeing if a user has an account already 
@@ -111,12 +111,12 @@ export default function App() {
             null
           }
 
-          {!state.loggedIn && !state.hasAccount?
+          {/* {!state.loggedIn && !state.hasAccount?
             <CreateAccountComponent 
               dispatch={dispatch}
             /> :
             null
-          }
+          } */}
 
           {!state.loggedIn && state.hasAccount?
             <LoginScreenComponent 

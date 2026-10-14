@@ -14,7 +14,7 @@ export const stateShape = {
     friends : [],
     // just keep friendsData local
     friendsData : [],
-    curPartner : mockPartnerData,
+    partnerData: {},
     liked: [],
     disliked: [],
     lastCardSwiped: "",
@@ -113,13 +113,19 @@ export const reducer = (state, action) => {
         case "SET_PARTNER" : 
             return {
                 ...state,
-                curPartner : action.profileData 
+                partnerData : {
+                    ...state.partnerData,
+                    ...action.partnerData 
+                }
             }
 
         case "UPDATE_PARTNER_DATA" :
             return {
                 ...state,
-                curParnter : action.partnerData
+                partnerData : {
+                    ...state.partnerData,
+                    ...action.partnerData 
+                }
             }
 
         case "LIKED" :

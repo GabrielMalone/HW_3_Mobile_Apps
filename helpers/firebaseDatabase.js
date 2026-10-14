@@ -13,7 +13,6 @@ export const createUserProfile = async (user) => {
         profilePic: "p1",
         searchRadius: 1000,
         friends: [],
-        partnerUid: null,
         partnerData: null,
         liked: [],
         disliked: [],

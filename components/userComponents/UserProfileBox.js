@@ -31,13 +31,14 @@ const UserProfileBox = ({state, isUser=false, isCurPartner=false, isFriendInList
     // --------------------------------------------------------------------------------
     let pic = null;
     let name = "";
+
     if (isUser){
         pic = profilePics[state?.profilePic];
         name = state?.userName;
     }
     else if (isCurPartner) {
-        pic = profilePics[state?.curPartner?.profilePic];
-        name = state?.curPartner?.userName;
+        pic = profilePics[state?.partnerData?.profilePic];
+        name = state?.partnerData?.userName;
     }
     else if (isFriendInList){
         pic = profilePics[state.profilePic];

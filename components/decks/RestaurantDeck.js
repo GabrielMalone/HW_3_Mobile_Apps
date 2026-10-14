@@ -6,7 +6,7 @@ import {
 import getRestaurantData from '../../helpers/getRestaurantData';
 import Card from '../cardComponents/Card'
 import { compareLikes } from '../../helpers/compareLikes';
-import { setUserLikes, setUserDislikes } from '../../helpers/firebaseDatabase';
+import { setUserLikes, setUserDislikes, getUserData } from '../../helpers/firebaseDatabase';
 
 // --------------------------------------------------------------------------------
 // https://react-native-swipe-deck.pages.dev
@@ -18,24 +18,30 @@ const RestaurantCards = createSwipeDeck({
 // --------------------------------------------------------------------------------
 // https://react-native-swipe-deck.pages.dev/guide/usage/handling-events
 // --------------------------------------------------------------------------------
-function DeckEvents(dispatch, state) {
+async function DeckEvents(dispatch, state) {
 
-  RestaurantCards.useDeckEventListener('swipe', ({ item, direction, source }) => {
+  RestaurantCards.useDeckEventListener('swipe', async ({ item, direction, source }) => {
     
     switch(direction)
     {
       case "left" :  
         dispatch({type: "DISLIKED", placeId: item.id});
-        setUserDislikes(state.uid, item.id);
+        await setUserDislikes(state.uid, item.id);
         return;
 
       case "right": 
         // what's the best way to go about this?
         // update the backend then have that auto update the state?
         dispatch({type: "LIKED", placeId: item.id});
-        setUserLikes(state.uid, item.id);
-        const partnerLikes = state.curPartner.liked;
-        const isMatch = compareLikes(item.id, partnerLikes);
+        try {
+          // i need to try catch my asyn stuff more
+          await setUserLikes(state.uid, item.id);
+        } catch (error) {
+            console.log("Error saving like:", error);
+        }
+        if (!state.partnerData) return;
+        // need to change this to a remote check
+        const isMatch = compareLikes(item.id, state.partnerData?.liked);
         if (isMatch){
           dispatch({type: "SET_MATCH_MADE", isMatch: true});
         }
