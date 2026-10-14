@@ -3,7 +3,6 @@ import { mockPartnerData, mockUserData } from "../data/mockUsers";
 export const stateShape = {
 
     // user state stuff
-
     loggedIn : false,
     hasAccount : false,
     uid: null,

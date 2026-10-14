@@ -7,7 +7,7 @@ import TruchetPattern from "../../assets/svg/TruchetPattern.jsx";
 
 const Card = ({data, state}) => {
   const styles = StyleSheet.create({
-    
+
     scrollContainer: {
 
       borderRadius: 15,

@@ -11,8 +11,8 @@ import { onSnapshot, doc } from "firebase/firestore";
 const ProfileArea = ({state, dispatch}) => {
     // listen for partner likes remotely
     useEffect(() => {
-        console.log("listening to local partner?", 
-            JSON.stringify(state.partnerData, null, 2));
+        // console.log("listening to local partner?", 
+        //     JSON.stringify(state.partnerData, null, 2));
         if (!state.partnerData?.uid) return;
         const unsubscribe = onSnapshot(
             doc(db, "users", state.partnerData.uid),
@@ -27,6 +27,9 @@ const ProfileArea = ({state, dispatch}) => {
                 }
             }
         );
+
+        
+
         return unsubscribe;
     }, [state.partnerData?.uid]);
 

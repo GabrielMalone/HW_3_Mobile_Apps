@@ -10,7 +10,7 @@ import RestaurantDeck from './components/decks/RestaurantDeck';
 import ProfileArea from './components/userComponents/ProfileArea';
 import HeaderComponent from './components/main/HeaderComponent';
 import UserSettingsComponent from './components/userComponents/userSettings/UserSettingsComponent';
-import { getUserData, getFriendsData } from './helpers/firebaseDatabase';
+import { getUserData, getFriendsData, partnered } from './helpers/firebaseDatabase';
 import CreateAccountComponent from './components/loginComponents/CreateAccountComponent';
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import LoginScreenComponent from './components/loginComponents/LoginScreenComponent';
@@ -20,8 +20,10 @@ export default function App() {
   // run this to delete any local data during testing
   // AsyncStorage.removeItem("hasAccount");
   // TO DO --
-  // when click on a friend, load their entire friend object into state.partnerData
-  // when liked, give timestamp then you can compare likes on recent vs old
+  // set up a field to flag when two users have each other as partners
+  // once that is set, check for swipe matches
+  // then if match, notify both
+
   const [state, dispatch] = useReducer(reducer, stateShape);
   // ------------------------------------------------------------------------------
   // useEffect Stuff and other hooks
@@ -29,8 +31,9 @@ export default function App() {
   
   // for debuggins stsate
   useEffect(() => {
-      console.log("CURRENT PARTNER INFO: ", 
-        JSON.stringify(state.partnerData, null, 2));
+      // console.log("CURRENT STATE INFO: ", 
+      //   JSON.stringify(state, null, 2));
+      partnered(state);
   }, [state]);
 
   // local solution to seeing if a user has an account already 

@@ -61,3 +61,19 @@ export const getFriendsData = async (state) => {
     ); 
     return friends;
 }
+// --------------------------------------------------------------------------------
+export const updateUserPartnerInfo = async (userUID, partnerUID) => {
+    // get reference to particular document
+    const userRef = doc(db, "users", userUID);
+    // update that document
+    await updateDoc(userRef, {partnerUID: partnerUID});
+}
+// --------------------------------------------------------------------------------
+export const partnered = (state) => {
+    // is my uid my partner's partner uid
+    const myuid = state?.uid;
+    const myPartnersPartnerId = state?.partnerData?.partnerUID; 
+    console.log(`myUID: ${myuid} mypartnersUID: ${myPartnersPartnerId}`);
+    // if match then can start swiping and have both notified of any matches
+    return myuid === myPartnersPartnerId;
+}
