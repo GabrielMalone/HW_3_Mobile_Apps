@@ -2,23 +2,29 @@
 import {  StyleSheet, Text, Pressable } from 'react-native';
 import { Confetti } from 'react-native-fast-confetti';
 import { clearLikesAndDislikes } from '../../helpers/firebaseDatabase';
+import IsoSphere from '../../assets/svg/IsoSphere';
 
 const MatchFx = ({state, dispatch}) => {
 
     const styles = StyleSheet.create({
         matchFxContainer : {
             flex : 10,
-            backgroundColor: "#705f5f73",
+
             borderRadius: 20,
             zIndex: 3,
             alignItems : "center",
             justifyContent: "center",
+            position: "relative"
         },
         matchText : {
             fontFamily : "UnicaCustom",
             fontSize: 64,
             color : "#FFFFFF",
         },
+        isoSphere : {
+            zIndex: 0,
+            position: "absolute"
+        }
     });
 
     // on date decided --> 
@@ -33,6 +39,13 @@ const MatchFx = ({state, dispatch}) => {
             }}
             style={styles.matchFxContainer}
         >
+            <IsoSphere
+                style={styles.isoSphere}
+                width={600}
+                height={600}
+                lightColor = "#c50ce168"
+                darkColor = "#26bb8022"
+            />
             <Text style={styles.matchText}>
                 It's decided!
             </Text>
