@@ -43,7 +43,12 @@ export const setUserDislikes = async (uid, likedItemId) => {
 // --------------------------------------------------------------------------------
 export const clearLikesAndDislikes = async (uid) => {
     const userRef = doc(db, "users", uid);
-    await updateDoc(userRef, {disliked: [], liked: []});
+    await updateDoc(userRef, {disliked: [], liked: [], matchMade: false});
+}
+// --------------------------------------------------------------------------------
+export const alertPartnerOfMatch = async (partnerUID) => {
+    const userRef = doc(db, "users", partnerUID);
+    await updateDoc(userRef,{matchMade: true});
 }
 // --------------------------------------------------------------------------------
 export const getFriendsData = async (state) => {
@@ -73,7 +78,9 @@ export const partnered = (state) => {
     // is my uid my partner's partner uid
     const myuid = state?.uid;
     const myPartnersPartnerId = state?.partnerData?.partnerUID; 
-    console.log(`myUID: ${myuid} mypartnersUID: ${myPartnersPartnerId}`);
+    // console.log(`myname: ${state.userName} 
+    //     myUID: ${myuid}
+    //     mypartnersPartnerUID: ${myPartnersPartnerId}`);
     // if match then can start swiping and have both notified of any matches
     return myuid === myPartnersPartnerId;
 }

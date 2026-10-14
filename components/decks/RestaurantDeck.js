@@ -6,7 +6,7 @@ import {
 import getRestaurantData from '../../helpers/getRestaurantData';
 import Card from '../cardComponents/Card'
 import { compareLikes } from '../../helpers/compareLikes';
-import { setUserLikes, setUserDislikes, getUserData } from '../../helpers/firebaseDatabase';
+import { setUserLikes, setUserDislikes, alertPartnerOfMatch } from '../../helpers/firebaseDatabase';
 
 // --------------------------------------------------------------------------------
 // https://react-native-swipe-deck.pages.dev
@@ -42,8 +42,13 @@ async function DeckEvents(dispatch, state) {
         if (!state.partnerData) return;
         // need to change this to a remote check
         const isMatch = compareLikes(item.id, state.partnerData?.liked);
+        // ok this right here is enough to get both backend states to say matchmade true
         if (isMatch){
-          dispatch({type: "SET_MATCH_MADE", isMatch: true});
+          dispatch({type: "SET_MATCH_MADE", matchMade: true});
+          // could just also send this remotely to partner here
+          console.log("MATCH IS MADE");
+          await alertPartnerOfMatch(state.partnerData.uid);
+          await alertPartnerOfMatch(state.uid);
         }
 
       default : 

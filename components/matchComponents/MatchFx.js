@@ -1,8 +1,9 @@
 
-import { View, StyleSheet, Text, Pressable } from 'react-native';
+import {  StyleSheet, Text, Pressable } from 'react-native';
 import { Confetti } from 'react-native-fast-confetti';
+import { clearLikesAndDislikes } from '../../helpers/firebaseDatabase';
 
-const MatchFx = ({dispatch}) => {
+const MatchFx = ({state, dispatch}) => {
 
     const styles = StyleSheet.create({
         matchFxContainer : {
@@ -26,7 +27,10 @@ const MatchFx = ({dispatch}) => {
 
     return (
         <Pressable
-            onPress={()=>{dispatch({type: "SET_MATCH_MADE", isMatch: false})}}
+            onPress={ async () => {
+                dispatch({type: "SET_MATCH_MADE", matchMade: false});
+                await clearLikesAndDislikes(state.uid);
+            }}
             style={styles.matchFxContainer}
         >
             <Text style={styles.matchText}>

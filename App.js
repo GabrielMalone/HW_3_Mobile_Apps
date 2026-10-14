@@ -23,19 +23,35 @@ export default function App() {
   // set up a field to flag when two users have each other as partners
   // once that is set, check for swipe matches
   // then if match, notify both
-
   const [state, dispatch] = useReducer(reducer, stateShape);
   // ------------------------------------------------------------------------------
   // useEffect Stuff and other hooks
   // ------------------------------------------------------------------------------
-  
   // for debuggins stsate
   useEffect(() => {
-      // console.log("CURRENT STATE INFO: ", 
-      //   JSON.stringify(state, null, 2));
+      console.log(`current state info for ${state.userName}: ${state.matchMade}`);
       partnered(state);
   }, [state]);
-
+  // ------------------------------------------------------------------------------
+  // listen for changes in partner match remotely
+  // useEffect(() => {
+  //   if (!state.partnerData?.uid) return;
+  //   const unsubscribe = onSnapshot(
+  //     // dont send cached data
+  //     { includeMetadataChanges: true },
+  //     (snapshot) => {
+  //       if (snapshot.exists() && state.partnerData.matchMade) {
+  //         console.log(`my partner ${state.partnerData.userName} maade a match!"`);
+  //         dispatch({
+  //             type: "SET_MATCH_MADE",
+  //             matchMade: true
+  //         });
+  //       }
+  //     }
+  //   );
+  //   return unsubscribe;
+  // },[state.partnerData?.matchMade]);
+  // ------------------------------------------------------------------------------
   // local solution to seeing if a user has an account already 
   // so we dont show create account on start up unecessarily
   useEffect(() => {
@@ -45,7 +61,7 @@ export default function App() {
       };
       checkAccount();
   }, []);
-
+  // ------------------------------------------------------------------------------
   useEffect(()=>{
     // listen for changes in the user's authentication state
     // returns a function that stops that listener automatically
@@ -76,6 +92,7 @@ export default function App() {
     return unsubscribe;
 
   }, []);
+  // ------------------------------------------------------------------------------
   // hook to load custom fonts
   const [fontsLoaded] = useFonts({
     'NotoCustom': require('./assets/fonts/NotoSerif-VariableFont_wdth,wght.ttf'),
@@ -86,7 +103,6 @@ export default function App() {
   if (!fontsLoaded) {
     return null;
   }
-
   // ------------------------------------------------------------------------------
   const styles = StyleSheet.create({
     container: {
@@ -104,11 +120,11 @@ export default function App() {
           edges={["top", "bottom"]}
         >
 
-     
           <HeaderComponent state={state}/>
 
           {state.matchMade ? 
             <MatchFx 
+              state={state}
               dispatch={dispatch} 
             /> : 
             null
@@ -121,7 +137,7 @@ export default function App() {
             null
           } */}
 
-          {!state.loggedIn && state.hasAccount?
+          {!state.loggedIn ?
             <LoginScreenComponent 
               dispatch={dispatch}
             /> :

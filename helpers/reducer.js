@@ -149,13 +149,15 @@ export const reducer = (state, action) => {
             return {
                 ...state, 
                 loggedIn: true,
-                uid: action.uid
+                uid: action.uid,
             }
 
         case "LOGGED_OUT" : 
             return {
                 ...state,
-                loggedIn : false
+                loggedIn : false,
+                uid: null,
+                partnerData: null,
             }
 
         case "SET_HAS_ACCOUNT" : 
@@ -180,7 +182,7 @@ export const reducer = (state, action) => {
         case "SET_MATCH_MADE" :
             return {
                 ...state,
-                matchMade : action.isMatch
+                matchMade : action.matchMade
             }
         
         default : 

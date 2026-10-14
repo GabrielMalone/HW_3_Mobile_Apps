@@ -9,10 +9,8 @@ import { onSnapshot, doc } from "firebase/firestore";
 // This holds the current user and the user they are matching things with
 // --------------------------------------------------------------------------------
 const ProfileArea = ({state, dispatch}) => {
-    // listen for partner likes remotely
+    // listen for changes in partner state remotely
     useEffect(() => {
-        // console.log("listening to local partner?", 
-        //     JSON.stringify(state.partnerData, null, 2));
         if (!state.partnerData?.uid) return;
         const unsubscribe = onSnapshot(
             doc(db, "users", state.partnerData.uid),
@@ -20,17 +18,26 @@ const ProfileArea = ({state, dispatch}) => {
             { includeMetadataChanges: true },
             (snapshot) => {
                 if (snapshot.exists()) {
+                    // not sure what doing with this anymore
                     dispatch({
                         type: "UPDATE_PARTNER_DATA",
                         partnerData: snapshot.data()
                     });
-                }
-            }
+                    // check for match here
+                    if (snapshot.data().matchMade
+                        && !state.matchMade){
+                        console.log(`MY PARTNER ${snapshot.data().userName} MADE A MATCH`);
+                        dispatch({
+                            type:"SET_MATCH_MADE",
+                            matchMade: true
+                        });
+                    }
+                }   
+            }   
         );
-
         
-
         return unsubscribe;
+
     }, [state.partnerData?.uid]);
 
 
