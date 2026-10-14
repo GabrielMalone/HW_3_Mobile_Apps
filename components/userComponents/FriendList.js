@@ -12,7 +12,7 @@ const FriendList = ({state, dispatch}) => {
         friendListContent:{
             position: "absolute",
             bottom: 110,
-            right: 89,
+            right: "22%",
             maxHeight: state.friendListMaxHeight,
         },
         friendListContainer:{
