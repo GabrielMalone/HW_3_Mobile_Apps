@@ -1,6 +1,7 @@
 import { StyleSheet, View, Image, Text } from "react-native";
 import { profilePics } from "../../data/mockUsers";
 import AddUserIcon from "../../assets/svg/addUserIcon";
+import TruchetPattern from "../../assets/svg/TruchetPattern.jsx";
 // --------------------------------------------------------------------------------
 // This box is the smallest unit that contains the user profile image
 // --------------------------------------------------------------------------------
@@ -15,7 +16,8 @@ const UserProfileBox = ({state, isUser=false, isCurPartner=false, isFriendInList
             position: "relative",
             alignItems: "center",
             backgroundColor: "#0a0a0a",
-            boxShadow: "0px 5px 15px rgba(0, 0, 0, 0.65)"
+            boxShadow: "0px 5px 15px rgba(0, 0, 0, 0.65)",
+            overflow: "hidden",
         },
         pickAPartnerbox :{
             flexDirection: "column",
@@ -24,6 +26,8 @@ const UserProfileBox = ({state, isUser=false, isCurPartner=false, isFriendInList
             alignItems : "center",
             justifyContent: "center",
             padding:  1,
+            backgroundColor: "#121111",
+            borderRadius: 10,
         },
         pickAPartnerText:{
             textAlign: "center",
@@ -41,7 +45,12 @@ const UserProfileBox = ({state, isUser=false, isCurPartner=false, isFriendInList
             fontFamily: "OpenCustom",
             fontSize: 12,
             color: "#ffffff",
-        }
+        },
+        bgPattern:{
+            position: "absolute",
+            top: 0,
+            left: 0,
+        },
     });
     // --------------------------------------------------------------------------------
     let pic = null;
@@ -63,10 +72,12 @@ const UserProfileBox = ({state, isUser=false, isCurPartner=false, isFriendInList
     return (
         <View style={sytles.profileContainer}>
             {!state.partnerData && !isFriendInList && !isUser? 
-                <View style={[sytles.pickAPartnerbox]}>
-
+                <View style={sytles.pickAPartnerbox}>
+                    <View style={sytles.bgPattern}>
+                        <TruchetPattern width={200} height={200} color="#f510bc" backgroundColor="#191818" opacity={100}/>
+                    </View>
                     <AddUserIcon size={48} color="white"/>
-                    <Text style={[sytles.pickAPartnerText]}>
+                    <Text style={sytles.pickAPartnerText}>
                         Pick a Partner!
                     </Text>
                 </View>
