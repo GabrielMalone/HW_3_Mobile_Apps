@@ -80,13 +80,15 @@ export default function RestaurantDeck({dispatch, state}) {
   // otherwise infinite loop
   // ------------------------------------------------------------------------------
   useEffect(()=>{
-      const loadRestaurants = async () => {
-          const places = await getRestaurantData();
-          setRestaurantData(places);
-      }
-      loadRestaurants();
-  },[]);
 
+    const loadRestaurants = async () => {
+      const places = await getRestaurantData();
+      setRestaurantData(places);
+    }
+
+    loadRestaurants();
+
+  },[]);
   // ------------------------------------------------------------------------------
   return (
     <RestaurantCards.Root

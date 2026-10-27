@@ -63,12 +63,11 @@ const getRestaurantData = async () => {
                         latitude: user_lat,
                         longitude: user_lon
                     },
-                radius: searchRadius
+                    radius: searchRadius
                 }
             }
         })
-    }
-    );
+    });
     // ------------------------------------------------------------------------------
     // this returns an object
     // with places key whose value is an array

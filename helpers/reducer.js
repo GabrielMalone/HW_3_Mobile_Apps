@@ -53,11 +53,11 @@ export const stateShape = {
     cardPriceLevelFontSize : 40,
     cardPriceLevelFontColor : "#FAA0A0",
     // card bg styling --------------------------------------------------------------
-    cardPatternBgColor : "#00d3f8",
-    cardPatternBgBgColor : "#0a0909",
+    cardPatternBgColor : "#a200ee",
+    cardPatternBgBgColor : "#23021e",
     cardPatternBgHeight : "100%",
     cardPatternBgWidth : "100%",
-    cardPatternBgOpacity : 0.2,
+    cardPatternBgOpacity : 0.4,
     // review styling ---------------------------------------------------------------
     cardStarRatingColor : "#770737", 
     cardStarRatingSize : 40,

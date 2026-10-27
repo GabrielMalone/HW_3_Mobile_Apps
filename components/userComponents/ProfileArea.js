@@ -40,7 +40,7 @@ const ProfileArea = ({state, dispatch}) => {
 
     }, [state.partnerData?.uid]);
 
-
+    // ----------------------------------------------------------------------------
     return (
         <View style={styles.profilesCotainer}>
 
@@ -65,7 +65,7 @@ const ProfileArea = ({state, dispatch}) => {
                     }
                 }
             >
-                <UserProfileBox state={state} isCurPartner={true}/>
+                <UserProfileBox state={state} isCurPartner={true} isFriendInList={false}/>
             </Pressable>
         </View>
     );

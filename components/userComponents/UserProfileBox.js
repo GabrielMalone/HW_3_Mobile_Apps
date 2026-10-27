@@ -1,5 +1,6 @@
 import { StyleSheet, View, Image, Text } from "react-native";
 import { profilePics } from "../../data/mockUsers";
+import AddUserIcon from "../../assets/svg/addUserIcon";
 // --------------------------------------------------------------------------------
 // This box is the smallest unit that contains the user profile image
 // --------------------------------------------------------------------------------
@@ -15,6 +16,20 @@ const UserProfileBox = ({state, isUser=false, isCurPartner=false, isFriendInList
             alignItems: "center",
             backgroundColor: "#0a0a0a",
             boxShadow: "0px 5px 15px rgba(0, 0, 0, 0.65)"
+        },
+        pickAPartnerbox :{
+            flexDirection: "column",
+            width: 100,
+            height: 120,
+            alignItems : "center",
+            justifyContent: "center",
+            padding:  1,
+        },
+        pickAPartnerText:{
+            textAlign: "center",
+            fontFamily: "OpenCustom",
+            fontSize: 12,
+            color: "#ffffff",
         },
         photo:{
             width: 100,
@@ -47,15 +62,27 @@ const UserProfileBox = ({state, isUser=false, isCurPartner=false, isFriendInList
     // --------------------------------------------------------------------------------
     return (
         <View style={sytles.profileContainer}>
-            <Image
-                source={pic}
-                width={100}
-                height={100}
-                style={sytles.photo}
-            />
-            <Text style={sytles.userName}>
-                {name}
-            </Text>
+            {!state.partnerData && !isFriendInList && !isUser? 
+                <View style={[sytles.pickAPartnerbox]}>
+
+                    <AddUserIcon size={48} color="white"/>
+                    <Text style={[sytles.pickAPartnerText]}>
+                        Pick a Partner!
+                    </Text>
+                </View>
+            :
+                <>
+                    <Image
+                        source={pic}
+                        width={100}
+                        height={100}
+                        style={sytles.photo}
+                    />
+                    <Text style={sytles.userName}>
+                        {name}
+                    </Text>
+                </>
+            }
         </View>
     );
 }

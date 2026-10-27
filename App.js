@@ -19,10 +19,6 @@ import MatchFx from './components/matchComponents/MatchFx';
 export default function App() {
   // run this to delete any local data during testing
   // AsyncStorage.removeItem("hasAccount");
-  // TO DO --
-  // set up a field to flag when two users have each other as partners
-  // once that is set, check for swipe matches
-  // then if match, notify both
   const [state, dispatch] = useReducer(reducer, stateShape);
   // ------------------------------------------------------------------------------
   // useEffect Stuff and other hooks
@@ -32,25 +28,6 @@ export default function App() {
       console.log(`current state info for ${state.userName}: ${state.matchMade}`);
       partnered(state);
   }, [state]);
-  // ------------------------------------------------------------------------------
-  // listen for changes in partner match remotely
-  // useEffect(() => {
-  //   if (!state.partnerData?.uid) return;
-  //   const unsubscribe = onSnapshot(
-  //     // dont send cached data
-  //     { includeMetadataChanges: true },
-  //     (snapshot) => {
-  //       if (snapshot.exists() && state.partnerData.matchMade) {
-  //         console.log(`my partner ${state.partnerData.userName} maade a match!"`);
-  //         dispatch({
-  //             type: "SET_MATCH_MADE",
-  //             matchMade: true
-  //         });
-  //       }
-  //     }
-  //   );
-  //   return unsubscribe;
-  // },[state.partnerData?.matchMade]);
   // ------------------------------------------------------------------------------
   // local solution to seeing if a user has an account already 
   // so we dont show create account on start up unecessarily

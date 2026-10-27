@@ -13,6 +13,7 @@ export const profilePics = {
     p10: require("../assets/profileImg/p10.png"),
     p11: require("../assets/profileImg/p11.png"),
     p12: require("../assets/profileImg/p12.png"),
+    p13: require("../assets/profileImg/p13.png"),
 };
 
 const user_1 = {
