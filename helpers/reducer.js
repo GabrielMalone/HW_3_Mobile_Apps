@@ -19,6 +19,7 @@ export const stateShape = {
     lastCardSwiped: "",
     profilePic : "",
     matchMade : false,
+    listReset : false,
 
     // we can set up colors here too and other visuals
 
@@ -54,10 +55,10 @@ export const stateShape = {
     cardPriceLevelFontColor : "#FAA0A0",
     // card bg styling --------------------------------------------------------------
     cardPatternBgColor : "#a200ee",
-    cardPatternBgBgColor : "#23021e",
+    cardPatternBgBgColor : "#030303",
     cardPatternBgHeight : "100%",
     cardPatternBgWidth : "100%",
-    cardPatternBgOpacity : 0.4,
+    cardPatternBgOpacity : 0.2,
     // review styling ---------------------------------------------------------------
     cardStarRatingColor : "#770737", 
     cardStarRatingSize : 40,
@@ -142,7 +143,9 @@ export const reducer = (state, action) => {
         case "RESET_LIKED" :
             return {
                 ...state,
-                liked : []
+                liked : [],
+                disliked: [],
+                listReset : !state.listReset,
             }
 
         case "LOGGED_IN" : 
@@ -158,6 +161,7 @@ export const reducer = (state, action) => {
                 loggedIn : false,
                 uid: null,
                 partnerData: null,
+                friendsListVisible: false,
             }
 
         case "SET_HAS_ACCOUNT" : 

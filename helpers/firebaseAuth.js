@@ -44,9 +44,11 @@ export const loginUser = async (email, password) => {
     }
 };
 // --------------------------------------------------------------------------------
-export const logOut = async () => {
+export const logOut = async (dispatch) => {
     // clears persistent login on firebase
     // also triggers dispatch(logout)
+    console.log("TRYING TO LOGOUT!!!");
+    dispatch({action: "LOGGED_OUT"});
     await signOut(auth);
 }
 // --------------------------------------------------------------------------------

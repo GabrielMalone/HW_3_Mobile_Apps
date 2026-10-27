@@ -1,6 +1,6 @@
 import { StyleSheet, View, Image, Text } from "react-native";
 import { profilePics } from "../../data/mockUsers";
-import AddUserIcon from "../../assets/svg/addUserIcon";
+import AddUserIcon from "../../assets/svg/AddUserIcon";
 import TruchetPattern from "../../assets/svg/TruchetPattern.jsx";
 // --------------------------------------------------------------------------------
 // This box is the smallest unit that contains the user profile image
@@ -74,7 +74,13 @@ const UserProfileBox = ({state, isUser=false, isCurPartner=false, isFriendInList
             {!state.partnerData && !isFriendInList && !isUser? 
                 <View style={sytles.pickAPartnerbox}>
                     <View style={sytles.bgPattern}>
-                        <TruchetPattern width={200} height={200} color="#f510bc" backgroundColor="#191818" opacity={100}/>
+                        <TruchetPattern
+                            width={200} 
+                            height={200} 
+                            color="#f510bc" 
+                            backgroundColor="#191818" 
+                            opacity={100}
+                        />
                     </View>
                     <AddUserIcon size={48} color="white"/>
                     <Text style={sytles.pickAPartnerText}>

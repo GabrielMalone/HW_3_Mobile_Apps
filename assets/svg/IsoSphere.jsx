@@ -11,6 +11,7 @@ export default function IsoSphere({
   darkColor = "#1a1a1a",
   style,
 }) {
+  // too many spots many to go through by hand
   const xml = originalSvg
     .replace(/#cccccc/gi, lightColor)
     .replace(/#1a1a1a/gi, darkColor);

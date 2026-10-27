@@ -15,6 +15,7 @@ import CreateAccountComponent from './components/loginComponents/CreateAccountCo
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import LoginScreenComponent from './components/loginComponents/LoginScreenComponent';
 import MatchFx from './components/matchComponents/MatchFx';
+import PlaceholderDeck from './components/decks/PlaceholderDeck';
 // --------------------------------------------------------------------------------
 export default function App() {
   // run this to delete any local data during testing
@@ -69,6 +70,8 @@ export default function App() {
     return unsubscribe;
 
   }, []);
+  // ------------------------------------------------------------------------------
+
   // ------------------------------------------------------------------------------
   // hook to load custom fonts
   const [fontsLoaded] = useFonts({
@@ -129,15 +132,23 @@ export default function App() {
             null
           }
           
-          <RestaurantDeck 
-            dispatch={dispatch} 
-            state={state}           
-          />
+          {!state.partnerData ? 
+            
+            <PlaceholderDeck state={state}/> :
+
+            <RestaurantDeck 
+              key={state.listReset}
+              dispatch={dispatch} 
+              state={state}           
+            />
+
+          }
 
           <ProfileArea 
             state={state}
             dispatch={dispatch}
           />
+          
         </SafeAreaView>
       </SafeAreaProvider>
     </GestureHandlerRootView>

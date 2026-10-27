@@ -1,10 +1,12 @@
-import { View, StyleSheet, Pressable } from "react-native";
+import { View, StyleSheet, Pressable, Text } from "react-native";
 import { useEffect } from 'react';
 import UserProfileBox from "./UserProfileBox.js";
 import FriendList from "./FriendList.js";
 import { logOut } from "../../helpers/firebaseAuth.js";
 import { db } from "../../helpers/firebaseConfig.js";
 import { onSnapshot, doc } from "firebase/firestore";
+import { clearLikesAndDislikes } from '../../helpers/firebaseDatabase';
+import getRestaurantData from "../../helpers/getRestaurantData";
 // --------------------------------------------------------------------------------
 // This holds the current user and the user they are matching things with
 // --------------------------------------------------------------------------------
@@ -46,7 +48,7 @@ const ProfileArea = ({state, dispatch}) => {
 
             {/*user profile */}
             <Pressable
-                onPress={logOut}
+                onPress={()=>logOut(dispatch)}
                 //onPress={()=>dispatch({type: "TOGGLE_USER_SETTINGS"})}
             >
             <UserProfileBox state={state} isUser={true}/>
@@ -67,11 +69,25 @@ const ProfileArea = ({state, dispatch}) => {
             >
                 <UserProfileBox state={state} isCurPartner={true} isFriendInList={false}/>
             </Pressable>
+
+
+            <Pressable 
+                style={styles.resetButtonStyle}
+                onPress={async ()=> {
+                    dispatch({type: "RESET_LIKED"});
+                    await clearLikesAndDislikes(state.uid);
+                    
+                }}
+            >
+                <Text style={styles.resetButtonStyle}>reset swipes</Text>
+            </Pressable>
+
         </View>
     );
 }
 // --------------------------------------------------------------------------------
 const styles = StyleSheet.create({
+
     profilesCotainer:{
         width: "100%",
         maxHeight: 125,
@@ -80,6 +96,11 @@ const styles = StyleSheet.create({
         marginTop: 10,
         position: "relative",
     },
+
+    resetButtonStyle:{
+        color: "white"
+    },
+    
 });
 // --------------------------------------------------------------------------------
 export default ProfileArea;
