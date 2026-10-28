@@ -1,8 +1,7 @@
-import React, { useMemo } from "react";
+import { useMemo } from "react";
 import { View } from "react-native";
 import { SvgXml } from "react-native-svg";
 
-// Original SVG geometry preserved.
 const originalSvg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1400 2000" width="1400" height="2000"><g transform="translate(700, 1000)"><g transform="translate(0, 0)"><g transform="translate(-600.00, -900.00) scale(1.0000) rotate(0.00)"><defs>
           <clipPath id="clip-1791745520885-3260">
             <rect x="-100" y="-100" width="200" height="200" />

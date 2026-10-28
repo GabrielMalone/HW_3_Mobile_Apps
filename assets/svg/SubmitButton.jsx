@@ -3,7 +3,6 @@ import Svg, { Path } from "react-native-svg";
 
 const SubmitButton = ({ onPress, width = 100, height = 100, color = "#00d9ff" }) => {
 
-
     const styles = StyleSheet.create({
         
         button: {

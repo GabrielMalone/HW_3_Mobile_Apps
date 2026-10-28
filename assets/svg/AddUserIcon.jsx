@@ -1,6 +1,5 @@
 import Svg, { Path, G, Circle } from "react-native-svg";
 
-// Icon: Add User
 export default function AddUserIcon({ size = 24, color = "black" }) {
   return (
     <Svg width={size} height={size} viewBox="0 0 24 24">

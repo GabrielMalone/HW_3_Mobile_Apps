@@ -9,7 +9,6 @@ const Card = ({data, state}) => {
   const styles = StyleSheet.create({
 
     scrollContainer: {
-
       borderRadius: 15,
       borderWidth: !state.userSettingsVisible ? 1 : 0,
       borderColor: !state.userSettingsVisible ? state.cardBorderColor : "#00000000",

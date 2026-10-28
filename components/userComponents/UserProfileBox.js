@@ -1,13 +1,22 @@
-import { StyleSheet, View, Image, Text } from "react-native";
+import { StyleSheet, View, Image, Text, Pressable } from "react-native";
 import { profilePics } from "../../data/mockUsers";
 import AddUserIcon from "../../assets/svg/AddUserIcon";
 import TruchetPattern from "../../assets/svg/TruchetPattern.jsx";
+import SettingsIcon from "../../assets/svg/SettingsIcon.jsx";
 // --------------------------------------------------------------------------------
 // This box is the smallest unit that contains the user profile image
 // --------------------------------------------------------------------------------
+const SettingsButton = ({styles}) => {
+    return (
+        <Pressable style={styles.settingsIconStyle}>
+            <SettingsIcon color="#FFFFFF" size={36}/>
+        </Pressable> 
+    );
+}
+// --------------------------------------------------------------------------------
 const UserProfileBox = ({state, isUser=false, isCurPartner=false, isFriendInList=false}) => {
 
-    const sytles = StyleSheet.create({
+    const styles = StyleSheet.create({
         profileContainer: {
             borderRadius: 10,
             borderColor: "#ffffff",
@@ -51,6 +60,11 @@ const UserProfileBox = ({state, isUser=false, isCurPartner=false, isFriendInList
             top: 0,
             left: 0,
         },
+        settingsIconStyle : {
+            position: "absolute",
+            top: 5,
+            left: 5,
+        },
     });
     // --------------------------------------------------------------------------------
     let pic = null;
@@ -70,10 +84,10 @@ const UserProfileBox = ({state, isUser=false, isCurPartner=false, isFriendInList
     }
     // --------------------------------------------------------------------------------
     return (
-        <View style={sytles.profileContainer}>
+        <View style={styles.profileContainer}>
             {!state.partnerData && !isFriendInList && !isUser? 
-                <View style={sytles.pickAPartnerbox}>
-                    <View style={sytles.bgPattern}>
+                <View style={styles.pickAPartnerbox}>
+                    <View style={styles.bgPattern}>
                         <TruchetPattern
                             width={200} 
                             height={200} 
@@ -83,7 +97,7 @@ const UserProfileBox = ({state, isUser=false, isCurPartner=false, isFriendInList
                         />
                     </View>
                     <AddUserIcon size={48} color="white"/>
-                    <Text style={sytles.pickAPartnerText}>
+                    <Text style={styles.pickAPartnerText}>
                         Pick a Partner!
                     </Text>
                 </View>
@@ -93,9 +107,10 @@ const UserProfileBox = ({state, isUser=false, isCurPartner=false, isFriendInList
                         source={pic}
                         width={100}
                         height={100}
-                        style={sytles.photo}
+                        style={styles.photo}
                     />
-                    <Text style={sytles.userName}>
+                    {isUser ? <SettingsButton styles={styles}/>: null}
+                    <Text style={styles.userName}>
                         {name}
                     </Text>
                 </>

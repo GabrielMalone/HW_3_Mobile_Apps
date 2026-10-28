@@ -5,8 +5,6 @@ import FriendList from "./FriendList.js";
 import { logOut } from "../../helpers/firebaseAuth.js";
 import { db } from "../../helpers/firebaseConfig.js";
 import { onSnapshot, doc } from "firebase/firestore";
-import { clearLikesAndDislikes } from '../../helpers/firebaseDatabase';
-import ResetIcon  from '../../assets/svg/ResetIcon.jsx'
 // --------------------------------------------------------------------------------
 // This holds the current user and the user they are matching things with
 // --------------------------------------------------------------------------------
@@ -79,31 +77,6 @@ const ProfileArea = ({state, dispatch}) => {
                 : null
             }
 
-            {/*reset deck and likes and dislikes */}
-            {state.partnerData ?
-                <Pressable 
-                    style={styles.resetButtonStyle}
-                    onPress={async ()=> {
-                        dispatch({type: "RESET_LIKED"});
-                        await clearLikesAndDislikes(state.uid);
-                    }}
-                >
-                    {/*pressable has press information in its props
-                    we can use that to get if user holding down button*/}
-                    {
-                        ({pressed})=>{
-                            return (
-                                <>
-                                    <ResetIcon color={pressed ? "lime" : "white"} size={48}/>
-                                    <Text style={styles.resetButtonStyle}>restart!</Text>
-                                </>
-                            );
-                        }
-                    }
-                </Pressable>  
-                :  
-                null
-            }
             
 
             {/*partner profile */}

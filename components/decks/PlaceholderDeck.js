@@ -41,8 +41,7 @@ function PlaceholderDeck({dispatch, state}) {
       alignSelf: "center",
       backgroundColor: "#000000",
       
-      width: "90%",
-      height: "90%",
+      width: "80%",
       
       borderWidth:2,
       borderColor: "white",
