@@ -93,6 +93,13 @@ export const stateShape = {
 
     matchFxBgColor : "#FFFFFF",
 
+    // ------------------------------------------------------------------------------
+    // Button Press Styling
+    // ------------------------------------------------------------------------------
+
+    buttonOffPressColor : "#FFFFFF",
+    buttonOnPressColor  : "#0dff00",
+
 };
 // ------------------------------------------------------------------------------
 export const reducer = (state, action) => {

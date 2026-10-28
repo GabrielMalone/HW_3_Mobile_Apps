@@ -12,17 +12,17 @@ const FriendList = ({state, dispatch}) => {
         friendListContent:{
             position: "absolute",
             bottom: 110,
-            right: "22%",
+            right: "10.6%",
             maxHeight: state.friendListMaxHeight,
         },
         friendListContainer:{
             justifyContent: "center",
             padding: 0,
             gap: 10,
-            borderTopWidth :1,
-            borderBottomWidth: 1,
+            borderTopWidth :0,
+            borderBottomWidth: 0,
             borderColor: "white",
-            backgroundColor: state.friendListBgColor,
+            backgroundColor: "#ff00cc12",
         }
     });
     // ----------------------------------------------------------------------------

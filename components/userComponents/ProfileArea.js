@@ -6,11 +6,31 @@ import { logOut } from "../../helpers/firebaseAuth.js";
 import { db } from "../../helpers/firebaseConfig.js";
 import { onSnapshot, doc } from "firebase/firestore";
 import { clearLikesAndDislikes } from '../../helpers/firebaseDatabase';
-import getRestaurantData from "../../helpers/getRestaurantData";
+import ResetIcon  from '../../assets/svg/ResetIcon.jsx'
 // --------------------------------------------------------------------------------
 // This holds the current user and the user they are matching things with
 // --------------------------------------------------------------------------------
 const ProfileArea = ({state, dispatch}) => {
+    // ----------------------------------------------------------------------------
+    const styles = StyleSheet.create({
+
+        profilesCotainer:{
+            width: "100%",
+            maxHeight: 125,
+            flexDirection: "row",
+            justifyContent: "center",
+            alignItems: "center",
+            marginTop: 10,
+            position: "relative",
+            gap: 20,
+        },
+
+        resetButtonStyle:{
+            color: "#FFFFFF"
+        },
+        
+    });
+    // ----------------------------------------------------------------------------
     // listen for changes in partner state remotely
     useEffect(() => {
         if (!state.partnerData?.uid) return;
@@ -41,7 +61,6 @@ const ProfileArea = ({state, dispatch}) => {
         return unsubscribe;
 
     }, [state.partnerData?.uid]);
-
     // ----------------------------------------------------------------------------
     return (
         <View style={styles.profilesCotainer}>
@@ -60,6 +79,33 @@ const ProfileArea = ({state, dispatch}) => {
                 : null
             }
 
+            {/*reset deck and likes and dislikes */}
+            {state.partnerData ?
+                <Pressable 
+                    style={styles.resetButtonStyle}
+                    onPress={async ()=> {
+                        dispatch({type: "RESET_LIKED"});
+                        await clearLikesAndDislikes(state.uid);
+                    }}
+                >
+                    {/*pressable has press information in its props
+                    we can use that to get if user holding down button*/}
+                    {
+                        ({pressed})=>{
+                            return (
+                                <>
+                                    <ResetIcon color={pressed ? "lime" : "white"} size={48}/>
+                                    <Text style={styles.resetButtonStyle}>restart!</Text>
+                                </>
+                            );
+                        }
+                    }
+                </Pressable>  
+                :  
+                null
+            }
+            
+
             {/*partner profile */}
             <Pressable
                 onPress={ async ()=> {
@@ -70,37 +116,8 @@ const ProfileArea = ({state, dispatch}) => {
                 <UserProfileBox state={state} isCurPartner={true} isFriendInList={false}/>
             </Pressable>
 
-
-            <Pressable 
-                style={styles.resetButtonStyle}
-                onPress={async ()=> {
-                    dispatch({type: "RESET_LIKED"});
-                    await clearLikesAndDislikes(state.uid);
-                    
-                }}
-            >
-                <Text style={styles.resetButtonStyle}>reset swipes</Text>
-            </Pressable>
-
         </View>
     );
 }
-// --------------------------------------------------------------------------------
-const styles = StyleSheet.create({
-
-    profilesCotainer:{
-        width: "100%",
-        maxHeight: 125,
-        flexDirection: "row",
-        justifyContent: "center",
-        marginTop: 10,
-        position: "relative",
-    },
-
-    resetButtonStyle:{
-        color: "white"
-    },
-    
-});
 // --------------------------------------------------------------------------------
 export default ProfileArea;

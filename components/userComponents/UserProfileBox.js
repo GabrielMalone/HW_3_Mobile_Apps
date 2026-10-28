@@ -77,9 +77,9 @@ const UserProfileBox = ({state, isUser=false, isCurPartner=false, isFriendInList
                         <TruchetPattern
                             width={200} 
                             height={200} 
-                            color="#f510bc" 
+                            color="#10d7f5" 
                             backgroundColor="#191818" 
-                            opacity={100}
+                            opacity={0.5}
                         />
                     </View>
                     <AddUserIcon size={48} color="white"/>

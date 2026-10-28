@@ -14,14 +14,22 @@ const placeholderCards = createSwipeDeck({
 function PlaceholderDeck({dispatch, state}) {
 
   // instruction cards before partner is picked
+
+  // ok here we need to have it so that once swiped through all of these, restaurants load regardless partnered or ont
+  // will need to keep track of if this is a solo swiping adventure or a partner swiping adventure
+  
   const cards = [
-    {text: "please pick a partner...", id: 0},
-    {text: "once you have a partner...", id: 1},
-    {text: "that same partner needs to select you as their partner...", id: 2},
-    {text: "then you can both start swiping!", id: 3},
-    {text: "swipe left to say NO to a restaurant", id: 4},
-    {text: "swipe right to say YES to a restaurant", id: 5},
-    {text: "if you both swipe right, we'll let you know!", id: 6},
+
+    {text: "either pick a partner...", id: 0},
+    {text: "or start swiping solo...", id: 1},
+    {text: "if you do pick a partner...", id: 2},
+    {text: "that same partner needs to select you as their partner...", id: 3},
+    {text: "then you can both start swiping!", id: 4},
+    {text: "either way, swipe left to say NO to a restaurant", id: 5},
+    {text: "swipe right to say YES to a restaurant", id: 6},
+    {text: "if you and a partner both swipe right, we'll let you know!", id: 7},
+    {text: "and if you're swiping alone or with a partner, all your likes will be saved!", id: 8},
+
   ];
 
   // ------------------------------------------------------------------------------
