@@ -1,8 +1,19 @@
 // https://developers.google.com/maps/documentation/places/web-service/nearby-search
 
 import * as Location from "expo-location";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 // ------------------------------------------------------------------------------
 const getRestaurantData = async () => {
+
+    // if cached let's not waste api $$$
+    // will need to modify this in the future to clear cache
+    //  on new location settings/stale time
+    const cached = await AsyncStorage.getItem("googlePlacesCache");
+
+    if (cached){
+        console.log("Using cached Google Places data:", JSON.parse(cached));
+        return JSON.parse(cached).places;       
+    }
 
     const GOOGLE_API_KEY = process.env.EXPO_PUBLIC_GOOGLE_API_KEY;
     // settings
@@ -39,9 +50,11 @@ const getRestaurantData = async () => {
     //  29.951065
     // -90.071533
     // ------------------------------------------------------------------------------
-    const location = await Location.getCurrentPositionAsync({});
-    const user_lat = location.coords.latitude;
-    const user_lon = location.coords.longitude;
+    // const location = await Location.getCurrentPositionAsync({});
+    // const user_lat = location.coords.latitude;
+    // const user_lon = location.coords.longitude;
+    const user_lat = 29.951065;
+    const user_lon = -90.071533;
     // ------------------------------------------------------------------------------
     // get the data from google
     // ------------------------------------------------------------------------------
@@ -79,6 +92,7 @@ const getRestaurantData = async () => {
         console.error("Google Places API Error:", data);
         return;
     }
+    await AsyncStorage.setItem("googlePlacesCache", JSON.stringify(data));
     // ------------------------------------------------------------------------------
     return data.places;
 }
