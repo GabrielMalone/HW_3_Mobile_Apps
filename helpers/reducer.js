@@ -20,6 +20,7 @@ export const stateShape = {
     profilePic : "",
     matchMade : false,
     listReset : false,
+    swipingSolo : false,
 
     // we can set up colors here too and other visuals
 
@@ -194,6 +195,13 @@ export const reducer = (state, action) => {
             return {
                 ...state,
                 matchMade : action.matchMade
+            }
+
+
+        case "SWIPING_SOLO" :
+            return {
+                ...state, 
+                swipingSolo : action.swipingSolo
             }
         
         default : 

@@ -131,9 +131,9 @@ export default function App() {
             null
           }
           
-          {!state.partnerData ? 
+          {!state.partnerData && !state.swipingSolo ? 
             
-            <PlaceholderDeck state={state}/> :
+            <PlaceholderDeck state={state} dispatch={dispatch}/> :
 
             <RestaurantDeck 
               key={state.listReset}

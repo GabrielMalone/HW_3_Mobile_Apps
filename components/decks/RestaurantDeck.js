@@ -97,7 +97,7 @@ export default function RestaurantDeck({dispatch, state}) {
       allowedDirections={["left", "right"]}
       visibleCardCount={3}
     >
-      <RestaurantCards.Card interactive>
+      <RestaurantCards.Card interactive={true}>
         {({ item }) => <Card data={item} state={state}/>}
       </RestaurantCards.Card>
     </RestaurantCards.Root>

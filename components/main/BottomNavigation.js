@@ -126,11 +126,12 @@ const BottomNavigation = ({state, dispatch}) => {
             borderRadius : 10,
             alignSelf: "center",
             marginTop: 10,
-
+            padding: 10,
             gap: 20,
 
             flexDirection: "row",
             justifyContent: "center",
+            alignItems: "center"
 
         },
 
