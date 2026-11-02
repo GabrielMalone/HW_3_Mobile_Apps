@@ -55,7 +55,7 @@ const ProfileArea = ({state, dispatch}) => {
                 }   
             }   
         );
-        
+       
         return unsubscribe;
 
     }, [state.partnerData?.uid]);

@@ -1,5 +1,4 @@
 import { FlatList, StyleSheet, Pressable } from "react-native";
-import { useEffect } from "react";
 import UserProfileBox from "./UserProfileBox.js";
 import { clearLikesAndDislikes, updateUserPartnerInfo } from "../../helpers/firebaseDatabase.js";
 
@@ -33,10 +32,15 @@ const FriendList = ({state, dispatch}) => {
                 // what happens when click on a friend
                 onPress={ async ()=>{
                     dispatch({
-                        type:"SET_PARTNER", 
+                        type: "SET_PARTNER", 
                         partnerData: profileData
                     });
-                    dispatch({type:"TOGGLE_FRIENDS_LIST"});
+                    dispatch({
+                        type : "RESET_LIKED"
+                    });
+                    dispatch({
+                        type: "TOGGLE_FRIENDS_LIST"
+                    });
                     // tell backend I have this partner
                     await updateUserPartnerInfo(state.uid, profileData.uid);
                     // reset likes and dislikes for new round of matching

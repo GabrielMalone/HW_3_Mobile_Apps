@@ -18,6 +18,15 @@ import MatchFx from './components/matchComponents/MatchFx';
 import PlaceholderDeck from './components/decks/PlaceholderDeck';
 import BottomNavigation from './components/main/BottomNavigation';
 // --------------------------------------------------------------------------------
+// TO DO 
+// 1 - set up partner matching awareness. list of people who have me as their selected partner. 
+// 2 - make both parties aware when parnter matched (could like golden both avatars or someething)
+// 2a - if I pick a partner and they have not yet selected me as a partner, indicate that as well (maybe like a greyed out avatar or red outline or something)
+// 3 - otherwise make indicator for solo swiping 
+// 4 - set up favorites page for solo swipes and partner swipes. (maybe array of mini cards showing your likes)
+// 5 - undo swipe button (remove from database likes, should be easy just always track last card swiped)
+// 6 - share option. like you're swiping solo but want to share a restaurant with someone
+// --------------------------------------------------------------------------------
 export default function App() {
   // run this to delete any local data during testing
   // AsyncStorage.removeItem("hasAccount");
@@ -27,7 +36,6 @@ export default function App() {
   // ------------------------------------------------------------------------------
   // for debuggins stsate
   useEffect(() => {
-      console.log(`current state info for ${state.userName}: ${state.matchMade}`);
       partnered(state);
   }, [state]);
   // ------------------------------------------------------------------------------

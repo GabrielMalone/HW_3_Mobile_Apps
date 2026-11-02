@@ -101,7 +101,7 @@ const SearchSettingsButton = ({styles}) => {
                         />
                         <Text 
                             style={styles.HomeButtonStyleText}>
-                                location  
+                                radius
                         </Text>
                         </>
                     );
