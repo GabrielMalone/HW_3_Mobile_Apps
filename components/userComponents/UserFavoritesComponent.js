@@ -55,13 +55,15 @@ const UserFavoritesComponent = ({dispatch, state}) => {
     // between long-term favs and session favs
     return (
         <View style={styles.userSettingsContainer}>
+            <Text style={styles.profileHeader}>
+                Favorites
+            </Text>
             <FlatList
                 data={myLikedRestaurantData}
                 keyExtractor={(item) => item.id}
                 numColumns={3}
                 renderItem={
                     ({item})=>{
-                        console.log(item);
                         return (
                             <MiniCard data={item} state={state}/>
                         );

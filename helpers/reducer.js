@@ -113,9 +113,6 @@ export const reducer = (state, action) => {
             return {
                 ...state, 
                 friendsListVisible: !state.friendsListVisible,
-                userFavoritesVisible: false,
-                userSettingsVisible: false,
-                
             }
 
         case "TOGGLE_USER_SETTINGS" :

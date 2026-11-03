@@ -100,7 +100,7 @@ function PlaceholderDeck({dispatch, state}) {
     <placeholderCards.Root
       data={cards}
       getKey={(card) => card.id}
-      allowedDirections={["up"]}
+      allowedDirections={["right","left","up"]}
       visibleCardCount={3}
     >
       <placeholderCards.Card interactive={true}>

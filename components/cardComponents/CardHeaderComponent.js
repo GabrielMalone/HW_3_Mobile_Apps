@@ -19,7 +19,7 @@ const CardHeaderComponent = ({data, state, mini=false}) => {
     priceLevel:{
       fontFamily: state.cardPriceLevelFontFace,
       fontSize: !mini ? state.cardPriceLevelFontSize : 16,
-      color: !mini ? state.cardPriceLevelFontColor : "#00ffcc",
+      color: !mini ? "#00ffcc" : "#00ffcc",
     },
     stars:{
       margin: 10
@@ -55,7 +55,7 @@ const CardHeaderComponent = ({data, state, mini=false}) => {
           enableHalfStar={true}
           step="quarter"
           starSize={!mini ? state.cardStarRatingSize : 12}
-          color={!mini ? state.cardStarRatingColor : "#00ffe5"}
+          color={!mini ? "#FFFFFF" : "#00ffe5"}
       />
 
     </>
