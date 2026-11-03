@@ -21,7 +21,7 @@ const UserFavoritesComponent = ({dispatch, state}) => {
             setMyLikedRestaurantData(likes);
         }
         loadRestaurants();
-    },[]);
+    },[state?.liked]);
     // ----------------------------------------------------------------------------
     // from just the saved id's get the full restaurant data
     // ----------------------------------------------------------------------------
