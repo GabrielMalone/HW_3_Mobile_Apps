@@ -3,7 +3,7 @@
 import * as Location from "expo-location";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 // ------------------------------------------------------------------------------
-const getRestaurantData = async () => {
+const getRestaurantData = async (dispatch) => {
 
     // if cached let's not waste api $$$
     // will need to modify this in the future to clear cache
@@ -12,6 +12,7 @@ const getRestaurantData = async () => {
 
     if (cached){
         // console.log("Using cached Google Places data:", JSON.parse(cached));
+        dispatch({type: "SET_LOCAL_RESTAURANT_DATA", localRestaurantData: JSON.parse(cached).places});
         return JSON.parse(cached).places;       
     }
 

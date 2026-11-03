@@ -9,7 +9,7 @@ import { auth } from './helpers/firebaseConfig';
 import RestaurantDeck from './components/decks/RestaurantDeck';
 import ProfileArea from './components/userComponents/ProfileArea';
 import HeaderComponent from './components/main/HeaderComponent';
-import UserSettingsComponent from './components/userComponents/userSettings/UserSettingsComponent';
+import UserSettingsComponent from './components/userComponents/UserSettingsComponent';
 import { getUserData, getFriendsData, partnered } from './helpers/firebaseDatabase';
 import CreateAccountComponent from './components/loginComponents/CreateAccountComponent';
 import AsyncStorage from "@react-native-async-storage/async-storage";
@@ -17,6 +17,7 @@ import LoginScreenComponent from './components/loginComponents/LoginScreenCompon
 import MatchFx from './components/matchComponents/MatchFx';
 import PlaceholderDeck from './components/decks/PlaceholderDeck';
 import BottomNavigation from './components/main/BottomNavigation';
+import UserFavoritesComponent from './components/userComponents/UserFavoritesComponent';
 // --------------------------------------------------------------------------------
 // TO DO 
 // 1 - set up partner matching awareness. list of people who have me as their selected partner. 
@@ -133,6 +134,14 @@ export default function App() {
 
           {state.userSettingsVisible ?
             <UserSettingsComponent
+              state={state} 
+              dispatch={dispatch}
+            /> :
+            null
+          }
+
+          {state.userFavoritesVisible ?
+            <UserFavoritesComponent
               state={state} 
               dispatch={dispatch}
             /> :

@@ -82,12 +82,12 @@ export default function RestaurantDeck({dispatch, state}) {
   useEffect(()=>{
 
     const loadRestaurants = async () => {
-      const places = await getRestaurantData();
+      const places = await getRestaurantData(dispatch);
       setRestaurantData(places);
     }
 
     loadRestaurants();
-
+    
   },[]);
   // ------------------------------------------------------------------------------
   return (

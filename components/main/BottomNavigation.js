@@ -5,6 +5,11 @@ import HomeIcon from "../../assets/svg/HomeIcon";
 import GlobeSearchIcon from "../../assets/svg/GlobeSeachIcon";
 import SettingsIcon from "../../assets/svg/SettingsIcon";
 import { clearLikesAndDislikes } from "../../helpers/firebaseDatabase";
+
+// --------------------------------------------------------------------------------
+
+const buttonColor = "dimgray";
+
 // --------------------------------------------------------------------------------
 const ResetButton = ({styles, state, dispatch}) => {
     return (
@@ -22,7 +27,7 @@ const ResetButton = ({styles, state, dispatch}) => {
                     return (
                         <>
                         <ResetIcon 
-                            color={pressed ? "lightgreen" : "white"} 
+                            color={pressed ? "lightgreen" : buttonColor} 
                             size={28}
                         />
                         <Text 
@@ -37,17 +42,18 @@ const ResetButton = ({styles, state, dispatch}) => {
     );
 }
 // --------------------------------------------------------------------------------
-const FavoritesButton = ({styles}) => {
+const FavoritesButton = ({styles, dispatch}) => {
     return (
         <Pressable
             style={styles.buttonStyle}
+            onPress={()=>dispatch({type: "TOGGLE_USER_FAVORITES"})}
         >
             {
                 ({pressed})=>{
                     return (
                         <>
                         <HeartIcon 
-                            color={pressed ? "lightgreen" : "white"} 
+                            color={pressed ? "lightgreen" : buttonColor} 
                             size={28}
                         />
                         <Text 
@@ -72,7 +78,7 @@ const HomeButton = ({styles}) => {
                     return (
                         <>
                         <HomeIcon 
-                            color={pressed ? "lightgreen" : "white"} 
+                            color={pressed ? "lightgreen" : buttonColor} 
                             size={28}
                         />
                         <Text 
@@ -97,7 +103,7 @@ const SearchSettingsButton = ({styles}) => {
                     return (
                         <>
                         <GlobeSearchIcon 
-                            color={pressed ? "lightgreen" : "white"} 
+                            color={pressed ? "lightgreen" : buttonColor} 
                             size={28}
                         />
                         <Text 
@@ -125,12 +131,12 @@ const SettingsButton = ({dispatch, styles}) => {
                     return (
                         <>
                         <SettingsIcon 
-                            color={pressed ? "lightgreen" : "white"} 
+                            color={pressed ? "lightgreen" : buttonColor} 
                             size={28}
                         />
                         <Text 
                             style={styles.buttonText}>
-                                profile
+                                logout
                         </Text>
                         </>
                     );
@@ -148,14 +154,13 @@ const BottomNavigation = ({state, dispatch}) => {
 
             minHeight: 50,
             maxHeight :50,
-            width: "80%",
+            width: "100%",
             backgroundColor: "#ffffff00",
             borderColor: "#343734",
-            borderWidth : 1,
-            borderRadius : 10,
+            borderTopWidth: 1,
             alignSelf: "center",
             marginTop: 10,
-            padding: 10,
+            paddingTop: 30,
             gap: 20,
 
             flexDirection: "row",
@@ -188,6 +193,7 @@ const BottomNavigation = ({state, dispatch}) => {
             />
             <FavoritesButton 
                 styles={styles}
+                dispatch={dispatch}
             />
             <ResetButton 
                 styles={styles} 

@@ -36,6 +36,15 @@ export const setUserLikes = async (uid, likedItemId) => {
     await updateDoc(userRef, {liked: arrayUnion(likedItemId)});
 }
 // --------------------------------------------------------------------------------
+export const getMyLikes = async (state) => {
+    const userRef = doc(db, "users", state.uid);
+    const userLikes = await getDoc(userRef);
+    if (userLikes.exists()){
+        return userLikes.data().liked;
+    }
+    return null;
+}
+// --------------------------------------------------------------------------------
 export const setUserDislikes = async (uid, likedItemId) => {
     const userRef = doc(db, "users", uid);
     await updateDoc(userRef, {disliked: arrayUnion(likedItemId)});

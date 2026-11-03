@@ -1,18 +1,20 @@
 import { View, StyleSheet, Text } from "react-native";
-
+// --------------------------------------------------------------------------------
 const UserSettingsComponent = ({state, dispatch}) => {
 
     const styles = StyleSheet.create({
         userSettingsContainer : {
-            width : "80%",
-            height: "75%",
-            borderWidth : 1,
-            borderColor: "#ffffff87",
+
+            position: "absolute",
+            top: 110,
+
+            width : "100%",
+            height: "69%",
             backgroundColor: "#0f0f0f",
-            borderRadius: 10,
             alignSelf: "center",
-            
+      
             alignItems: "center",
+            zIndex : 10,
 
         },
         profileHeader:{
@@ -24,17 +26,15 @@ const UserSettingsComponent = ({state, dispatch}) => {
 
     });
 
-    console.log("we are here!");
-
     return (
         <View style={styles.userSettingsContainer}>
             <Text style={styles.profileHeader}>
-                Profile Settings
+                User Settings
             </Text>
         </View>
     );
 
 }
-
+// --------------------------------------------------------------------------------
 export default UserSettingsComponent;
 

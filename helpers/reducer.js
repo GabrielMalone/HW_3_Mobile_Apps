@@ -8,6 +8,7 @@ export const stateShape = {
     uid: null,
     friendsListVisible: false,
     userSettingsVisible: false,
+    userFavoritesVisible: false,
     searchRadius: 1000,
     curLocation: "",
     friends : [],
@@ -21,6 +22,8 @@ export const stateShape = {
     matchMade : false,
     listReset : false,
     swipingSolo : false,
+
+    localRestaurantData : null,
 
     // we can set up colors here too and other visuals
 
@@ -109,13 +112,27 @@ export const reducer = (state, action) => {
         case "TOGGLE_FRIENDS_LIST" : 
             return {
                 ...state, 
-                friendsListVisible: !state.friendsListVisible
+                friendsListVisible: !state.friendsListVisible,
+                userFavoritesVisible: false,
+                userSettingsVisible: false,
+                
             }
 
         case "TOGGLE_USER_SETTINGS" :
             return {
                 ...state,
-                userSettingsVisible: !state.userSettingsVisible
+                userSettingsVisible: !state.userSettingsVisible,
+                friendsListVisible: false,
+                userFavoritesVisible: false,
+    
+            }
+
+        case "TOGGLE_USER_FAVORITES" :
+            return {
+                ...state,
+                userFavoritesVisible: !state.userFavoritesVisible,
+                friendsListVisible: false,
+                userSettingsVisible: false,
             }
 
         case "SET_PARTNER" : 
@@ -170,6 +187,8 @@ export const reducer = (state, action) => {
                 uid: null,
                 partnerData: null,
                 friendsListVisible: false,
+                userFavoritesVisible: false,
+                userSettingsVisible: false,
             }
 
         case "SET_HAS_ACCOUNT" : 
@@ -202,6 +221,12 @@ export const reducer = (state, action) => {
             return {
                 ...state, 
                 swipingSolo : action.swipingSolo
+            }
+
+        case "SET_LOCAL_RESTAURANT_DATA" :
+            return {
+                ...state,
+                localRestaurantData : action.localRestaurantData
             }
         
         default : 
