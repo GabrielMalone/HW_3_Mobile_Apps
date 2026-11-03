@@ -28,13 +28,13 @@ function PlaceholderDeck({dispatch, state}) {
   const cards = [
 
     {text: "pick a partner...", id: 0},
-    // {text: "or start swiping solo...", id: 1},
-    // {text: "if you do pick a partner...", id: 2},
-    // {text: "that same partner needs to select you as their partner...", id: 3},
-    // {text: "then you can both start swiping!", id: 4},
-    // {text: "swipe left to say NO to a restaurant", id: 5},
-    // {text: "swipe right to say YES to a restaurant", id: 6},
-    // {text: "if you and a partner both swipe right, we'll let you know!", id: 7},
+    {text: "or start swiping solo...", id: 1},
+    {text: "if you do pick a partner...", id: 2},
+    {text: "that same partner needs to select you as their partner...", id: 3},
+    {text: "then you can both start swiping!", id: 4},
+    {text: "swipe left to say NO to a restaurant", id: 5},
+    {text: "swipe right to say YES to a restaurant", id: 6},
+    {text: "if you and a partner both swipe right, we'll let you know!", id: 7},
 
   ];
 
@@ -100,7 +100,7 @@ function PlaceholderDeck({dispatch, state}) {
     <placeholderCards.Root
       data={cards}
       getKey={(card) => card.id}
-      allowedDirections={["left", "right"]}
+      allowedDirections={["up"]}
       visibleCardCount={3}
     >
       <placeholderCards.Card interactive={true}>

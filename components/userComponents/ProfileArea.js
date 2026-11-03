@@ -65,8 +65,7 @@ const ProfileArea = ({state, dispatch}) => {
 
             {/*user profile */}
             <Pressable
-                onPress={()=>logOut(dispatch)}
-                //onPress={()=>dispatch({type: "TOGGLE_USER_SETTINGS"})}
+                onPress={()=>dispatch({type: "TOGGLE_USER_SETTINGS"})}
             >
             <UserProfileBox state={state} isUser={true}/>
             </Pressable>
@@ -76,9 +75,6 @@ const ProfileArea = ({state, dispatch}) => {
                 <FriendList state={state} dispatch={dispatch}/> 
                 : null
             }
-
-            
-
             {/*partner profile */}
             <Pressable
                 onPress={ async ()=> {

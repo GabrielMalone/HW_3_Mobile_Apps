@@ -109,7 +109,6 @@ const UserProfileBox = ({state, isUser=false, isCurPartner=false, isFriendInList
                         height={100}
                         style={styles.photo}
                     />
-                    {isUser ? <SettingsButton styles={styles}/>: null}
                     <Text style={styles.userName}>
                         {name}
                     </Text>

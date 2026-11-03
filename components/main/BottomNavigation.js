@@ -3,12 +3,13 @@ import ResetIcon from "../../assets/svg/ResetIcon";
 import HeartIcon from "../../assets/svg/HeartIcon";
 import HomeIcon from "../../assets/svg/HomeIcon";
 import GlobeSearchIcon from "../../assets/svg/GlobeSeachIcon";
+import SettingsIcon from "../../assets/svg/SettingsIcon";
 import { clearLikesAndDislikes } from "../../helpers/firebaseDatabase";
 // --------------------------------------------------------------------------------
 const ResetButton = ({styles, state, dispatch}) => {
     return (
         <Pressable 
-            style={styles.ResetButtonStyle}
+            style={styles.buttonStyle}
             onPress={async ()=> {
                 dispatch({type: "RESET_LIKED"});
                 await clearLikesAndDislikes(state.uid);
@@ -21,11 +22,11 @@ const ResetButton = ({styles, state, dispatch}) => {
                     return (
                         <>
                         <ResetIcon 
-                            color={pressed ? "lime" : "white"} 
+                            color={pressed ? "lightgreen" : "white"} 
                             size={28}
                         />
                         <Text 
-                            style={styles.ResetButtonStyleText}>
+                            style={styles.buttonText}>
                                 reset  
                         </Text>
                         </>
@@ -39,18 +40,18 @@ const ResetButton = ({styles, state, dispatch}) => {
 const FavoritesButton = ({styles}) => {
     return (
         <Pressable
-            style={styles.FavoritesButtonStyle}
+            style={styles.buttonStyle}
         >
             {
                 ({pressed})=>{
                     return (
                         <>
                         <HeartIcon 
-                            color={pressed ? "pink" : "white"} 
+                            color={pressed ? "lightgreen" : "white"} 
                             size={28}
                         />
                         <Text 
-                            style={styles.FavoritesButtonStyleText}>
+                            style={styles.buttonText}>
                                 favorites  
                         </Text>
                         </>
@@ -64,18 +65,18 @@ const FavoritesButton = ({styles}) => {
 const HomeButton = ({styles}) => {
     return (
         <Pressable
-            style={styles.HomeButtonStyle}
+            style={styles.buttonText}
         >
             {
                 ({pressed})=>{
                     return (
                         <>
                         <HomeIcon 
-                            color={pressed ? "yellow" : "white"} 
+                            color={pressed ? "lightgreen" : "white"} 
                             size={28}
                         />
                         <Text 
-                            style={styles.HomeButtonStyleText}>
+                            style={styles.buttonText}>
                                 home  
                         </Text>
                         </>
@@ -89,19 +90,47 @@ const HomeButton = ({styles}) => {
 const SearchSettingsButton = ({styles}) => {
     return (
         <Pressable
-            style={styles.HomeButtonStyle}
+            style={styles.buttonStyle}
         >
             {
                 ({pressed})=>{
                     return (
                         <>
                         <GlobeSearchIcon 
-                            color={pressed ? "blue" : "white"} 
+                            color={pressed ? "lightgreen" : "white"} 
                             size={28}
                         />
                         <Text 
-                            style={styles.HomeButtonStyleText}>
+                            style={styles.buttonText}>
                                 radius
+                        </Text>
+                        </>
+                    );
+                }
+            }
+        </Pressable>
+    ); 
+}
+// --------------------------------------------------------------------------------
+const SettingsButton = ({dispatch, styles}) => {
+    return (
+        <Pressable
+            style={styles.buttonStyle}
+            onPress={()=>{
+                dispatch({type: "LOGGED_OUT"});
+            }}
+        >
+            {
+                ({pressed})=>{
+                    return (
+                        <>
+                        <SettingsIcon 
+                            color={pressed ? "lightgreen" : "white"} 
+                            size={28}
+                        />
+                        <Text 
+                            style={styles.buttonText}>
+                                profile
                         </Text>
                         </>
                     );
@@ -120,7 +149,7 @@ const BottomNavigation = ({state, dispatch}) => {
             minHeight: 50,
             maxHeight :50,
             width: "80%",
-            backgroundColor: "#121212",
+            backgroundColor: "#ffffff00",
             borderColor: "#343734",
             borderWidth : 1,
             borderRadius : 10,
@@ -135,47 +164,39 @@ const BottomNavigation = ({state, dispatch}) => {
 
         },
 
-        HomeButtonStyle : {
+        buttonStyle : {
             alignItems: "center",
         },
 
-        HomeButtonStyleText : {
+        buttonText : {
             color : "#FFFFFF",
             fontSize:  10,      
-        },
-
-        ResetButtonStyle : {
-            alignItems: "center",
-        },
-
-        FavoritesButtonStyle : {
-            alignItems : "center"
-        },
-
-        ResetButtonStyleText : {
-            color : "#FFFFFF",
-            fontSize:  10,      
-        },
-
-        FavoritesButtonStyleText : {
-            color : "#FFFFFF",
-            fontSize:  10,
         },
 
     });
 
     return (
-        <View style={styles.tabContainer}>
+        <View 
+            style={styles.tabContainer}
+        >
+            <SettingsButton 
+                styles={styles}
+                dispatch={dispatch}
+            />
             <HomeButton 
                 styles={styles}
             />
-            <FavoritesButton styles={styles}/>
+            <FavoritesButton 
+                styles={styles}
+            />
             <ResetButton 
                 styles={styles} 
                 state={state} 
                 dispatch={dispatch}
             />
-            <SearchSettingsButton styles={styles}/>
+            <SearchSettingsButton 
+                styles={styles}
+            />
         </View>
     );
 
