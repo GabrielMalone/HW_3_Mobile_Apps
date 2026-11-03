@@ -34,11 +34,11 @@ const Card = ({data, state}) => {
       contentContainerStyle={styles.card}
     >
       <TruchetPattern 
-        width={state.cardPatternBgWidth}
-        height={state.cardPatternBgHeight}
-        color={state.cardPatternBgColor}
-        backgroundColor={state.cardPatternBgBgColor}
-        opacity={state.cardPatternBgOpacity}
+        width={350}
+        height={1000}
+        color="#008c8a"
+        backgroundColor="#011c2b"
+        opacity={0.7}
       />
       {/*horizontal scroll images of restaurant*/}
       <CardPhotosComponent data={data} state={state}/>

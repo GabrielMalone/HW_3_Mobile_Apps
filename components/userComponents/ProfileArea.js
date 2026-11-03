@@ -82,9 +82,12 @@ const ProfileArea = ({state, dispatch}) => {
                     }
                 }
             >
-                <UserProfileBox state={state} isCurPartner={true} isFriendInList={false}/>
+                <UserProfileBox
+                    state={state} 
+                    isCurPartner={true} 
+                    isFriendInList={false}
+                />
             </Pressable>
-
         </View>
     );
 }

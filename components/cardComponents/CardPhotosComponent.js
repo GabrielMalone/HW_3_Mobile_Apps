@@ -6,17 +6,17 @@ const CardPhotosComponent = ({data, state, mini=false}) => {
 
     const styles = StyleSheet.create({
       photoListContainer :{
-        height: state.photoListHeight,
+        height: !mini ? state.photoListHeight : 40,
         margin: 20,
       },
       photoListContent:{
         padding: 0,
-        gap: 10,
+        gap: !mini ? 10 : 1,
       },
       cardImage:{
-        width: state.cardImageWidth,
-        height: state.cardImageHeight,
-        borderRadius: 10,
+        width: !mini ? state.cardImageWidth : 40,
+        height: !mini ? state.cardImageHeight : 40,
+        borderRadius: !mini ? 10 : 0,
       },    
     });
 

@@ -89,7 +89,7 @@ const UserProfileBox = ({state, isUser=false, isCurPartner=false, isFriendInList
                 <View style={styles.pickAPartnerbox}>
                     <View style={styles.bgPattern}>
                         <TruchetPattern
-                            width={200} 
+                            width={100} 
                             height={200} 
                             color="#10d7f5" 
                             backgroundColor="#191818" 

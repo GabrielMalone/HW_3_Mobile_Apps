@@ -33,9 +33,11 @@ const UserFavoritesComponent = ({dispatch, state}) => {
 
             width : "100%",
             height: "69%",
-            backgroundColor: "#0f0f0f",
+            backgroundColor: "#070707",
             alignSelf: "center",
-      
+            
+            borderRadius: 10,
+
             alignItems: "center",
             zIndex : 10,
 

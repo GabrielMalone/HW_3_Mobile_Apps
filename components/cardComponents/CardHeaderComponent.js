@@ -6,7 +6,7 @@ const CardHeaderComponent = ({data, state, mini=false}) => {
   const styles = StyleSheet.create({
     itemName: {
       textAlign: 'center',
-      fontSize: !mini ? state.cardTitleFontSize : 12,
+      fontSize: !mini ? state.cardTitleFontSize : 16,
       backgroundColor: 'transparent',
       color: state.cardTitleFontColor,
       fontFamily: state.cardTitleFontFace,
@@ -18,8 +18,8 @@ const CardHeaderComponent = ({data, state, mini=false}) => {
     },
     priceLevel:{
       fontFamily: state.cardPriceLevelFontFace,
-      fontSize: !mini ? state.cardPriceLevelFontSize : 12,
-      color: state.cardPriceLevelFontColor,
+      fontSize: !mini ? state.cardPriceLevelFontSize : 16,
+      color: !mini ? state.cardPriceLevelFontColor : "#00ffcc",
     },
     stars:{
       margin: 10
@@ -55,7 +55,7 @@ const CardHeaderComponent = ({data, state, mini=false}) => {
           enableHalfStar={true}
           step="quarter"
           starSize={!mini ? state.cardStarRatingSize : 12}
-          color={state.cardStarRatingColor}
+          color={!mini ? state.cardStarRatingColor : "#00ffe5"}
       />
 
     </>
