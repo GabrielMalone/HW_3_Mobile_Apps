@@ -5,16 +5,17 @@ const CardHeaderComponent = ({data, state, mini=false}) => {
 
   const styles = StyleSheet.create({
     itemName: {
+
       textAlign: 'center',
       fontSize: !mini ? state.cardTitleFontSize : 16,
       backgroundColor: 'transparent',
       color: state.cardTitleFontColor,
       fontFamily: state.cardTitleFontFace,
+      margin : mini ?  20 : 20,
     },
     priceRating:{
       flexDirection: "row",
       alignItems: "center",
-      margin: 50,
     },
     priceLevel:{
       fontFamily: state.cardPriceLevelFontFace,

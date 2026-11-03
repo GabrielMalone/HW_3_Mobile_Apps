@@ -5,6 +5,7 @@ import HomeIcon from "../../assets/svg/HomeIcon";
 import GlobeSearchIcon from "../../assets/svg/GlobeSeachIcon";
 import SettingsIcon from "../../assets/svg/SettingsIcon";
 import { clearLikesAndDislikes } from "../../helpers/firebaseDatabase";
+import { useEffect, useState } from "react";
 
 // --------------------------------------------------------------------------------
 
@@ -42,7 +43,8 @@ const ResetButton = ({styles, state, dispatch}) => {
     );
 }
 // --------------------------------------------------------------------------------
-const FavoritesButton = ({styles, dispatch}) => {
+const FavoritesButton = ({styles, color, dispatch}) => {
+
     return (
         <Pressable
             style={styles.buttonStyle}
@@ -53,7 +55,7 @@ const FavoritesButton = ({styles, dispatch}) => {
                     return (
                         <>
                         <HeartIcon 
-                            color={pressed ? "lightgreen" : buttonColor} 
+                            color={color} 
                             size={28}
                         />
                         <Text 
@@ -148,6 +150,17 @@ const SettingsButton = ({dispatch, styles}) => {
 // --------------------------------------------------------------------------------
 const BottomNavigation = ({state, dispatch}) => {
 
+    const [activeColor, setActiveColor] = useState(buttonColor);
+
+    useEffect(()=>{
+        // console.log("likes updated!")
+        setActiveColor("lightgreen");
+        setTimeout(() => {
+            setActiveColor("darkgrey");
+        }, 200);
+    },
+    [state?.liked]);
+
     const styles = StyleSheet.create({
 
         tabContainer : {
@@ -194,6 +207,7 @@ const BottomNavigation = ({state, dispatch}) => {
             <FavoritesButton 
                 styles={styles}
                 dispatch={dispatch}
+                color={activeColor}
             />
             <ResetButton 
                 styles={styles} 

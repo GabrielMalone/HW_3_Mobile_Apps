@@ -1,11 +1,9 @@
 import { FlatList, StyleSheet, Pressable } from "react-native";
 import UserProfileBox from "./UserProfileBox.js";
-import { clearLikesAndDislikes, updateUserPartnerInfo } from "../../helpers/firebaseDatabase.js";
+import { clearLikesAndDislikes, updateUserPartnerInfo, partnered } from "../../helpers/firebaseDatabase.js";
 
 // --------------------------------------------------------------------------------
 const FriendList = ({state, dispatch}) => {
-    // every time we get a partner, we need to listen
-    // to their likes remotely
     // ----------------------------------------------------------------------------
     const styles = StyleSheet.create({
         friendListContent:{
@@ -26,6 +24,11 @@ const FriendList = ({state, dispatch}) => {
             zIndex: 20,
         }
     });
+    // ----------------------------------------------------------------------------
+    // so this takes all the friends data that gets downloaded at the load of the app 
+    // (not very efficient i know)
+    // and then finds the data for that friend 
+    // and sets it as the partner data if you click that friend
     // ----------------------------------------------------------------------------
     const renderFriends = (profileData) => {
         // oh ok i need to send this to firestore as well

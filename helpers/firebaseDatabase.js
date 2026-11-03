@@ -60,6 +60,12 @@ export const alertPartnerOfMatch = async (partnerUID) => {
     await updateDoc(userRef,{matchMade: true});
 }
 // --------------------------------------------------------------------------------
+export const resetMyPartner = async (uid) => {
+    const userRef = doc(db, "users", uid);
+    await updateDoc(userRef, {partnerData: null})
+    await updateDoc(userRef, {partnerUID: null})
+}
+// --------------------------------------------------------------------------------
 export const getFriendsData = async (state) => {
     // current state should have friends list already loaded 
     // promise all needed to async arrays
@@ -83,13 +89,6 @@ export const updateUserPartnerInfo = async (userUID, partnerUID) => {
     await updateDoc(userRef, {partnerUID: partnerUID});
 }
 // --------------------------------------------------------------------------------
-export const partnered = (state) => {
-    // is my uid my partner's partner uid
-    const myuid = state?.uid;
-    const myPartnersPartnerId = state?.partnerData?.partnerUID; 
-    // console.log(`myname: ${state.userName} 
-    //     myUID: ${myuid}
-    //     mypartnersPartnerUID: ${myPartnersPartnerId}`);
-    // if match then can start swiping and have both notified of any matches
-    return myuid === myPartnersPartnerId;
+export const partnered = async (uid, partnerUID) => {
+
 }

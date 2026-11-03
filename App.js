@@ -10,7 +10,7 @@ import RestaurantDeck from './components/decks/RestaurantDeck';
 import ProfileArea from './components/userComponents/ProfileArea';
 import HeaderComponent from './components/main/HeaderComponent';
 import UserSettingsComponent from './components/userComponents/UserSettingsComponent';
-import { getUserData, getFriendsData, partnered } from './helpers/firebaseDatabase';
+import { getUserData, getFriendsData, resetMyPartner } from './helpers/firebaseDatabase';
 import CreateAccountComponent from './components/loginComponents/CreateAccountComponent';
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import LoginScreenComponent from './components/loginComponents/LoginScreenComponent';
@@ -35,11 +35,12 @@ export default function App() {
   // ------------------------------------------------------------------------------
   // useEffect Stuff and other hooks
   // ------------------------------------------------------------------------------
-  // for debuggins stsate
-  useEffect(() => {
-      partnered(state);
+  // just state debugging here
+  useEffect(()=>{
+    // console.log("am i matched? : ", partnered());
+    // console.log(state.partnerData);
   }, [state]);
-  // ------------------------------------------------------------------------------
+  
   // local solution to seeing if a user has an account already 
   // so we dont show create account on start up unecessarily
   useEffect(() => {
@@ -48,6 +49,7 @@ export default function App() {
           dispatch({type:"SET_HAS_ACCOUNT", hasAccount: result});
       };
       checkAccount();
+      return checkAccount;
   }, []);
   // ------------------------------------------------------------------------------
   useEffect(()=>{
@@ -56,6 +58,8 @@ export default function App() {
     // when this component unmounts (though at app level not likely)
     const unsubscribe = onAuthStateChanged(auth, async (user) => {
       if (user){
+
+        await resetMyPartner(user.uid);
         // set state to logged in
         dispatch({type: "LOGGED_IN", uid: user.uid});
         // get user data from firestore

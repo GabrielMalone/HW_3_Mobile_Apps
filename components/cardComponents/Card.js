@@ -38,12 +38,13 @@ const Card = ({data, state}) => {
         height={1000}
         color="#008c8a"
         backgroundColor="#011c2b"
-        opacity={0.7}
+        opacity={0.2}
       />
-      {/*horizontal scroll images of restaurant*/}
-      <CardPhotosComponent data={data} state={state}/>
+
       {/*name of restaurant and price / overall rating*/}
       <CardHeaderComponent data={data} state={state}/>
+      {/*horizontal scroll images of restaurant*/}
+      <CardPhotosComponent data={data} state={state}/>
       {/*horizontal scroll of individual reviews*/}
       <CardReviewComponent data={data} state={state}/>
       {/*map of restaurant location*/}

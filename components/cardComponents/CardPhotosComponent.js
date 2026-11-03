@@ -6,16 +6,16 @@ const CardPhotosComponent = ({data, state, mini=false}) => {
 
     const styles = StyleSheet.create({
       photoListContainer :{
-        height: !mini ? state.photoListHeight : 40,
-        margin: 20,
+        height: state.photoListHeight,
+        margin: !mini ? 20 : 0,
       },
       photoListContent:{
         padding: 0,
-        gap: !mini ? 10 : 1,
+        gap: !mini ? 10 : 3,
       },
       cardImage:{
-        width: !mini ? state.cardImageWidth : 40,
-        height: !mini ? state.cardImageHeight : 40,
+        width: !mini ? state.cardImageWidth : 80,
+        height: !mini ? state.cardImageHeight : 80,
         borderRadius: !mini ? 10 : 0,
       },    
     });
@@ -23,9 +23,10 @@ const CardPhotosComponent = ({data, state, mini=false}) => {
     return (
         <FlatList 
             data={data.photos}
-            horizontal={true}
+            horizontal={!mini ? true : false}
             style={styles.photoListContainer}
             contentContainerStyle={styles.photoListContent}
+          
             renderItem={({item})=>{
                 const pic = item.name;
                 const photoURL = 

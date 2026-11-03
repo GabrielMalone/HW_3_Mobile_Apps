@@ -7,14 +7,6 @@ import FriendList from "./FriendList.js";
 // --------------------------------------------------------------------------------
 // This box is the smallest unit that contains the user profile image
 // --------------------------------------------------------------------------------
-const SettingsButton = ({styles}) => {
-    return (
-        <Pressable style={styles.settingsIconStyle}>
-            <SettingsIcon color="#FFFFFF" size={36}/>
-        </Pressable> 
-    );
-}
-// --------------------------------------------------------------------------------
 const UserProfileBox = ({
     state, 
     dispatch, 

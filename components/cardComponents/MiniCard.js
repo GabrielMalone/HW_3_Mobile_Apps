@@ -11,17 +11,14 @@ const MiniCard = ({data, state}) => {
 
       borderRadius: 15,
       borderWidth: 1,
-      borderColor: "#0458fea2",
+      borderColor: "#616265",
       alignSelf: "center",
-      backgroundColor: "#000000",
       width: 100,
       maxWidth: 100,
       height: 150,
       maxHeight : 150,
       boxShadow: `0px 5px 15px #000000`,
-      margin: 5,
-      paddig: 10,
-
+      margin: 3,
     },
 
     card: {
@@ -41,9 +38,9 @@ const MiniCard = ({data, state}) => {
       <TruchetPattern 
         width={100}
         height={300}
-        color="#008c8aec"
+        color="#008c8a"
         backgroundColor="#011c2b"
-        opacity={1}
+        opacity={0.3}
       />
       {/*name of restaurant and price / overall rating*/}
       <CardHeaderComponent data={data} state={state} mini={true}/>
