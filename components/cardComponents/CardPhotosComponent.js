@@ -1,6 +1,6 @@
 import { FlatList, Image, StyleSheet } from "react-native"
 // ------------------------------------------------------------------------------
-const CardPhotosComponent = ({data, state}) => {
+const CardPhotosComponent = ({data, state, mini=false}) => {
 
     const key = process.env.EXPO_PUBLIC_GOOGLE_API_KEY;
 

@@ -1,6 +1,7 @@
 import { View, StyleSheet, Text, FlatList } from "react-native";
 import { useEffect, useState } from "react";
 import getRestaurantData from "../../helpers/getRestaurantData";
+import MiniCard from "../cardComponents/MiniCard";
 // --------------------------------------------------------------------------------
 const UserFavoritesComponent = ({dispatch, state}) => {
      // ----------------------------------------------------------------------------
@@ -23,7 +24,6 @@ const UserFavoritesComponent = ({dispatch, state}) => {
     },[]);
     // ----------------------------------------------------------------------------
     // from just the saved id's get the full restaurant data
-  
     // ----------------------------------------------------------------------------
     const styles = StyleSheet.create({
         userSettingsContainer : {
@@ -49,16 +49,26 @@ const UserFavoritesComponent = ({dispatch, state}) => {
 
     });
     // maybe render them in a mini card style
+    // will also need to keep like a separation 
+    // between long-term favs and session favs
     return (
         <View style={styles.userSettingsContainer}>
             <FlatList
                 data={myLikedRestaurantData}
-                renderItem={(data)=><Text style={styles.profileHeader}>{data.item.displayName.text}</Text>}
+                keyExtractor={(item) => item.id}
+                numColumns={3}
+                renderItem={
+                    ({item})=>{
+                        console.log(item);
+                        return (
+                            <MiniCard data={item} state={state}/>
+                        );
+                    }
+                }
             >
             </FlatList>
         </View>
     );
-
 }
 // --------------------------------------------------------------------------------
 export default UserFavoritesComponent;

@@ -23,7 +23,7 @@ export const stateShape = {
     listReset : false,
     swipingSolo : false,
 
-    localRestaurantData : null,
+    // localRestaurantData : null,
 
     // we can set up colors here too and other visuals
 

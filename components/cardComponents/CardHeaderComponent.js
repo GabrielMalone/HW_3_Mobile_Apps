@@ -1,12 +1,12 @@
 import { Text, StyleSheet } from "react-native";
 import StarRating from "react-native-star-rating-widget";
 // ------------------------------------------------------------------------------
-const CardHeaderComponent = ({data, state}) => {
+const CardHeaderComponent = ({data, state, mini=false}) => {
 
   const styles = StyleSheet.create({
     itemName: {
       textAlign: 'center',
-      fontSize: state.cardTitleFontSize,
+      fontSize: !mini ? state.cardTitleFontSize : 12,
       backgroundColor: 'transparent',
       color: state.cardTitleFontColor,
       fontFamily: state.cardTitleFontFace,
@@ -18,7 +18,7 @@ const CardHeaderComponent = ({data, state}) => {
     },
     priceLevel:{
       fontFamily: state.cardPriceLevelFontFace,
-      fontSize: state.cardPriceLevelFontSize,
+      fontSize: !mini ? state.cardPriceLevelFontSize : 12,
       color: state.cardPriceLevelFontColor,
     },
     stars:{
@@ -54,7 +54,7 @@ const CardHeaderComponent = ({data, state}) => {
           rating={data.rating}
           enableHalfStar={true}
           step="quarter"
-          starSize={state.cardStarRatingSize}
+          starSize={!mini ? state.cardStarRatingSize : 12}
           color={state.cardStarRatingColor}
       />
 
