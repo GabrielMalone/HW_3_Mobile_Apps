@@ -1,6 +1,4 @@
 import { StyleSheet, ScrollView } from "react-native";
-import CardMapComponent from "./CardMapComponent";
-import CardReviewComponent from "./CardReviewComponent.js";
 import CardPhotosComponent from "./CardPhotosComponent";
 import CardHeaderComponent from "./CardHeaderComponent.js";
 import TruchetPattern from "../../assets/svg/TruchetPattern.jsx";

@@ -22,6 +22,7 @@ export const stateShape = {
     matchMade : false,
     listReset : false,
     swipingSolo : false,
+    iamMyPartnersPartner : false,
 
     // localRestaurantData : null,
 
@@ -139,6 +140,12 @@ export const reducer = (state, action) => {
                     ...state.partnerData,
                     ...action.partnerData 
                 }
+            }
+
+        case "IAM_MY_PARTNERS_PARTNER " : 
+            return {
+                ...state,
+                iamMyPartnersPartner : action.iamMyPartnersPartner
             }
 
         case "UPDATE_PARTNER_DATA" :

@@ -63,18 +63,19 @@ const ProfileArea = ({state, dispatch}) => {
     return (
         <View style={styles.profilesCotainer}>
 
+            
+
             {/*user profile */}
             <Pressable
                 onPress={()=>dispatch({type: "TOGGLE_USER_SETTINGS"})}
             >
-            <UserProfileBox state={state} isUser={true}/>
+            <UserProfileBox 
+                state={state} 
+                dispatch={dispatch} 
+                isUser={true}
+            />
             </Pressable>
 
-            {/*friends list menu */}
-            {state.friendsListVisible ? 
-                <FriendList state={state} dispatch={dispatch}/> 
-                : null
-            }
             {/*partner profile */}
             <Pressable
                 onPress={ async ()=> {
@@ -84,6 +85,7 @@ const ProfileArea = ({state, dispatch}) => {
             >
                 <UserProfileBox
                     state={state} 
+                    dispatch={dispatch}
                     isCurPartner={true} 
                     isFriendInList={false}
                 />
