@@ -1,7 +1,7 @@
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { signInWithEmailAndPassword, signOut } from "firebase/auth";
 import { auth } from "./firebaseConfig";
-import { createUserProfile } from "./firebaseDatabase";
+import { clearLikesAndDislikes, createUserProfile, resetMyPartner, removeMeFromOtherLists } from "./firebaseDatabase";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 // --------------------------------------------------------------------------------
 export const registerUser = async (email, password) => {
@@ -44,10 +44,16 @@ export const loginUser = async (email, password) => {
     }
 };
 // --------------------------------------------------------------------------------
-export const logOut = async (dispatch) => {
+export const logOut = async (dispatch, state) => {
+    
+    await removeMeFromOtherLists(state, state.uid, null);
+    await clearLikesAndDislikes(state.uid);
+    await resetMyPartner(state.uid);
+
     // clears persistent login on firebase
     // also triggers dispatch(logout)=
     dispatch({action: "LOGGED_OUT"});
+
     await signOut(auth);
 }
 // --------------------------------------------------------------------------------

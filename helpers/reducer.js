@@ -20,6 +20,7 @@ export const stateShape = {
     disliked: [],
     lastCardSwiped: "",
     profilePic : "",
+    haveMutualPartner: false,
     matchMade : false,
     listReset : false,
     swipingSolo : false,
@@ -141,6 +142,12 @@ export const reducer = (state, action) => {
                     ...action.partnerData 
                 }
 
+            }
+
+        case "MUTUAL_PARTNERSHIP" : 
+            return {
+                ...state,
+                haveMutualPartner: action.haveMutualPartner
             }
 
         case "UPDATE_PARTNER_DATA" :

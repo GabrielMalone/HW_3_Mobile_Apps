@@ -10,7 +10,7 @@ import RestaurantDeck from './components/decks/RestaurantDeck';
 import ProfileArea from './components/userComponents/ProfileArea';
 import HeaderComponent from './components/main/HeaderComponent';
 import UserSettingsComponent from './components/userComponents/UserSettingsComponent';
-import { getUserData, getFriendsData, resetMyPartner } from './helpers/firebaseDatabase';
+import { getUserData, getFriendsData, resetMyPartner, removeMeFromOtherLists } from './helpers/firebaseDatabase';
 import CreateAccountComponent from './components/loginComponents/CreateAccountComponent';
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import LoginScreenComponent from './components/loginComponents/LoginScreenComponent';
@@ -18,6 +18,9 @@ import MatchFx from './components/matchComponents/MatchFx';
 import PlaceholderDeck from './components/decks/PlaceholderDeck';
 import BottomNavigation from './components/main/BottomNavigation';
 import UserFavoritesComponent from './components/userComponents/UserFavoritesComponent';
+import { onSnapshot, doc } from "firebase/firestore";
+import { db } from './helpers/firebaseConfig';
+import { checkForMutualPartner } from './helpers/checkForMutualPartner';
 // --------------------------------------------------------------------------------
 // TO DO 
 // 1 - set up partner matching awareness. list of people who have me as their selected partner. 
@@ -39,10 +42,12 @@ export default function App() {
   useEffect(()=>{
     // console.log("am i matched? : ", partnered());
     // console.log(state.partnerData);
-  }, [state]);
-  
+    // console.log(state.friendsData);
+  }, [state]);  
+  // ----------------------------------------------------------------------------
   // local solution to seeing if a user has an account already 
   // so we dont show create account on start up unecessarily
+  // ----------------------------------------------------------------------------
   useEffect(() => {
       const checkAccount = async () => {
           const result = await AsyncStorage.getItem("hasAccount");
@@ -51,6 +56,19 @@ export default function App() {
       checkAccount();
       return checkAccount;
   }, []);
+    // ----------------------------------------------------------------------------
+    // listen to our own list of ppl wanting to be our parnters
+    // ----------------------------------------------------------------------------
+    useEffect(() => {
+        if(!state.uid) return;
+        const unsubscribe = onSnapshot(
+            doc(db, "users", state.uid),
+            (snapshot) => {
+              checkForMutualPartner(snapshot, state, dispatch);
+            }
+        );
+        return unsubscribe;
+    }, [state.partnerData?.uid]);
   // ------------------------------------------------------------------------------
   useEffect(()=>{
     // listen for changes in the user's authentication state
@@ -58,8 +76,9 @@ export default function App() {
     // when this component unmounts (though at app level not likely)
     const unsubscribe = onAuthStateChanged(auth, async (user) => {
       if (user){
-
+        // simple resets
         await resetMyPartner(user.uid);
+
         // set state to logged in
         dispatch({type: "LOGGED_IN", uid: user.uid});
         // get user data from firestore
@@ -73,6 +92,7 @@ export default function App() {
         const friendsData = await getFriendsData(userData);
         // set friend data locally
         dispatch({type: "SET_FRIENDS_DATA", friendsData: friendsData});
+        // will this have the friends data?
 
       } else {
         console.log("user logged out: ");

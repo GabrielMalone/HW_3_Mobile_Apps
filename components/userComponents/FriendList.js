@@ -1,6 +1,13 @@
 import { FlatList, StyleSheet, Pressable } from "react-native";
+import { useEffect } from "react";
 import UserProfileBox from "./UserProfileBox.js";
-import { clearLikesAndDislikes, updateUserPartnerInfo, partnered } from "../../helpers/firebaseDatabase.js";
+import { 
+    clearLikesAndDislikes, 
+    updateUserPartnerInfo, 
+    removeMeFromOtherLists, 
+    addMeToTheList,
+    checkMyWaitList 
+} from "../../helpers/firebaseDatabase.js";
 
 // --------------------------------------------------------------------------------
 const FriendList = ({state, dispatch}) => {
@@ -24,6 +31,7 @@ const FriendList = ({state, dispatch}) => {
             zIndex: 20,
         }
     });
+
     // ----------------------------------------------------------------------------
     // so this takes all the friends data that gets downloaded at the load of the app 
     // (not very efficient i know)
@@ -46,8 +54,20 @@ const FriendList = ({state, dispatch}) => {
                     dispatch({
                         type: "TOGGLE_FRIENDS_LIST"
                     });
+
                     // tell backend I have this partner
                     await updateUserPartnerInfo(state.uid, profileData.uid);
+
+                    // then tell the other person I am wanting to be their partner
+                    // by adding my uid to their partnerInWaiting list
+                    await addMeToTheList(state.uid, profileData.uid);
+
+                    // will need to remove myself from any other lists that might be in
+                    // loop through friends
+                    await removeMeFromOtherLists(state, state.uid, profileData.uid);
+                    // then listen to my own list (listening happening at app level)
+                    // to see if this person ever joins is
+
                     // reset likes and dislikes for new round of matching
                     // would need to notify partner that they are in a new pair though 
                     // before clearing theirs

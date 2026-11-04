@@ -6,6 +6,7 @@ import GlobeSearchIcon from "../../assets/svg/GlobeSeachIcon";
 import SettingsIcon from "../../assets/svg/SettingsIcon";
 import { clearLikesAndDislikes } from "../../helpers/firebaseDatabase";
 import { useEffect, useState } from "react";
+import { logOut } from "../../helpers/firebaseAuth";
 
 // --------------------------------------------------------------------------------
 
@@ -120,12 +121,12 @@ const SearchSettingsButton = ({styles}) => {
     ); 
 }
 // --------------------------------------------------------------------------------
-const SettingsButton = ({dispatch, styles}) => {
+const SettingsButton = ({dispatch, state, styles}) => {
     return (
         <Pressable
             style={styles.buttonStyle}
-            onPress={()=>{
-                dispatch({type: "LOGGED_OUT"});
+            onPress={ async ()=>{
+               await logOut(dispatch, state);
             }}
         >
             {
@@ -200,6 +201,7 @@ const BottomNavigation = ({state, dispatch}) => {
             <SettingsButton 
                 styles={styles}
                 dispatch={dispatch}
+                state={state}
             />
             <HomeButton 
                 styles={styles}

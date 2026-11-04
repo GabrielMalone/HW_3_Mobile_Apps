@@ -35,6 +35,7 @@ const MatchFx = ({state, dispatch}) => {
         <Pressable
             onPress={ async () => {
                 dispatch({type: "SET_MATCH_MADE", matchMade: false});
+                dispatch({type: "RESET_LIKED"});
                 await clearLikesAndDislikes(state.uid);
             }}
             style={styles.matchFxContainer}

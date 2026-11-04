@@ -4,6 +4,7 @@ import AddUserIcon from "../../assets/svg/AddUserIcon";
 import TruchetPattern from "../../assets/svg/TruchetPattern.jsx";
 import SettingsIcon from "../../assets/svg/SettingsIcon.jsx";
 import FriendList from "./FriendList.js";
+import { partnered } from "../../helpers/firebaseDatabase.js";
 // --------------------------------------------------------------------------------
 // This box is the smallest unit that contains the user profile image
 // --------------------------------------------------------------------------------
@@ -12,7 +13,8 @@ const UserProfileBox = ({
     dispatch, 
     isUser=false, 
     isCurPartner=false, 
-    isFriendInList=false
+    isFriendInList=false,
+    partnered=false,
 }) => {
 
     const styles = StyleSheet.create({
@@ -27,8 +29,8 @@ const UserProfileBox = ({
             width :110,
             height :120,
             alignItems: "center",
-            backgroundColor: "#0a0a0a",
-            boxShadow: "0px 5px 15px rgba(0, 0, 0, 0.65)",           
+            backgroundColor: partnered ? "#01c4ff5a" : "#0a0a0a",
+            boxShadow: !partnered ? "0px 5px 15px rgba(0, 0, 0, 0.65)" :  null,           
         },
         pickAPartnerbox :{
 

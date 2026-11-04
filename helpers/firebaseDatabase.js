@@ -1,5 +1,6 @@
-import { doc, setDoc, getDoc, arrayUnion, updateDoc } from "firebase/firestore";
+import { doc, setDoc, getDoc, arrayUnion, updateDoc, arrayRemove } from "firebase/firestore";
 import { db } from "./firebaseConfig";
+import { arrayFilter } from "firebase/firestore/lite/pipelines";
 // --------------------------------------------------------------------------------
 // doc(db, "users", user.uid) identifies the document we want to write.
 // setDoc() creates that document and saves the information inside it.
@@ -89,6 +90,33 @@ export const updateUserPartnerInfo = async (userUID, partnerUID) => {
     await updateDoc(userRef, {partnerUID: partnerUID});
 }
 // --------------------------------------------------------------------------------
-export const partnered = async (uid, partnerUID) => {
+// this is a really lazy approach, can think of something better later
+// --------------------------------------------------------------------------------
+export const removeMeFromOtherLists = async (state, uid, parnterUID) => {
 
+    if (!state.friendsData) return;
+
+    for (let i = 0; i < state.friendsData.length ; i ++){   
+        let id = state.friendsData[i].uid;
+        // if not my current partner 
+        if (id !== parnterUID){
+            const userRef = doc(db, "users", id);
+            // remove me from this other person's list
+            await updateDoc(userRef, {peopleWaitingToBeMyPartner: arrayRemove(uid)});
+        }
+    }
 }
+// --------------------------------------------------------------------------------
+export const addMeToTheList = async (uid, partnerUID) => {
+    // console.log("adding myself to a list! : ", uid);
+    const userRef = doc(db, "users", partnerUID);
+    // arrayUnion for spread operation
+    await updateDoc(userRef, {peopleWaitingToBeMyPartner: arrayUnion(uid)});
+}
+// --------------------------------------------------------------------------------
+export const checkMyWaitList = async (uid) => {
+    const userRef = doc(db, "users", uid);
+    const userSnapshot = await getDoc(userRef);
+    return userSnapshot.data().peopleWaitingToBeMyPartner;
+}
+// --------------------------------------------------------------------------------
