@@ -40,15 +40,13 @@ WHAT I DO HAVE:
 ------------------------------------------------------------------------------
 HOW TO USE:
 
-step 1 : log in with any of these accounts
+step 1 : log in with any of the accounts listed in the next section
 step 2 : you shouldn't need to turn or set location services on, I hardcode the location to new orleans for this demo
-step 3 : to test solo swiping (and to just see that right sipes are saved to favorites) just start siwping 
-
+step 3 : to test solo swiping (or to just see that right sipes are saved to favorites) just start siwping 
 step 4 : if you want to test matching, you'd need to load another virtual phone and log in with another user. Then make sure each user has each other set as their partner. at that point you can start to swipe again (your likes should reset automatically if you were swiping prior to this).
 
-to log out click the gear icon
-home button does nothing
-to exit out of favorites, just tap the favorites button again
+-to log out click the gear icon
+-to exit out of favorites, just tap the favorites button again
 ------------------------------------------------------------------------------
 LOGIN INFO
 
