@@ -27,14 +27,16 @@ WHAT I DO HAVE:
             lastCardSwiped: null,
             profilePic : "",
             haveMutualPartner: false,
+            peopleWaitingToBeMyPartner: [],
             matchMade : false,
             matchedID : null,
 3- local data and backend data coordination
     reducer manages localRestraurantData after making initial cache or API call
     reducer manages your parnters data (uses useEffect and firebases' snapShot to listen for changes to relevant partner data (their new likes and such))
-4- reusable components
+4- Favorites page that saves your right swipes
+5- reusable components
     so many! 
-5- some multi-user interaction (matching on restaurants/partners). 
+6- some multi-user interaction (matching on restaurants/partners). 
 ------------------------------------------------------------------------------
 HOW TO USE:
 
@@ -52,7 +54,7 @@ LOGIN INFO
 
 user accounts on firebase:
 
-drben@gmail.com (I can't remember if I made you a friend of anyone else though)
+drben@gmail.com 
 gabemalone@gmail.com
 test1@gmail.com
 test2@gmail.com
@@ -78,4 +80,10 @@ incons form https://iconify.design
 BUGS:
 
 Lots of things unfinished. Once a match is made, nothing really happens other than you are shown the resturant you've matched on. Touching this compenent makes it go away and likes/matches reset. Logging out should reset all of these things too. 
+
+ - Home button does nothing
+ - Clicking your own profile image brings up empty user settings page
+ - radius button does nothing
+
+I'm sure there are a ton of other bugs, most I see are the result of reloading the virtual phone without also logging out beforehand. Or logging out but the phone still has cached state data?
 
