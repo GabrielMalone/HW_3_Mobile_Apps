@@ -12,7 +12,7 @@ const getRestaurantData = async (dispatch) => {
 
     if (cached){
         // console.log("Using cached Google Places data:", JSON.parse(cached));
-        // dispatch({type: "SET_LOCAL_RESTAURANT_DATA", localRestaurantData: JSON.parse(cached).places});
+        dispatch({type: "SET_LOCAL_RESTAURANT_DATA", localRestaurantData: JSON.parse(cached).places});
         return JSON.parse(cached).places;       
     }
 
@@ -96,6 +96,7 @@ const getRestaurantData = async (dispatch) => {
     await AsyncStorage.setItem("googlePlacesCache", JSON.stringify(data));
     // ------------------------------------------------------------------------------
     console.log("NOT USING cached Google Places data:", data);
+    dispatch({type: "SET_LOCAL_RESTAURANT_DATA", localRestaurantData: data.places});
     return data.places;
 }
 

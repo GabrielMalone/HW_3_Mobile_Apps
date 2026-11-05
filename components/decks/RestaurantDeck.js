@@ -7,14 +7,12 @@ import getRestaurantData from '../../helpers/getRestaurantData';
 import Card from '../cardComponents/Card'
 import { compareLikes } from '../../helpers/compareLikes';
 import { setUserLikes, setUserDislikes, alertPartnerOfMatch } from '../../helpers/firebaseDatabase';
-
 // --------------------------------------------------------------------------------
 // https://react-native-swipe-deck.pages.dev
 // --------------------------------------------------------------------------------
 const RestaurantCards = createSwipeDeck({
     motion: SwipeDeckMotion.tinder(),
 });
-
 // --------------------------------------------------------------------------------
 // https://react-native-swipe-deck.pages.dev/guide/usage/handling-events
 // --------------------------------------------------------------------------------
@@ -25,7 +23,9 @@ async function DeckEvents(dispatch, state) {
     switch(direction)
     {
       case "left" :  
+
         dispatch({type: "DISLIKED", placeId: item.id});
+        dispatch({type: "LAST_SWIPE", lastCardSwiped : item});
         await setUserDislikes(state.uid, item.id);
         return;
 
@@ -33,6 +33,7 @@ async function DeckEvents(dispatch, state) {
         // what's the best way to go about this?
         // update the backend then have that auto update the state?
         dispatch({type: "LIKED", placeId: item.id});
+        dispatch({type: "LAST_SWIPE", lastCardSwiped : item});
         try {
           // i need to try catch my asyn stuff more
           await setUserLikes(state.uid, item.id);
@@ -41,7 +42,7 @@ async function DeckEvents(dispatch, state) {
         }
         if (!state.partnerData) return;
         // need to change this to a remote check
-        const isMatch = compareLikes(item.id, state.partnerData?.liked);
+        const isMatch = compareLikes(item.id, state.partnerData?.liked, dispatch);
         // ok this right here is enough to get both backend states to say matchmade true
         if (isMatch){
           dispatch({type: "SET_MATCH_MADE", matchMade: true});

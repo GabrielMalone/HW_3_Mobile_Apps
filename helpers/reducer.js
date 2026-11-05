@@ -16,16 +16,16 @@ export const stateShape = {
     // just keep friendsData local
     friendsData : [],
     partnerData: {},
+    localRestaurantData: [],
     liked: [],
     disliked: [],
-    lastCardSwiped: "",
+    lastCardSwiped: null,
     profilePic : "",
     haveMutualPartner: false,
     matchMade : false,
+    matchedID : null,
     listReset : false,
     swipingSolo : false,
-
-    // localRestaurantData : null,
 
     // we can set up colors here too and other visuals
 
@@ -66,7 +66,7 @@ export const stateShape = {
     cardPatternBgWidth : "100%",
     cardPatternBgOpacity : 0.2,
     // review styling ---------------------------------------------------------------
-    cardStarRatingColor : "#770737", 
+    cardStarRatingColor : "#FFFFFFF", 
     cardStarRatingSize : 40,
     // all the little review boxes
     reviewContainerBgColor : "#100f0f",
@@ -83,7 +83,7 @@ export const stateShape = {
     individualReviewTextSize : 10,
     individualReviewTextFace : "OpenCustom",
 
-    invidualReviewStarsColor: "#FAA0A0",
+    invidualReviewStarsColor: "#FFFFFF",
     invidualReviewStarsSize : 10,
 
     // ------------------------------------------------------------------------------
@@ -111,6 +111,13 @@ export const stateShape = {
 export const reducer = (state, action) => {
     switch(action.type)
     {
+
+        case "LAST_SWIPE" : 
+            return {
+                ...state,
+                lastCardSwiped: action.lastCardSwiped
+            }
+
         case "TOGGLE_FRIENDS_LIST" : 
             return {
                 ...state, 
@@ -220,6 +227,12 @@ export const reducer = (state, action) => {
             return {
                 ...state,
                 matchMade : action.matchMade
+            }
+
+        case "SET_MATCH_ID" : 
+            return {
+                ...state,
+                matchedID : action.matchedID
             }
 
 

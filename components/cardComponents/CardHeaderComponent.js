@@ -39,7 +39,7 @@ const CardHeaderComponent = ({data, state, mini=false}) => {
     <>
 
       <Text style={styles.itemName}>
-          {data.displayName.text}
+          {data.displayName?.text}
       </Text>
 
       { data.priceLevel ?   

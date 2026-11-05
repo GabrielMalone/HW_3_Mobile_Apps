@@ -1,11 +1,11 @@
 import { doc, setDoc, getDoc, arrayUnion, updateDoc, arrayRemove } from "firebase/firestore";
 import { db } from "./firebaseConfig";
-import { arrayFilter } from "firebase/firestore/lite/pipelines";
 // --------------------------------------------------------------------------------
 // doc(db, "users", user.uid) identifies the document we want to write.
 // setDoc() creates that document and saves the information inside it.
 // --------------------------------------------------------------------------------
 export const createUserProfile = async (user) => {
+
     await setDoc(doc(db, "users", user.uid), {
         userName: "",
         fname: "",
@@ -19,6 +19,7 @@ export const createUserProfile = async (user) => {
         disliked: [],
         lastCardSwiped: null,
     });
+
 };
 // --------------------------------------------------------------------------------
 export const getUserData = async (uid) => {

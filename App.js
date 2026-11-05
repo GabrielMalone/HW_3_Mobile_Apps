@@ -21,6 +21,7 @@ import UserFavoritesComponent from './components/userComponents/UserFavoritesCom
 import { onSnapshot, doc } from "firebase/firestore";
 import { db } from './helpers/firebaseConfig';
 import { checkForMutualPartner } from './helpers/checkForMutualPartner';
+import IsoSphere from './assets/svg/IsoSphere';
 // --------------------------------------------------------------------------------
 // TO DO 
 // 1 - set up partner matching awareness. list of people who have me as their selected partner. 
@@ -122,6 +123,14 @@ export default function App() {
       backgroundColor: state.mainAppBgColor,
       position: "relative",
     },
+    isoSphere :{
+      position: "absolute",
+      left: 0,
+      right: 0,
+      top: 0,
+      bottom: 0,
+      zIndex: -1,
+    }
   });
   // ------------------------------------------------------------------------------
   return (
@@ -131,7 +140,13 @@ export default function App() {
           style={styles.container} 
           edges={["top", "bottom"]}
         >
-
+          {/* <IsoSphere
+              style={styles.isoSphere}
+              width={state.loggedIn? 500 : 1200}
+              height={state.loggedIn? 700 : 1000}
+              lightColor = {state.loggedIn? "#b700ff0c": "#ff00f71b"}
+              darkColor = {state.loggedIn? "#3e800000" : "#01031325"}
+          /> */}
           <HeaderComponent state={state}/>
 
           {state.matchMade ? 

@@ -25,7 +25,7 @@ const Card = ({data, state}) => {
 
   });
 
-  if (state.matchMade) return null;
+  // if (state.matchMade) return null;
   
   // ---------------------------------------------------------r--------------------
   return (
@@ -36,7 +36,7 @@ const Card = ({data, state}) => {
       <TruchetPattern 
         width={350}
         height={1000}
-        color="#008c8a"
+        color="#f900f1"
         backgroundColor="#011c2b"
         opacity={0.2}
       />

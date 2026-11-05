@@ -23,13 +23,13 @@ const LoginScreenComponent = ({dispatch}) => {
     return (
         <View style={styles.loginScreenContainer}>
 
-            <HalftoneSphere 
+            {/* <HalftoneSphere 
                 width={600}
                 height={600}
                 color="#00ffae"
                 opacity={0.1}
                 style={{zIndex: 0, position: "absolute"}}
-            />
+            /> */}
 
             <Text style={styles.loginHeader}>
                 Login

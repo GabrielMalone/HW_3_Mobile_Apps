@@ -29,7 +29,7 @@ const UserProfileBox = ({
             width :110,
             height :120,
             alignItems: "center",
-            backgroundColor: partnered ? "#01c4ff5a" : "#0a0a0a",
+            backgroundColor: partnered ? "#5e01ff47" : "#0a0a0a",
             boxShadow: !partnered ? "0px 5px 15px rgba(0, 0, 0, 0.65)" :  null,           
         },
         pickAPartnerbox :{

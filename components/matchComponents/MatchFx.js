@@ -1,19 +1,27 @@
 
 import {  StyleSheet, Text, Pressable } from 'react-native';
+import { useState, useEffect } from 'react';
 import { Confetti } from 'react-native-fast-confetti';
 import { clearLikesAndDislikes } from '../../helpers/firebaseDatabase';
 import IsoSphere from '../../assets/svg/IsoSphere';
+import Card from '../cardComponents/Card';
+import { getMatchedRestaurantObj } from '../../helpers/compareLikes';
 
 const MatchFx = ({state, dispatch}) => {
 
+    const [rObj, setRObj] = useState(null);
+
+    useEffect(()=>{
+        const restaurantObj = getMatchedRestaurantObj(state);
+        setRObj(restaurantObj);
+    },[state]);
+
     const styles = StyleSheet.create({
         matchFxContainer : {
-            flex : 10,
-
-            borderRadius: 20,
-            zIndex: 3,
+            height: "100%",
+            borderRadius: 0,
+            zIndex: 10,
             alignItems : "center",
-            justifyContent: "center",
             position: "relative"
         },
         matchText : {
@@ -22,7 +30,7 @@ const MatchFx = ({state, dispatch}) => {
             color : "#FFFFFF",
         },
         isoSphere : {
-            zIndex: 0,
+            zIndex: -1,
             position: "absolute"
         }
     });
@@ -40,16 +48,14 @@ const MatchFx = ({state, dispatch}) => {
             }}
             style={styles.matchFxContainer}
         >
-            <IsoSphere
+            {/* <IsoSphere
                 style={styles.isoSphere}
-                width={600}
-                height={600}
-                lightColor = "#c50ce168"
-                darkColor = "#26bb8022"
-            />
-            <Text style={styles.matchText}>
-                It's decided!
-            </Text>
+                width={1200}
+                height={1200}
+                lightColor = "#00e1ff0c"
+                darkColor = "#2710b810"
+            /> */}
+            {rObj && <Card data={rObj} state={state} />}
             <Confetti autoplay>
             <Confetti.Flake size={12} radius={6} />
                 <Confetti.Flake width={8} height={14} />
@@ -61,6 +67,7 @@ const MatchFx = ({state, dispatch}) => {
                 <Confetti.Flake width={24} height={17} shape="streamer" />  
             </Confetti>
         </Pressable>
+        
     );
 }
 
