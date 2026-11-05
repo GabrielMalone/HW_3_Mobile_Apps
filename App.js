@@ -10,7 +10,7 @@ import RestaurantDeck from './components/decks/RestaurantDeck';
 import ProfileArea from './components/userComponents/ProfileArea';
 import HeaderComponent from './components/main/HeaderComponent';
 import UserSettingsComponent from './components/userComponents/UserSettingsComponent';
-import { getUserData, getFriendsData, resetMyPartner, removeMeFromOtherLists } from './helpers/firebaseDatabase';
+import { getUserData, getFriendsData, resetMyPartner } from './helpers/firebaseDatabase';
 import CreateAccountComponent from './components/loginComponents/CreateAccountComponent';
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import LoginScreenComponent from './components/loginComponents/LoginScreenComponent';
@@ -21,14 +21,9 @@ import UserFavoritesComponent from './components/userComponents/UserFavoritesCom
 import { onSnapshot, doc } from "firebase/firestore";
 import { db } from './helpers/firebaseConfig';
 import { checkForMutualPartner } from './helpers/checkForMutualPartner';
-import IsoSphere from './assets/svg/IsoSphere';
 // --------------------------------------------------------------------------------
 // TO DO 
-// 1 - set up partner matching awareness. list of people who have me as their selected partner. 
-// 2 - make both parties aware when parnter matched (could like golden both avatars or someething)
-// 2a - if I pick a partner and they have not yet selected me as a partner, indicate that as well (maybe like a greyed out avatar or red outline or something)
-// 3 - otherwise make indicator for solo swiping 
-// 4 - set up favorites page for solo swipes and partner swipes. (maybe array of mini cards showing your likes)
+// 3-  make indicator for solo swiping 
 // 5 - undo swipe button (remove from database likes, should be easy just always track last card swiped)
 // 6 - share option. like you're swiping solo but want to share a restaurant with someone
 // --------------------------------------------------------------------------------
@@ -36,15 +31,18 @@ export default function App() {
   // run this to delete any local data during testing
   // AsyncStorage.removeItem("hasAccount");
   const [state, dispatch] = useReducer(reducer, stateShape);
+
   // ------------------------------------------------------------------------------
   // useEffect Stuff and other hooks
   // ------------------------------------------------------------------------------
+
   // just state debugging here
   useEffect(()=>{
     // console.log("am i matched? : ", partnered());
     // console.log(state.partnerData);
     // console.log(state.friendsData);
   }, [state]);  
+
   // ----------------------------------------------------------------------------
   // local solution to seeing if a user has an account already 
   // so we dont show create account on start up unecessarily
@@ -57,6 +55,7 @@ export default function App() {
       checkAccount();
       return checkAccount;
   }, []);
+
     // ----------------------------------------------------------------------------
     // listen to our own list of ppl wanting to be our parnters
     // ----------------------------------------------------------------------------
@@ -70,6 +69,7 @@ export default function App() {
         );
         return unsubscribe;
     }, [state.partnerData?.uid]);
+
   // ------------------------------------------------------------------------------
   useEffect(()=>{
     // listen for changes in the user's authentication state
@@ -79,7 +79,6 @@ export default function App() {
       if (user){
         // simple resets
         await resetMyPartner(user.uid);
-
         // set state to logged in
         dispatch({type: "LOGGED_IN", uid: user.uid});
         // get user data from firestore
@@ -94,19 +93,15 @@ export default function App() {
         // set friend data locally
         dispatch({type: "SET_FRIENDS_DATA", friendsData: friendsData});
         // will this have the friends data?
-
       } else {
         console.log("user logged out: ");
         dispatch({type : "LOGGED_OUT"});
       }
-
     })
-
     return unsubscribe;
-
   }, []);
+
   // ------------------------------------------------------------------------------
-  // hook to load custom fonts
   const [fontsLoaded] = useFonts({
     'NotoCustom': require('./assets/fonts/NotoSerif-VariableFont_wdth,wght.ttf'),
     'UnicaCustom': require('./assets/fonts/UnicaOne-Regular.ttf'),
@@ -133,6 +128,7 @@ export default function App() {
     }
   });
   // ------------------------------------------------------------------------------
+  
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
       <SafeAreaProvider>
@@ -140,13 +136,6 @@ export default function App() {
           style={styles.container} 
           edges={["top", "bottom"]}
         >
-          {/* <IsoSphere
-              style={styles.isoSphere}
-              width={state.loggedIn? 500 : 1200}
-              height={state.loggedIn? 700 : 1000}
-              lightColor = {state.loggedIn? "#b700ff0c": "#ff00f71b"}
-              darkColor = {state.loggedIn? "#3e800000" : "#01031325"}
-          /> */}
           <HeaderComponent state={state}/>
 
           {state.matchMade ? 

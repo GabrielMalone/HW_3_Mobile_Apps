@@ -43,6 +43,7 @@ export const stateShape = {
     // ------------------------------------------------------------------------------
     // CARD STYLING
     // ------------------------------------------------------------------------------
+
     // card header styling ----------------------------------------------------------
     cardBgColor : "#010101",
     cardBorderColor : "#c4bbc5",
@@ -109,9 +110,9 @@ export const stateShape = {
 };
 // ------------------------------------------------------------------------------
 export const reducer = (state, action) => {
+    
     switch(action.type)
     {
-
         case "LAST_SWIPE" : 
             return {
                 ...state,

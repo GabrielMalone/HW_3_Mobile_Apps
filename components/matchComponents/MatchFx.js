@@ -3,10 +3,9 @@ import {  StyleSheet, Text, Pressable } from 'react-native';
 import { useState, useEffect } from 'react';
 import { Confetti } from 'react-native-fast-confetti';
 import { clearLikesAndDislikes } from '../../helpers/firebaseDatabase';
-import IsoSphere from '../../assets/svg/IsoSphere';
 import Card from '../cardComponents/Card';
 import { getMatchedRestaurantObj } from '../../helpers/compareLikes';
-
+// ------------------------------------------------------------------------------
 const MatchFx = ({state, dispatch}) => {
 
     const [rObj, setRObj] = useState(null);
@@ -48,13 +47,6 @@ const MatchFx = ({state, dispatch}) => {
             }}
             style={styles.matchFxContainer}
         >
-            {/* <IsoSphere
-                style={styles.isoSphere}
-                width={1200}
-                height={1200}
-                lightColor = "#00e1ff0c"
-                darkColor = "#2710b810"
-            /> */}
             {rObj && <Card data={rObj} state={state} />}
             <Confetti autoplay>
             <Confetti.Flake size={12} radius={6} />

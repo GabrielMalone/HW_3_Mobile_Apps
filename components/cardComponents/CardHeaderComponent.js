@@ -37,7 +37,6 @@ const CardHeaderComponent = ({data, state, mini=false}) => {
   }
   return (
     <>
-
       <Text style={styles.itemName}>
           {data.displayName?.text}
       </Text>
@@ -48,7 +47,6 @@ const CardHeaderComponent = ({data, state, mini=false}) => {
         </Text> 
         : null
       }
-
       <StarRating 
           style={styles.stars}
           onChange={()=>{}}
@@ -58,7 +56,6 @@ const CardHeaderComponent = ({data, state, mini=false}) => {
           starSize={!mini ? state.cardStarRatingSize : 12}
           color={!mini ? "#FFFFFF" : "#00ffe5"}
       />
-
     </>
   );
 }
