@@ -1,4 +1,6 @@
 import { FlatList, Image, StyleSheet } from "react-native"
+import localPhotos from "../../data/localPhotos";
+
 // ------------------------------------------------------------------------------
 const CardPhotosComponent = ({data, state, mini=false}) => {
 
@@ -21,24 +23,21 @@ const CardPhotosComponent = ({data, state, mini=false}) => {
     });
 
     return (
-        <FlatList 
-            data={data.photos}
-            horizontal={!mini ? true : false}
-            style={styles.photoListContainer}
-            contentContainerStyle={styles.photoListContent}
-          
-            renderItem={({item})=>{
-                const pic = item.name;
-                const photoURL = 
-                `https://places.googleapis.com/v1/${pic}/media?maxWidthPx=800&key=${key}`;
-                return(
-                <Image 
-                    source={{ uri: photoURL }}
-                    style={styles.cardImage}
-                />
-                );
-            }}
-        />
+      <FlatList 
+        data={data.photos}
+        horizontal={!mini ? true : false}
+        style={styles.photoListContainer}
+        contentContainerStyle={styles.photoListContent}
+        renderItem={({item})=>{
+          const localImage = localPhotos[item.name];
+          if (!localImage) return;
+          return(
+          <Image 
+              source={localImage}
+              style={styles.cardImage}
+          />);
+        }}
+      />
     );
 }
 // ------------------------------------------------------------------------------

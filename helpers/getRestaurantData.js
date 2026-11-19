@@ -1,7 +1,10 @@
 // https://developers.google.com/maps/documentation/places/web-service/nearby-search
-
+// import restaurantData from '../data/googlePlacesCache.json'
 import * as Location from "expo-location";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { File, Paths } from "expo-file-system";
+import googlePlacesCache from "../data/googlePlacesCache.json"
+
 // ------------------------------------------------------------------------------
 const getRestaurantData = async (dispatch) => {
 
@@ -10,10 +13,19 @@ const getRestaurantData = async (dispatch) => {
     //  on new location settings/stale time
     const cached = await AsyncStorage.getItem("googlePlacesCache");
 
-    if (cached){
-        // console.log("Using cached Google Places data:", JSON.parse(cached));
-        dispatch({type: "SET_LOCAL_RESTAURANT_DATA", localRestaurantData: JSON.parse(cached).places});
-        return JSON.parse(cached).places;       
+    // if (cached) {
+    //     const file = new File(Paths.document, "googlePlacesCache.json");
+    //     file.write(cached);
+    //     console.log("Saved cache to:", file.uri);
+    //     console.log("Using cached Google Places data:", JSON.parse(cached));
+    //     dispatch({type: "SET_LOCAL_RESTAURANT_DATA", localRestaurantData: JSON.parse(cached).places});
+    //     return JSON.parse(cached).places;   
+    // }
+
+    if (googlePlacesCache) {
+        console.log("Using project cached Google Places data:", googlePlacesCache.places);
+        dispatch({type: "SET_LOCAL_RESTAURANT_DATA", localRestaurantData: googlePlacesCache.places});
+        return JSON.parse(cached).places;   
     }
 
     const GOOGLE_API_KEY = process.env.EXPO_PUBLIC_GOOGLE_API_KEY;
@@ -32,7 +44,7 @@ const getRestaurantData = async (dispatch) => {
         "places.formattedAddress",
         "places.rating",
         "places.reviews",
-        "places.photos",
+        // "places.photos", // god damn expensive
         "places.priceRange",
         "places.priceLevel",
         "places.reviewSummary"
@@ -95,7 +107,7 @@ const getRestaurantData = async (dispatch) => {
     }
     await AsyncStorage.setItem("googlePlacesCache", JSON.stringify(data));
     // ------------------------------------------------------------------------------
-    console.log("NOT USING cached Google Places data:", data);
+    console.error("NOT USING cached Google Places data:", data);
     dispatch({type: "SET_LOCAL_RESTAURANT_DATA", localRestaurantData: data.places});
     return data.places;
 }
