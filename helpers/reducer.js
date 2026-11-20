@@ -5,11 +5,10 @@ export const stateShape = {
 
     // user state stuff
     loggedIn : false,
+    authChecked : false,
     hasAccount : false,
     uid: null,
     friendsListVisible: false,
-    userSettingsVisible: false,
-    userFavoritesVisible: false,
     searchRadius: 1000,
     curLocation: "",
     friends : [],
@@ -125,21 +124,10 @@ export const reducer = (state, action) => {
                 friendsListVisible: !state.friendsListVisible,
             }
 
-        case "TOGGLE_USER_SETTINGS" :
+        case "HIDE_FRIENDS_LIST" :
             return {
                 ...state,
-                userSettingsVisible: !state.userSettingsVisible,
                 friendsListVisible: false,
-                userFavoritesVisible: false,
-    
-            }
-
-        case "TOGGLE_USER_FAVORITES" :
-            return {
-                ...state,
-                userFavoritesVisible: !state.userFavoritesVisible,
-                friendsListVisible: false,
-                userSettingsVisible: false,
             }
 
         case "SET_PARTNER" : 
@@ -170,7 +158,9 @@ export const reducer = (state, action) => {
         case "LIKED" :
             return {
                 ...state,
-                liked: [...state.liked, action.placeId]
+                liked: state.liked.includes(action.placeId) ?
+                    state.liked :
+                    [...state.liked, action.placeId]
             }
 
         case "DISLIKED" :
@@ -191,6 +181,7 @@ export const reducer = (state, action) => {
             return {
                 ...state, 
                 loggedIn: true,
+                authChecked: true,
                 uid: action.uid,
             }
 
@@ -198,11 +189,10 @@ export const reducer = (state, action) => {
             return {
                 ...state,
                 loggedIn : false,
+                authChecked: true,
                 uid: null,
                 partnerData: null,
                 friendsListVisible: false,
-                userFavoritesVisible: false,
-                userSettingsVisible: false,
             }
 
         case "SET_HAS_ACCOUNT" : 
@@ -241,6 +231,12 @@ export const reducer = (state, action) => {
             return {
                 ...state, 
                 swipingSolo : action.swipingSolo
+            }
+
+        case "SET_SEARCH_RADIUS" :
+            return {
+                ...state,
+                searchRadius : action.searchRadius
             }
 
         case "SET_LOCAL_RESTAURANT_DATA" :

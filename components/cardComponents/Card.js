@@ -10,13 +10,13 @@ const Card = ({data, state}) => {
 
     scrollContainer: {
       borderRadius: 15,
-      borderWidth: !state.userSettingsVisible ? 1 : 0,
-      borderColor: !state.userSettingsVisible ? state.cardBorderColor : "#00000000",
+      borderWidth: 1,
+      borderColor: state.cardBorderColor,
       alignSelf: "center",
       backgroundColor: state.cardBgColor,
-      width: !state.userSettingsVisible ? "80%" : 0,
-      height: !state.userSettingsVisible ? "80%" : 0,
-      boxShadow: !state.userSettingsVisible ?  `0px 5px 15px ${state.cardShadowColor}` : null,
+      width: "80%",
+      height: "80%",
+      boxShadow: `0px 5px 15px ${state.cardShadowColor}`,
     },
 
     card: {

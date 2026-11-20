@@ -20,6 +20,7 @@ async function DeckEvents(dispatch, state) {
 
   RestaurantCards.useDeckEventListener('swipe', async ({ item, direction, source }) => {
     
+    
     switch(direction)
     {
       case "left" :  
@@ -72,6 +73,7 @@ async function DeckEvents(dispatch, state) {
 export default function RestaurantDeck({dispatch, state}) {
 // --------------------------------------------------------------------------------
   const [restaurantData, setRestaurantData] = useState([]);
+  console.log('reeeee', restaurantData)
 
   DeckEvents(dispatch, state);
 
@@ -83,7 +85,7 @@ export default function RestaurantDeck({dispatch, state}) {
   useEffect(()=>{
 
     const loadRestaurants = async () => {
-      const places = await getRestaurantData(dispatch);
+      const places = await getRestaurantData(dispatch, state.searchRadius);
       setRestaurantData(places);
     }
 
@@ -94,7 +96,7 @@ export default function RestaurantDeck({dispatch, state}) {
   return (
     <RestaurantCards.Root
       data={restaurantData}
-      getKey={(restaurant) => restaurant.id}
+      getKey={(restaurant) => restaurant?.id}
       allowedDirections={["left", "right"]}
       visibleCardCount={3}
     >

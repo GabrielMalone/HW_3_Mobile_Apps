@@ -1,229 +1,110 @@
-import { View, Text, StyleSheet, Pressable } from "react-native";
-import ResetIcon from "../../assets/svg/ResetIcon";
+import { useEffect, useState } from "react";
+import { createBottomTabNavigator, BottomTabBar } from "@react-navigation/bottom-tabs";
 import HeartIcon from "../../assets/svg/HeartIcon";
 import HomeIcon from "../../assets/svg/HomeIcon";
-import GlobeSearchIcon from "../../assets/svg/GlobeSeachIcon";
 import SettingsIcon from "../../assets/svg/SettingsIcon";
-import { clearLikesAndDislikes } from "../../helpers/firebaseDatabase";
-import { useEffect, useState } from "react";
-import { logOut } from "../../helpers/firebaseAuth";
-
+import ProfileArea from "../userComponents/ProfileArea";
+import PlaceholderDeck from "../decks/PlaceholderDeck";
+import RestaurantDeck from "../decks/RestaurantDeck";
+import UserFavoritesComponent from "../userComponents/UserFavoritesComponent";
+import UserSettingsComponent from "../userComponents/UserSettingsComponent";
 // --------------------------------------------------------------------------------
+const Tab = createBottomTabNavigator();
 
 const buttonColor = "dimgray";
+const activeButtonColor = "lightgreen";
+const iconSize = 28;
 
-// --------------------------------------------------------------------------------
-const ResetButton = ({styles, state, dispatch}) => {
-    return (
-        <Pressable 
-            style={styles.buttonStyle}
-            onPress={async ()=> {
-                dispatch({type: "RESET_LIKED"});
-                await clearLikesAndDislikes(state.uid);
-            }}
-        >
-            {/*pressable has press information in its props
-            we can use that to get if user holding down button*/}
-            {
-                ({pressed})=>{
-                    return (
-                        <>
-                        <ResetIcon 
-                            color={pressed ? "lightgreen" : buttonColor} 
-                            size={28}
-                        />
-                        <Text 
-                            style={styles.buttonText}>
-                                reset  
-                        </Text>
-                        </>
-                    );
-                }
-            }
-        </Pressable>  
-    );
-}
-// --------------------------------------------------------------------------------
-const FavoritesButton = ({styles, color, dispatch}) => {
-
-    return (
-        <Pressable
-            style={styles.buttonStyle}
-            onPress={()=>dispatch({type: "TOGGLE_USER_FAVORITES"})}
-        >
-            {
-                ({pressed})=>{
-                    return (
-                        <>
-                        <HeartIcon 
-                            color={color} 
-                            size={28}
-                        />
-                        <Text 
-                            style={styles.buttonText}>
-                                favorites  
-                        </Text>
-                        </>
-                    );
-                }
-            }
-        </Pressable>
-    );
-}
-// --------------------------------------------------------------------------------
-const HomeButton = ({styles}) => {
-    return (
-        <Pressable
-            style={styles.buttonText}
-        >
-            {
-                ({pressed})=>{
-                    return (
-                        <>
-                        <HomeIcon 
-                            color={pressed ? "lightgreen" : buttonColor} 
-                            size={28}
-                        />
-                        <Text 
-                            style={styles.buttonText}>
-                                home  
-                        </Text>
-                        </>
-                    );
-                }
-            }
-        </Pressable>
-    );
-}
-// --------------------------------------------------------------------------------
-const SearchSettingsButton = ({styles}) => {
-    return (
-        <Pressable
-            style={styles.buttonStyle}
-        >
-            {
-                ({pressed})=>{
-                    return (
-                        <>
-                        <GlobeSearchIcon 
-                            color={pressed ? "lightgreen" : buttonColor} 
-                            size={28}
-                        />
-                        <Text 
-                            style={styles.buttonText}>
-                                radius
-                        </Text>
-                        </>
-                    );
-                }
-            }
-        </Pressable>
-    ); 
-}
-// --------------------------------------------------------------------------------
-const SettingsButton = ({dispatch, state, styles}) => {
-    return (
-        <Pressable
-            style={styles.buttonStyle}
-            onPress={ async ()=>{
-               await logOut(dispatch, state);
-            }}
-        >
-            {
-                ({pressed})=>{
-                    return (
-                        <>
-                        <SettingsIcon 
-                            color={pressed ? "lightgreen" : buttonColor} 
-                            size={28}
-                        />
-                        <Text 
-                            style={styles.buttonText}>
-                                logout
-                        </Text>
-                        </>
-                    );
-                }
-            }
-        </Pressable>
-    ); 
-}
 // --------------------------------------------------------------------------------
 const BottomNavigation = ({state, dispatch}) => {
 
-    const [activeColor, setActiveColor] = useState(buttonColor);
+    const [favoritesFlash, setFavoritesFlash] = useState(false);
 
     useEffect(()=>{
-        // console.log("likes updated!")
-        setActiveColor("lightgreen");
-        setTimeout(() => {
-            setActiveColor("darkgrey");
+        setFavoritesFlash(true);
+        const timeout = setTimeout(() => {
+            setFavoritesFlash(false);
         }, 200);
+        return () => clearTimeout(timeout);
     },
     [state?.liked]);
 
-    const styles = StyleSheet.create({
-
-        tabContainer : {
-
-            minHeight: 50,
-            maxHeight :50,
-            width: "100%",
-            backgroundColor: "#ffffff00",
-            borderColor: "#343734",
-            borderTopWidth: 1,
-            alignSelf: "center",
-            marginTop: 10,
-            paddingTop: 30,
-            gap: 20,
-
-            flexDirection: "row",
-            justifyContent: "center",
-            alignItems: "center"
-
-        },
-
-        buttonStyle : {
-            alignItems: "center",
-        },
-
-        buttonText : {
-            color : "#FFFFFF",
-            fontSize:  10,      
-        },
-
-    });
-
     return (
-        <View 
-            style={styles.tabContainer}
+        <Tab.Navigator
+            initialRouteName="Home"
+            screenOptions={{
+                headerShown: false,
+                tabBarActiveTintColor: activeButtonColor,
+                tabBarInactiveTintColor: buttonColor,
+                tabBarLabelStyle: { fontSize: 10 },
+                tabBarStyle: {
+                    backgroundColor: state.mainAppBgColor,
+                    borderTopColor: "#343734",
+                    borderTopWidth: 1,
+                    elevation: 0,
+                },
+            }}
+            screenListeners={{
+                focus: () => dispatch({type: "HIDE_FRIENDS_LIST"}),
+            }}
+            tabBar={(props) => {
+                const activeRoute = props.state.routes[props.state.index].name;
+                return (
+                    <>
+                        <ProfileArea
+                            state={state}
+                            dispatch={dispatch}
+                            navigation={props.navigation}
+                            activeRoute={activeRoute}
+                        />
+                        <BottomTabBar {...props}/>
+                    </>
+                );
+            }}
         >
-            <SettingsButton 
-                styles={styles}
-                dispatch={dispatch}
-                state={state}
-            />
-            <HomeButton 
-                styles={styles}
-            />
-            <FavoritesButton 
-                styles={styles}
-                dispatch={dispatch}
-                color={activeColor}
-            />
-            <ResetButton 
-                styles={styles} 
-                state={state} 
-                dispatch={dispatch}
-            />
-            <SearchSettingsButton 
-                styles={styles}
-            />
-        </View>
+            <Tab.Screen
+                name="Home"
+                options={{
+                    tabBarLabel: "home",
+                    tabBarIcon: ({color}) => <HomeIcon color={color} size={iconSize}/>,
+                }}
+            >
+                {() => (
+                    !state.partnerData && !state.swipingSolo ?
+                        <PlaceholderDeck state={state} dispatch={dispatch}/> :
+                        <RestaurantDeck
+                            key={`${state.listReset}-${state.searchRadius}`}
+                            dispatch={dispatch}
+                            state={state}
+                        />
+                )}
+            </Tab.Screen>
+            <Tab.Screen
+                name="Favorites"
+                options={{
+                    tabBarLabel: "favorites",
+                    tabBarIcon: ({color}) => (
+                        <HeartIcon
+                            color={favoritesFlash ? activeButtonColor : color}
+                            size={iconSize}
+                        />
+                    ),
+                }}
+            >
+                {() => <UserFavoritesComponent state={state} dispatch={dispatch}/>}
+            </Tab.Screen>
+            <Tab.Screen
+                name="Settings"
+                options={{
+                    tabBarLabel: "settings",
+                    tabBarIcon: ({color}) => <SettingsIcon color={color} size={iconSize}/>,
+                }}
+            >
+                {() => <UserSettingsComponent state={state} dispatch={dispatch}/>}
+            </Tab.Screen>
+        </Tab.Navigator>
     );
 
 }
 // --------------------------------------------------------------------------------
 export default BottomNavigation;
-
-
