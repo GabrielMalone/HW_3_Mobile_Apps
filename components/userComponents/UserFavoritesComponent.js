@@ -1,45 +1,44 @@
 import { View, StyleSheet, Text, FlatList } from "react-native";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import getRestaurantData from "../../helpers/getRestaurantData";
 import MiniCard from "../cardComponents/MiniCard";
 // --------------------------------------------------------------------------------
 const UserFavoritesComponent = ({dispatch, state}) => {
      // ----------------------------------------------------------------------------
     // get the restaurant data so we can use like id's to get full info
-    const [myLikedRestaurantData, setMyLikedRestaurantData] = useState(null);
+    const [places, setPlaces] = useState([]);
     // load the data once on mounting the component
     useEffect(()=>{
+        let active = true;
         const loadRestaurants = async () => {
-            const places = await getRestaurantData(dispatch);
-            let likes = state?.liked?.map(
-                (id)=>{
-                    let data = places.find(
-                        restaurant=>restaurant.id === id
-                    );
-                    return data ? data : null;
-                }); 
-            setMyLikedRestaurantData(likes);
+            const data = await getRestaurantData(dispatch);
+            if (active) setPlaces(data ?? []);
         }
         loadRestaurants();
-    },[state?.liked]);
+        return () => {
+            active = false;
+        };
+    },[]);
     // ----------------------------------------------------------------------------
     // from just the saved id's get the full restaurant data
     // ----------------------------------------------------------------------------
+    const myLikedRestaurantData = useMemo(()=>{
+        const likedIds = [...new Set(state?.liked ?? [])];
+        return likedIds
+            .map((id)=>places.find((restaurant)=>restaurant?.id === id))
+            .filter(Boolean);
+    },[places, state?.liked]);
     const styles = StyleSheet.create({
         userSettingsContainer : {
 
-            position: "absolute",
-            top: 110,
-
+            flex: 1,
             width : "100%",
-            height: "69%",
             backgroundColor: "#070707",
             alignSelf: "center",
             
             borderRadius: 10,
 
             alignItems: "center",
-            zIndex : 10,
 
         },
         profileHeader:{
@@ -47,6 +46,12 @@ const UserFavoritesComponent = ({dispatch, state}) => {
             fontSize: 24  ,
             color: "#FFFFFF",
             marginVertical: 10,
+        },
+        emptyText:{
+            fontFamily: "OpenCustom",
+            fontSize: 14,
+            color: "dimgray",
+            marginTop: 20,
         },
 
     });
@@ -62,6 +67,11 @@ const UserFavoritesComponent = ({dispatch, state}) => {
                 data={myLikedRestaurantData}
                 keyExtractor={(item) => item.id}
                 numColumns={3}
+                ListEmptyComponent={
+                    <Text style={styles.emptyText}>
+                        No favorites yet
+                    </Text>
+                }
                 renderItem={
                     ({item})=>{
                         return (

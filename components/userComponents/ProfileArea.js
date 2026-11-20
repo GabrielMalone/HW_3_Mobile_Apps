@@ -7,7 +7,7 @@ import { onSnapshot, doc } from "firebase/firestore";
 // --------------------------------------------------------------------------------
 // This holds the current user and the user they are matching things with
 // --------------------------------------------------------------------------------
-const ProfileArea = ({state, dispatch}) => {
+const ProfileArea = ({state, dispatch, navigation, activeRoute}) => {
 
     // ----------------------------------------------------------------------------
     const styles = StyleSheet.create({
@@ -77,7 +77,7 @@ const ProfileArea = ({state, dispatch}) => {
 
             {/*user profile */}
             <Pressable
-                onPress={()=>dispatch({type: "TOGGLE_USER_SETTINGS"})}
+                onPress={()=>navigation.navigate(activeRoute === "Settings" ? "Home" : "Settings")}
             >
             <UserProfileBox 
                 state={state} 

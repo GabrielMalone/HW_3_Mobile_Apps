@@ -6,7 +6,35 @@ import { File, Paths } from "expo-file-system";
 import googlePlacesCache from "../data/googlePlacesCache.json"
 
 // ------------------------------------------------------------------------------
-const getRestaurantData = async (dispatch) => {
+const defaultSearchRadius = 5000;
+
+const distanceInMeters = (lat1, lon1, lat2, lon2) => {
+    const earthRadius = 6371000;
+    const toRadians = (degrees) => degrees * Math.PI / 180;
+    const dLat = toRadians(lat2 - lat1);
+    const dLon = toRadians(lon2 - lon1);
+    const a = Math.sin(dLat / 2) ** 2
+        + Math.cos(toRadians(lat1)) * Math.cos(toRadians(lat2)) * Math.sin(dLon / 2) ** 2;
+    return 2 * earthRadius * Math.asin(Math.sqrt(a));
+};
+
+const withinRadius = (places, lat, lon, radius) => {
+    if (!radius) return places;
+    return places?.filter((place) => {
+        if (!place?.location) return false;
+        return distanceInMeters(
+            lat,
+            lon,
+            place.location.latitude,
+            place.location.longitude
+        ) <= radius;
+    });
+};
+// ------------------------------------------------------------------------------
+const getRestaurantData = async (dispatch, radius) => {
+
+    const user_lat = 29.951065;
+    const user_lon = -90.071533;
 
     // if cached let's not waste api $$$
     // will need to modify this in the future to clear cache
@@ -23,9 +51,11 @@ const getRestaurantData = async (dispatch) => {
     // }
 
     if (googlePlacesCache) {
-        console.log("Using project cached Google Places data:", googlePlacesCache.places);
-        dispatch({type: "SET_LOCAL_RESTAURANT_DATA", localRestaurantData: googlePlacesCache.places});
-        return JSON.parse(cached).places;   
+        console.log("Using project cached Google Places data:", googlePlacesCache?.places);
+        dispatch({type: "SET_LOCAL_RESTAURANT_DATA", localRestaurantData: googlePlacesCache?.places});
+
+
+        return withinRadius(googlePlacesCache?.places, user_lat, user_lon, radius);
     }
 
     const GOOGLE_API_KEY = process.env.EXPO_PUBLIC_GOOGLE_API_KEY;
@@ -34,7 +64,7 @@ const getRestaurantData = async (dispatch) => {
     // max is 20
     const numPlacesToFind = 20;
     // 5k radius (3.1miles)
-    const searchRadius = 5000;
+    const searchRadius = radius ?? defaultSearchRadius;
     // what do I want to get back
     const fieldMask = [
         "places.id",
@@ -66,8 +96,6 @@ const getRestaurantData = async (dispatch) => {
     // const location = await Location.getCurrentPositionAsync({});
     // const user_lat = location.coords.latitude;
     // const user_lon = location.coords.longitude;
-    const user_lat = 29.951065;
-    const user_lon = -90.071533;
     // ------------------------------------------------------------------------------
     // get the data from google
     // ------------------------------------------------------------------------------

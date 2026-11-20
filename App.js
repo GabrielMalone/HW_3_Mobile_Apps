@@ -6,26 +6,24 @@ import { reducer, stateShape } from './helpers/reducer';
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { onAuthStateChanged } from 'firebase/auth';
 import { auth } from './helpers/firebaseConfig';
-import RestaurantDeck from './components/decks/RestaurantDeck';
-import ProfileArea from './components/userComponents/ProfileArea';
 import HeaderComponent from './components/main/HeaderComponent';
-import UserSettingsComponent from './components/userComponents/UserSettingsComponent';
 import { getUserData, getFriendsData, resetMyPartner } from './helpers/firebaseDatabase';
-import CreateAccountComponent from './components/loginComponents/CreateAccountComponent';
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import LoginScreenComponent from './components/loginComponents/LoginScreenComponent';
 import MatchFx from './components/matchComponents/MatchFx';
-import PlaceholderDeck from './components/decks/PlaceholderDeck';
 import BottomNavigation from './components/main/BottomNavigation';
-import UserFavoritesComponent from './components/userComponents/UserFavoritesComponent';
 import { onSnapshot, doc } from "firebase/firestore";
 import { db } from './helpers/firebaseConfig';
 import { checkForMutualPartner } from './helpers/checkForMutualPartner';
+import { NavigationContainer, DarkTheme } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
 // --------------------------------------------------------------------------------
 // TO DO 
 // 3-  make indicator for solo swiping 
 // 5 - undo swipe button (remove from database likes, should be easy just always track last card swiped)
 // 6 - share option. like you're swiping solo but want to share a restaurant with someone
+// --------------------------------------------------------------------------------
+const RootStack = createNativeStackNavigator();
 // --------------------------------------------------------------------------------
 export default function App() {
   // run this to delete any local data during testing
@@ -108,7 +106,7 @@ export default function App() {
     'QuickSandCustom':require('./assets/fonts/Quicksand-VariableFont_wght.ttf'),
     'OpenCustom':require('./assets/fonts/OpenSans-VariableFont_wdth,wght.ttf'),
   });
-  if (!fontsLoaded) {
+  if (!fontsLoaded || !state.authChecked) {
     return null;
   }
   // ------------------------------------------------------------------------------
@@ -127,6 +125,13 @@ export default function App() {
       zIndex: -1,
     }
   });
+  const navTheme = {
+    ...DarkTheme,
+    colors: {
+      ...DarkTheme.colors,
+      background: state.mainAppBgColor,
+    },
+  };
   // ------------------------------------------------------------------------------
   
   return (
@@ -134,70 +139,40 @@ export default function App() {
       <SafeAreaProvider>
         <SafeAreaView 
           style={styles.container} 
-          edges={["top", "bottom"]}
+          edges={["top"]}
         >
           <HeaderComponent state={state}/>
 
-          {state.matchMade ? 
-            <MatchFx 
+          {state.loggedIn && state.matchMade ?
+            <MatchFx
               state={state}
-              dispatch={dispatch} 
-            /> : 
-            null
-          }
-
-          {/* {!state.loggedIn && !state.hasAccount?
-            <CreateAccountComponent 
-              dispatch={dispatch}
-            /> :
-            null
-          } */}
-
-          {!state.loggedIn ?
-            <LoginScreenComponent 
               dispatch={dispatch}
             /> :
             null
           }
 
-          {state.userSettingsVisible ?
-            <UserSettingsComponent
-              state={state} 
-              dispatch={dispatch}
-            /> :
-            null
-          }
+          <NavigationContainer theme={navTheme}>
+            <RootStack.Navigator
+              screenOptions={{
+                headerShown: false,
+                contentStyle: { backgroundColor: state.mainAppBgColor },
+              }}
+            >
+              {state.loggedIn ? (
+                <RootStack.Screen name="Main">
+                  {() => <BottomNavigation state={state} dispatch={dispatch}/>}
+                </RootStack.Screen>
+              ) : (
+                <RootStack.Screen
+                  name="Login"
+                  options={{ animationTypeForReplace: "pop" }}
+                >
+                  {() => <LoginScreenComponent dispatch={dispatch}/>}
+                </RootStack.Screen>
+              )}
+            </RootStack.Navigator>
+          </NavigationContainer>
 
-          {state.userFavoritesVisible ?
-            <UserFavoritesComponent
-              state={state} 
-              dispatch={dispatch}
-            /> :
-            null
-          }
-          
-          {!state.partnerData && !state.swipingSolo ? 
-            
-            <PlaceholderDeck state={state} dispatch={dispatch}/> :
-
-            <RestaurantDeck 
-              key={state.listReset}
-              dispatch={dispatch} 
-              state={state}           
-            />
-
-          }
-
-          <ProfileArea 
-            state={state}
-            dispatch={dispatch}
-          />
-
-          <BottomNavigation 
-            state={state} 
-            dispatch={dispatch}
-          />
-          
         </SafeAreaView>
       </SafeAreaProvider>
     </GestureHandlerRootView>

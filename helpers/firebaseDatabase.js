@@ -57,6 +57,11 @@ export const clearLikesAndDislikes = async (uid) => {
     await updateDoc(userRef, {disliked: [], liked: [], matchMade: false});
 }
 // --------------------------------------------------------------------------------
+export const setSearchRadius = async (uid, searchRadius) => {
+    const userRef = doc(db, "users", uid);
+    await updateDoc(userRef, {searchRadius});
+}
+// --------------------------------------------------------------------------------
 export const alertPartnerOfMatch = async (partnerUID) => {
     const userRef = doc(db, "users", partnerUID);
     await updateDoc(userRef,{matchMade: true});

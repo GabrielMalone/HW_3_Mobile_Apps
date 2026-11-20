@@ -52,7 +52,7 @@ export const logOut = async (dispatch, state) => {
 
     // clears persistent login on firebase
     // also triggers dispatch(logout)=
-    dispatch({action: "LOGGED_OUT"});
+    dispatch({type: "LOGGED_OUT"});
 
     await signOut(auth);
 }
